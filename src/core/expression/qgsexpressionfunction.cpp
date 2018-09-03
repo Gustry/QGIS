@@ -23,6 +23,7 @@
 #include "qgsmultilinestring.h"
 #include "qgslinestring.h"
 #include "qgscurvepolygon.h"
+#include "qgsmaplayerstylemanager.h"
 #include "qgsmaptopixelgeometrysimplifier.h"
 #include "qgspolygon.h"
 #include "qgstriangle.h"
@@ -3992,6 +3993,12 @@ static QVariant fcnGetLayerProperty( const QVariantList &values, const QgsExpres
     return layer->crs().toProj4();
   else if ( QString::compare( layerProperty, QStringLiteral( "crs_description" ), Qt::CaseInsensitive ) == 0 )
     return layer->crs().description();
+  else if ( QString::compare( layerProperty, QStringLiteral( "style_name" ), Qt::CaseInsensitive ) == 0 )
+    return layer->styleManager()->currentStyle();
+  else if ( QString::compare( layerProperty, QStringLiteral( "style_names" ), Qt::CaseInsensitive ) == 0 )
+  {
+    return QVariant::fromValue( layer->styleManager()->styles() );
+  }
   else if ( QString::compare( layerProperty, QStringLiteral( "extent" ), Qt::CaseInsensitive ) == 0 )
   {
     QgsGeometry extentGeom = QgsGeometry::fromRect( layer->extent() );

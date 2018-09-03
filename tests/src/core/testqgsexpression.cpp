@@ -24,6 +24,7 @@
 #include "qgsfeatureiterator.h"
 #include "qgsfeaturerequest.h"
 #include "qgsgeometry.h"
+#include "qgsmaplayerstylemanager.h"
 #include "qgsrenderchecker.h"
 #include "qgsexpressioncontext.h"
 #include "qgsrelationmanager.h"
@@ -1245,6 +1246,15 @@ class TestQgsExpression: public QObject
       QTest::newRow( "layer_property crs" ) << QStringLiteral( "layer_property('%1','crs')" ).arg( mPointsLayer->name() ) << false << QVariant( "EPSG:4326" );
       QTest::newRow( "layer_property crs_description" ) << QStringLiteral( "layer_property('%1','crs_description')" ).arg( mPointsLayer->name() ) << false << QVariant( "WGS 84" );
       QTest::newRow( "layer_property crs_definition" ) << QStringLiteral( "layer_property('%1','crs_definition')" ).arg( mPointsLayer->name() ) << false << QVariant( "+proj=longlat +datum=WGS84 +no_defs" );
+      QTest::newRow( "layer_property style_name" ) << QStringLiteral( "layer_property('%1','style_name')" ).arg( mPointsLayer->name() ) << false << QVariant( "default" );
+      QStringList array;
+      array << QStringLiteral( "default" );
+      QTest::newRow( "layer_property style_names" ) << QStringLiteral( "layer_property('%1','style_names')" ).arg( mPointsLayer->name() ) << false << QVariant( array );
+
+      //QStringList keysExpected;
+      //keysExpected << QStringLiteral( "1" ) << QStringLiteral( "2" );
+      //QCOMPARE( QgsExpression( "map_akeys(\"map\")" ).evaluate( &context ), QVariant( keysExpected ) );
+
       QTest::newRow( "layer_property extent" ) << QStringLiteral( "geom_to_wkt(layer_property('%1','extent'))" ).arg( mPointsLayer->name() ) << false << QVariant( "Polygon ((-118.88888889 22.80020704, -83.33333333 22.80020704, -83.33333333 46.87198068, -118.88888889 46.87198068, -118.88888889 22.80020704))" );
       QTest::newRow( "layer_property type" ) << QStringLiteral( "layer_property('%1','type')" ).arg( mPointsLayer->name() ) << false << QVariant( "Vector" );
       QTest::newRow( "layer_property storage_type" ) << QStringLiteral( "layer_property('%1','storage_type')" ).arg( mPointsLayer->name() ) << false << QVariant( "ESRI Shapefile" );
