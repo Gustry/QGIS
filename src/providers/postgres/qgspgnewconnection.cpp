@@ -188,12 +188,14 @@ void QgsPgNewConnection::testConnection()
   QgsTemporaryCursorOverride cursorOverride( Qt::WaitCursor );
 
   QgsDataSourceUri uri;
+  QString label;
   if ( !txtService->text().isEmpty() )
   {
     uri.setConnection( txtService->text(), txtDatabase->text(),
                        mAuthSettings->username(), mAuthSettings->password(),
                        ( QgsDataSourceUri::SslMode ) cbxSSLmode->currentData().toInt(),
                        mAuthSettings->configId() );
+    label = txtService->text();
   }
   else
   {
@@ -201,6 +203,7 @@ void QgsPgNewConnection::testConnection()
                        mAuthSettings->username(), mAuthSettings->password(),
                        ( QgsDataSourceUri::SslMode ) cbxSSLmode->currentData().toInt(),
                        mAuthSettings->configId() );
+    label = txtHost->text();
   }
 
   QgsPostgresConn *conn = QgsPostgresConn::connectDb( uri.connectionInfo( false ), true );
@@ -208,7 +211,7 @@ void QgsPgNewConnection::testConnection()
   if ( conn )
   {
     // Database successfully opened; we can now issue SQL commands.
-    bar->pushMessage( tr( "Connection to %1 was successful." ).arg( txtName->text() ),
+    bar->pushMessage( tr( "Connection to %1 was successful." ).arg( label ),
                       Qgis::Info );
 
     // free pg connection resources
