@@ -2029,9 +2029,33 @@ QGISEXTERN QgsVectorLayerExporter::ExportError createEmptyLayer(
            oldToNewAttrIdxMap, errorMessage, options
          );
 }
-QGISEXTERN bool saveStyle( const QString &uri, const QString &qmlStyle, const QString &sldStyle,
-                           const QString &styleName, const QString &styleDescription,
-                           const QString &uiFileContent, bool useAsDefault, QString &errCause )
+
+static bool tableExists( QSqlDatabase &database, const QString &name, QString &errCause )
+{
+  if ( !QgsMssqlProvider::OpenDatabase( database ) )
+  {
+    QgsDebugMsg( "Error connecting to database" );
+    QgsDebugMsg( database.lastError().text() );
+    errCause = database.lastError().text();
+    return false;
+  }
+
+  QSqlQuery query = QSqlQuery( database );
+  query.setForwardOnly( true );
+  if ( !query.exec( QStringLiteral( "SELECT COUNT(*) FROM information_schema.tables WHERE table_name= N'%1'" ).arg( name ) ) )
+  {
+    QgsDebugMsg( query.lastError().text() );
+    errCause = database.lastError().text();
+    query.finish();
+    query.clear();
+    return false;
+  }
+  query.finish();
+  query.clear();
+  return query.isActive() && query.next() && query.value( 0 ).toInt() != 0;
+}
+
+QGISEXTERN bool styleExists( const QString &uri, const QString &styleName, QString &errCause )
 {
   QgsDataSourceUri dsUri( uri );
   // connect to database
@@ -2041,17 +2065,77 @@ QGISEXTERN bool saveStyle( const QString &uri, const QString &qmlStyle, const QS
   {
     QgsDebugMsg( QStringLiteral( "Error connecting to database" ) );
     QgsDebugMsg( mDatabase.lastError().text() );
+    errCause = mDatabase.lastError().text();
     return false;
   }
 
   QSqlQuery query = QSqlQuery( mDatabase );
   query.setForwardOnly( true );
-  if ( !query.exec( QStringLiteral( "SELECT COUNT(*) FROM information_schema.tables WHERE table_name= N'layer_styles'" ) ) )
+  if ( ! tableExists( mDatabase, QStringLiteral( "layer_styles" ), QString() ) )
   {
-    QgsDebugMsg( query.lastError().text() );
+    errCause = QObject::tr( "The layer_style table does not exist in the database." );
+    query.finish();
+    query.clear();
     return false;
   }
-  if ( query.isActive() && query.next() && query.value( 0 ).toInt() == 0 )
+
+  QString checkQuery = QString( "SELECT styleName"
+                                " FROM layer_styles"
+                                " WHERE f_table_catalog=%1"
+                                " AND f_table_schema=%2"
+                                " AND f_table_name=%3"
+                                " AND f_geometry_column=%4"
+                                " AND styleName=%5" )
+                       .arg( QgsMssqlProvider::quotedValue( dsUri.database() ) )
+                       .arg( QgsMssqlProvider::quotedValue( dsUri.schema() ) )
+                       .arg( QgsMssqlProvider::quotedValue( dsUri.table() ) )
+                       .arg( QgsMssqlProvider::quotedValue( dsUri.geometryColumn() ) )
+                       .arg( QgsMssqlProvider::quotedValue( styleName ) );
+
+  if ( !query.exec( checkQuery ) )
+  {
+    QgsDebugMsg( query.lastError().text() );
+    QgsDebugMsg( "Check Query failed" );
+    query.finish();
+    query.clear();
+    errCause = mDatabase.lastError().text();
+    return false;
+  }
+  if ( query.isActive() && query.next() && query.value( 0 ).toString() == styleName )
+  {
+    query.finish();
+    query.clear();
+    return true;
+  }
+  else
+  {
+    query.finish();
+    query.clear();
+    errCause = QObject::tr( "The style has not been found in the database." );
+    return false;
+  }
+
+}
+
+QGISEXTERN bool saveStyle( const QString &uri, const QString &qmlStyle, const QString &sldStyle,
+                           const QString &styleName, const QString &styleDescription,
+                           const QString &uiFileContent, bool useAsDefault, QString &errCause )
+{
+  QgsDataSourceUri dsUri( uri );
+  // connect to database
+  QSqlDatabase mDatabase = QgsMssqlProvider::GetDatabase( dsUri.service(), dsUri.host(), dsUri.database(), dsUri.username(), dsUri.password() );
+
+  if ( !QgsMssqlProvider::OpenDatabase( mDatabase ) )
+  {
+    QgsDebugMsg( "Error connecting to database" );
+    QgsDebugMsg( mDatabase.lastError().text() );
+    errCause = mDatabase.lastError().text();
+    return false;
+  }
+
+  QSqlQuery query = QSqlQuery( mDatabase );
+  query.setForwardOnly( true );
+  if ( ! tableExists( mDatabase, QStringLiteral( "layer_styles" ), QString() ) )
   {
     QgsDebugMsg( QStringLiteral( "Need to create styles table" ) );
     bool execOk = query.exec( QString( "CREATE TABLE [dbo].[layer_styles]("
@@ -2085,7 +2169,14 @@ QGISEXTERN bool saveStyle( const QString &uri, const QString &qmlStyle, const QS
     uiFileColumn = QStringLiteral( ",ui" );
     uiFileValue = QStringLiteral( ",XMLPARSE(DOCUMENT %1)" ).arg( uiFileContent );
   }
+  <<< <<< < Updated upstream
   QgsDebugMsg( QStringLiteral( "Ready to insert new style" ) );
+  == == == =
+    QgsDebugMsg( "Ready to insert new style" );
+  QString defaultStyleName = styleName.isEmpty() ? dsUri.table() : styleName;
+  QString defaultStyleDescription = styleDescription.isEmpty() ? QDateTime::currentDateTime().toString() : styleDescription;
+
+  >>> >>> > Stashed changes
   // Note: in the construction of the INSERT and UPDATE strings the qmlStyle and sldStyle values
   // can contain user entered strings, which may themselves include %## values that would be
   // replaced by the QString.arg function.  To ensure that the final SQL string is not corrupt these
@@ -2100,14 +2191,19 @@ QGISEXTERN bool saveStyle( const QString &uri, const QString &qmlStyle, const QS
                 .arg( QgsMssqlProvider::quotedValue( dsUri.schema() ) )
                 .arg( QgsMssqlProvider::quotedValue( dsUri.table() ) )
                 .arg( QgsMssqlProvider::quotedValue( dsUri.geometryColumn() ) )
-                .arg( QgsMssqlProvider::quotedValue( styleName.isEmpty() ? dsUri.table() : styleName ) )
+                .arg( QgsMssqlProvider::quotedValue( defaultStyleName ) )
                 .arg( QgsMssqlProvider::quotedValue( qmlStyle ) )
                 .arg( QgsMssqlProvider::quotedValue( sldStyle ) )
+                <<< <<< < Updated upstream
                 .arg( useAsDefault ? QStringLiteral( "1" ) : QStringLiteral( "0" ) )
                 .arg( QgsMssqlProvider::quotedValue( styleDescription.isEmpty() ? QDateTime::currentDateTime().toString() : styleDescription ) )
-                .arg( QgsMssqlProvider::quotedValue( dsUri.username() ) )
-                .arg( uiFileColumn )
-                .arg( uiFileValue );
+                == == == =
+                  .arg( useAsDefault ? "1" : "0" )
+                  .arg( QgsMssqlProvider::quotedValue( defaultStyleDescription ) )
+                  >>> >>> > Stashed changes
+                  .arg( QgsMssqlProvider::quotedValue( dsUri.username() ) )
+                  .arg( uiFileColumn )
+                  .arg( uiFileValue );
 
   QString checkQuery = QString( "SELECT styleName"
                                 " FROM layer_styles"
@@ -2120,7 +2216,7 @@ QGISEXTERN bool saveStyle( const QString &uri, const QString &qmlStyle, const QS
                        .arg( QgsMssqlProvider::quotedValue( dsUri.schema() ) )
                        .arg( QgsMssqlProvider::quotedValue( dsUri.table() ) )
                        .arg( QgsMssqlProvider::quotedValue( dsUri.geometryColumn() ) )
-                       .arg( QgsMssqlProvider::quotedValue( styleName.isEmpty() ? dsUri.table() : styleName ) );
+                       .arg( QgsMssqlProvider::quotedValue( defaultStyleName ) );
 
   if ( !query.exec( checkQuery ) )
   {
@@ -2128,8 +2224,9 @@ QGISEXTERN bool saveStyle( const QString &uri, const QString &qmlStyle, const QS
     QgsDebugMsg( QStringLiteral( "Check Query failed" ) );
     return false;
   }
-  if ( query.isActive() && query.next() && query.value( 0 ).toString() == styleName )
+  if ( styleExists( uri, defaultStyleName, errCause ) )
   {
+    <<< <<< < Updated upstream
     if ( QMessageBox::question( nullptr, QObject::tr( "Save style in database" ),
                                 QObject::tr( "A style named \"%1\" already exists in the database for this layer. Do you want to overwrite it?" )
                                 .arg( styleName.isEmpty() ? dsUri.table() : styleName ),
@@ -2141,6 +2238,9 @@ QGISEXTERN bool saveStyle( const QString &uri, const QString &qmlStyle, const QS
     }
 
     QgsDebugMsg( QStringLiteral( "Updating styles" ) );
+    == == == =
+      QgsDebugMsg( "Updating styles" );
+    >>> >>> > Stashed changes
     sql = QString( "UPDATE layer_styles "
                    " SET useAsDefault=%1"
                    ",styleQML=%2"
@@ -2155,13 +2255,13 @@ QGISEXTERN bool saveStyle( const QString &uri, const QString &qmlStyle, const QS
           .arg( useAsDefault ? QStringLiteral( "1" ) : QStringLiteral( "0" ) )
           .arg( QgsMssqlProvider::quotedValue( qmlStyle ) )
           .arg( QgsMssqlProvider::quotedValue( sldStyle ) )
-          .arg( QgsMssqlProvider::quotedValue( styleDescription.isEmpty() ? QDateTime::currentDateTime().toString() : styleDescription ) )
+          .arg( QgsMssqlProvider::quotedValue( defaultStyleDescription ) )
           .arg( QgsMssqlProvider::quotedValue( dsUri.username() ) )
           .arg( QgsMssqlProvider::quotedValue( dsUri.database() ) )
           .arg( QgsMssqlProvider::quotedValue( dsUri.schema() ) )
           .arg( QgsMssqlProvider::quotedValue( dsUri.table() ) )
           .arg( QgsMssqlProvider::quotedValue( dsUri.geometryColumn() ) )
-          .arg( QgsMssqlProvider::quotedValue( styleName.isEmpty() ? dsUri.table() : styleName ) );
+          .arg( QgsMssqlProvider::quotedValue( defaultStyleName ) );
   }
   if ( useAsDefault )
   {
