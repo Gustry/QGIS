@@ -691,11 +691,22 @@ bool QgsProcessingToolboxProxyModel::filterAcceptsRow( int sourceRow, const QMod
         parent = parent.parent();
       }
 
-      const QStringList partsToMatch = mFilterString.trimmed().split( ' ' );
+      const QStringList partsToMatch = mFilterString.trimmed().normalized( QString::NormalizationForm_KD ).split( ' ' );
 
-      QStringList partsToSearch = sourceModel()->data( sourceIndex, Qt::DisplayRole ).toString().split( ' ' );
+      QStringList partsToSearch;
+      QStringList algNameList = sourceModel()->data( sourceIndex, Qt::DisplayRole ).toString().split( ' ' );
+      partsToSearch << algNameList;
+      for ( const QString &part : algNameList )
+      {
+        partsToSearch.append( part.normalized( QString::NormalizationForm_KD ) );
+      }
+
       partsToSearch << algId << algName;
       partsToSearch.append( algTags );
+      for ( const QString &part : algTags )
+      {
+        partsToSearch.append( part.normalized( QString::NormalizationForm_KD ) );
+      }
       if ( !shortDesc.isEmpty() )
         partsToSearch.append( shortDesc.split( ' ' ) );
       partsToSearch.append( parentText );
@@ -705,7 +716,8 @@ bool QgsProcessingToolboxProxyModel::filterAcceptsRow( int sourceRow, const QMod
         bool found = false;
         for ( const QString &partToSearch : qgis::as_const( partsToSearch ) )
         {
-          if ( partToSearch.contains( part, Qt::CaseInsensitive ) )
+          QString partToSearchNormalized = partToSearch.normalized( QString::NormalizationForm_KD );
+          if ( partToSearch.contains( part.normalized( QString::NormalizationForm_KD ), Qt::CaseInsensitive ) )
           {
             found = true;
             break;
