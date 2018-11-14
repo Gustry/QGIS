@@ -1250,8 +1250,9 @@ bool QgsGeorefPluginGui::loadGCPs( /*bool verbose*/ )
 
     QgsPointXY mapCoords( ls.at( 0 ).toDouble(), ls.at( 1 ).toDouble() ); // map x,y
     QgsPointXY pixelCoords( ls.at( 2 ).toDouble(), ls.at( 3 ).toDouble() ); // pixel x,y
-    if ( ls.count() == 5 )
+    if ( ls.count() >= 5 && ls.count() <= 8 )
     {
+      // we don't care about dx, dy and residual in the file
       bool enable = ls.at( 4 ).toInt();
       addPoint( pixelCoords, mapCoords, enable, false );
     }
@@ -1280,15 +1281,18 @@ void QgsGeorefPluginGui::saveGCPs()
   if ( pointFile.open( QIODevice::WriteOnly | QIODevice::Truncate ) )
   {
     QTextStream points( &pointFile );
-    points << "mapX,mapY,pixelX,pixelY,enable" << endl;
+    points << "mapX,mapY,pixelX,pixelY,enable,dx,dy,residual" << endl;
     Q_FOREACH ( QgsGeorefDataPoint *pt, mPoints )
     {
-      points << QStringLiteral( "%1,%2,%3,%4,%5" )
+      points << QStringLiteral( "%1,%2,%3,%4,%5,%6,%7,%8" )
              .arg( qgsDoubleToString( pt->mapCoords().x() ),
                    qgsDoubleToString( pt->mapCoords().y() ),
                    qgsDoubleToString( pt->pixelCoords().x() ),
                    qgsDoubleToString( pt->pixelCoords().y() ) )
-             .arg( pt->isEnabled() ) << endl;
+             .arg( pt->isEnabled() )
+             .arg( qgsDoubleToString( pt->residual().x() ),
+                   qgsDoubleToString( pt->residual().y() ),
+                   qgsDoubleToString( std::sqrt( pt->residual().x() * pt->residual().x() + pt->residual().y() * pt->residual().y() ) ) ) << endl;
     }
 
     mInitialPoints = mPoints;
