@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 ***************************************************************************
 *                                                                         *
@@ -42,7 +40,8 @@ class ExampleProcessingAlgorithm(QgsProcessingAlgorithm):
     INPUT = 'INPUT'
     OUTPUT = 'OUTPUT'
 
-    def tr(self, string):
+    @staticmethod
+    def tr(string):
         """
         Returns a translatable string with the self.tr() function.
         """
@@ -91,7 +90,7 @@ class ExampleProcessingAlgorithm(QgsProcessingAlgorithm):
         should provide a basic description about what the algorithm does and the
         parameters and outputs associated with it..
         """
-        return self.tr("Example algorithm short description")
+        return self.tr('Example algorithm short description')
 
     def initAlgorithm(self, config=None):
         """
@@ -181,7 +180,7 @@ class ExampleProcessingAlgorithm(QgsProcessingAlgorithm):
         # to the executed algorithm, and that the executed algorithm can send feedback
         # reports to the user (and correctly handle cancellation and progress reports!)
         if False:
-            buffered_layer = processing.run("native:buffer", {
+            buffered_layer = processing.run('native:buffer', {
                 'INPUT': dest_id,
                 'DISTANCE': 1.5,
                 'SEGMENTS': 5,
