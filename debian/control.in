@@ -4,12 +4,14 @@ Uploaders: Jürgen E. Fischer <jef@norbit.de>
 Section: science
 Priority: optional
 Build-Depends:
+ autopep8,
  bison,
  ca-certificates,
  cmake (>= 2.8),
  debhelper (>= 9),
  dh-python,
  flex,
+ flip,
  gdal-bin,
  grass-dev,
  libexiv2-dev,

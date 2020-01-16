@@ -91,7 +91,7 @@ void QgsFileDownloader::cancelDownload()
 void QgsFileDownloader::onRequestTimedOut( QNetworkReply *reply )
 {
   if ( reply == mReply )
-    error( tr( "Network request %1 timed out" ).arg( mUrl.toString() ) );
+    error( tr( "Network request timed out %1" ).arg( mUrl.toString() ) );
 }
 
 #ifndef QT_NO_SSL
