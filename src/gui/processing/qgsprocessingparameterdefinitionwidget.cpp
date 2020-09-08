@@ -104,7 +104,7 @@ QgsProcessingParameterDefinition *QgsProcessingParameterDefinitionWidget::create
   {
     // if a specific definition widget exists, get it to create the parameter (since it will know
     // how to set all the additional properties of that parameter, which we don't)
-    param.reset( mDefinitionWidget->createParameter( name, mDescriptionLineEdit->text(), flags ) );
+    param.reset( mDefinitionWidget->createParameter( name, mDescriptionLineEdit->text(), flags, mDescriptionLineEdit->toolTip() ) );
   }
   else if ( QgsApplication::processingRegistry()->parameterType( mType ) )
   {

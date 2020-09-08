@@ -32,7 +32,7 @@ class CORE_EXPORT QgsProcessingParameterAggregate : public QgsProcessingParamete
 {
   public:
     //! Constructor for QgsProcessingParameterAggregate.
-    QgsProcessingParameterAggregate( const QString &name, const QString &description = QString(), const QString &parentLayerParameterName = QString(), bool optional = false );
+    QgsProcessingParameterAggregate( const QString &name, const QString &description = QString(), const QString &parentLayerParameterName = QString(), bool optional = false, const QString &help = QString() );
 
     QgsProcessingParameterDefinition *clone() const override;
     QString type() const override;

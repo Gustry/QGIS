@@ -1469,7 +1469,7 @@ class CORE_EXPORT QgsProcessingParameterBoolean : public QgsProcessingParameterD
      * Constructor for QgsProcessingParameterBoolean.
      */
     QgsProcessingParameterBoolean( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
-                                   bool optional = false );
+                                   bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -1500,7 +1500,7 @@ class CORE_EXPORT QgsProcessingParameterCrs : public QgsProcessingParameterDefin
      * Constructor for QgsProcessingParameterCrs.
      */
     QgsProcessingParameterCrs( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
-                               bool optional = false );
+                               bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -1532,7 +1532,7 @@ class CORE_EXPORT QgsProcessingParameterExtent : public QgsProcessingParameterDe
      * Constructor for QgsProcessingParameterExtent.
      */
     QgsProcessingParameterExtent( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
-                                  bool optional = false );
+                                  bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -1565,7 +1565,7 @@ class CORE_EXPORT QgsProcessingParameterPoint : public QgsProcessingParameterDef
      * Constructor for QgsProcessingParameterPoint.
      */
     QgsProcessingParameterPoint( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
-                                 bool optional = false );
+                                 bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -1608,7 +1608,7 @@ class CORE_EXPORT QgsProcessingParameterFile : public QgsProcessingParameterDefi
      * if both are specified then \a fileFilter takes precedence.
      */
     QgsProcessingParameterFile( const QString &name, const QString &description = QString(), Behavior behavior = File, const QString &extension = QString(), const QVariant &defaultValue = QVariant(),
-                                bool optional = false, const QString &fileFilter = QString() );
+                                bool optional = false, const QString &fileFilter = QString(), const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -1702,7 +1702,7 @@ class CORE_EXPORT QgsProcessingParameterMatrix : public QgsProcessingParameterDe
     QgsProcessingParameterMatrix( const QString &name, const QString &description = QString(), int numberRows = 3,
                                   bool hasFixedNumberRows = false, const QStringList &headers = QStringList(),
                                   const QVariant &defaultValue = QVariant(),
-                                  bool optional = false );
+                                  bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -1787,7 +1787,7 @@ class CORE_EXPORT QgsProcessingParameterMultipleLayers : public QgsProcessingPar
      */
     QgsProcessingParameterMultipleLayers( const QString &name, const QString &description = QString(), QgsProcessing::SourceType layerType = QgsProcessing::TypeVectorAnyGeometry,
                                           const QVariant &defaultValue = QVariant(),
-                                          bool optional = false );
+                                          bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -1879,7 +1879,8 @@ class CORE_EXPORT QgsProcessingParameterNumber : public QgsProcessingParameterDe
                                            const QVariant &defaultValue = QVariant(),
                                            bool optional = false,
                                            double minValue = std::numeric_limits<double>::lowest() + 1,
-                                           double maxValue = std::numeric_limits<double>::max()
+                                           double maxValue = std::numeric_limits<double>::max(),
+                                           const QString &help = QString()
                                          );
 
     /**
@@ -1975,7 +1976,8 @@ class CORE_EXPORT QgsProcessingParameterDistance : public QgsProcessingParameter
         const QString &parentParameterName = QString(),
         bool optional = false,
         double minValue = std::numeric_limits<double>::lowest() + 1,
-        double maxValue = std::numeric_limits<double>::max() );
+        double maxValue = std::numeric_limits<double>::max(),
+        const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -2045,7 +2047,7 @@ class CORE_EXPORT QgsProcessingParameterScale : public QgsProcessingParameterNum
      */
     explicit QgsProcessingParameterScale( const QString &name, const QString &description = QString(),
                                           const QVariant &defaultValue = QVariant(),
-                                          bool optional = false );
+                                          bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -2080,7 +2082,7 @@ class CORE_EXPORT QgsProcessingParameterRange : public QgsProcessingParameterDef
     QgsProcessingParameterRange( const QString &name, const QString &description = QString(),
                                  QgsProcessingParameterNumber::Type type = QgsProcessingParameterNumber::Integer,
                                  const QVariant &defaultValue = QVariant(),
-                                 bool optional = false );
+                                 bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -2131,7 +2133,7 @@ class CORE_EXPORT QgsProcessingParameterRasterLayer : public QgsProcessingParame
      * Constructor for QgsProcessingParameterRasterLayer.
      */
     QgsProcessingParameterRasterLayer( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
-                                       bool optional = false );
+                                       bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -2166,7 +2168,7 @@ class CORE_EXPORT QgsProcessingParameterEnum : public QgsProcessingParameterDefi
     QgsProcessingParameterEnum( const QString &name, const QString &description = QString(), const QStringList &options = QStringList(),
                                 bool allowMultiple = false,
                                 const QVariant &defaultValue = QVariant(),
-                                bool optional = false );
+                                bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -2233,7 +2235,7 @@ class CORE_EXPORT QgsProcessingParameterString : public QgsProcessingParameterDe
      */
     QgsProcessingParameterString( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
                                   bool multiLine = false,
-                                  bool optional = false );
+                                  bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -2292,7 +2294,7 @@ class CORE_EXPORT QgsProcessingParameterAuthConfig : public QgsProcessingParamet
      * Constructor for QgsProcessingParameterAuthConfig.
      */
     QgsProcessingParameterAuthConfig( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
-                                      bool optional = false );
+                                      bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -2325,7 +2327,7 @@ class CORE_EXPORT QgsProcessingParameterExpression : public QgsProcessingParamet
      */
     QgsProcessingParameterExpression( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
                                       const QString &parentLayerParameterName = QString(),
-                                      bool optional = false );
+                                      bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -2415,7 +2417,7 @@ class CORE_EXPORT QgsProcessingParameterVectorLayer : public QgsProcessingParame
                                        const QString &description = QString(),
                                        const QList< int > &types = QList< int >(),
                                        const QVariant &defaultValue = QVariant(),
-                                       bool optional = false );
+                                       bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -2454,7 +2456,7 @@ class CORE_EXPORT QgsProcessingParameterMeshLayer : public QgsProcessingParamete
     QgsProcessingParameterMeshLayer( const QString &name,
                                      const QString &description = QString(),
                                      const QVariant &defaultValue = QVariant(),
-                                     bool optional = false );
+                                     bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -2487,7 +2489,8 @@ class CORE_EXPORT QgsProcessingParameterMapLayer : public QgsProcessingParameter
      */
     QgsProcessingParameterMapLayer( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
                                     bool optional = false,
-                                    const QList< int > &types = QList< int >() );
+                                    const QList< int > &types = QList< int >(),
+                                    const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -2643,7 +2646,8 @@ class CORE_EXPORT QgsProcessingParameterFeatureSource : public QgsProcessingPara
     */
     QgsProcessingParameterFeatureSource( const QString &name, const QString &description = QString(),
                                          const QList< int > &types = QList< int >(),
-                                         const QVariant &defaultValue = QVariant(), bool optional = false );
+                                         const QVariant &defaultValue = QVariant(), bool optional = false,
+                                         const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -2685,7 +2689,7 @@ class CORE_EXPORT QgsProcessingDestinationParameter : public QgsProcessingParame
      * output will not be created by default.
      */
     QgsProcessingDestinationParameter( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
-                                       bool optional = false, bool createByDefault = true );
+                                       bool optional = false, bool createByDefault = true, const QString &help = QString() );
 
     bool isDestination() const override { return true; }
     QVariantMap toVariantMap() const override;
@@ -2806,7 +2810,7 @@ class CORE_EXPORT QgsProcessingParameterFeatureSink : public QgsProcessingDestin
      * output will not be created by default.
      */
     QgsProcessingParameterFeatureSink( const QString &name, const QString &description = QString(), QgsProcessing::SourceType type = QgsProcessing::TypeVectorAnyGeometry, const QVariant &defaultValue = QVariant(),
-                                       bool optional = false, bool createByDefault = true, bool supportsAppend = false );
+                                       bool optional = false, bool createByDefault = true, bool supportsAppend = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -2904,7 +2908,7 @@ class CORE_EXPORT QgsProcessingParameterVectorDestination : public QgsProcessing
      * output will not be created by default.
      */
     QgsProcessingParameterVectorDestination( const QString &name, const QString &description = QString(), QgsProcessing::SourceType type = QgsProcessing::TypeVectorAnyGeometry, const QVariant &defaultValue = QVariant(),
-        bool optional = false, bool createByDefault = true );
+        bool optional = false, bool createByDefault = true, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -2979,7 +2983,8 @@ class CORE_EXPORT QgsProcessingParameterRasterDestination : public QgsProcessing
     QgsProcessingParameterRasterDestination( const QString &name, const QString &description = QString(),
         const QVariant &defaultValue = QVariant(),
         bool optional = false,
-        bool createByDefault = true );
+        bool createByDefault = true,
+        const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -3041,7 +3046,8 @@ class CORE_EXPORT QgsProcessingParameterFileDestination : public QgsProcessingDe
                                            const QString &fileFilter = QString(),
                                            const QVariant &defaultValue = QVariant(),
                                            bool optional = false,
-                                           bool createByDefault = true );
+                                           bool createByDefault = true,
+                                           const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -3100,7 +3106,8 @@ class CORE_EXPORT QgsProcessingParameterFolderDestination : public QgsProcessing
     QgsProcessingParameterFolderDestination( const QString &name, const QString &description = QString(),
         const QVariant &defaultValue = QVariant(),
         bool optional = false,
-        bool createByDefault = true );
+        bool createByDefault = true,
+        const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -3135,7 +3142,8 @@ class CORE_EXPORT QgsProcessingParameterBand : public QgsProcessingParameterDefi
     QgsProcessingParameterBand( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
                                 const QString &parentLayerParameterName = QString(),
                                 bool optional = false,
-                                bool allowMultiple = false );
+                                bool allowMultiple = false,
+                                const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -3208,7 +3216,7 @@ class CORE_EXPORT QgsProcessingParameterLayout : public QgsProcessingParameterDe
      * Constructor for QgsProcessingParameterLayout.
      */
     QgsProcessingParameterLayout( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
-                                  bool optional = false );
+                                  bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -3248,7 +3256,8 @@ class CORE_EXPORT QgsProcessingParameterLayoutItem : public QgsProcessingParamet
     QgsProcessingParameterLayoutItem( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
                                       const QString &parentLayoutParameterName = QString(),
                                       int itemType = -1,
-                                      bool optional = false );
+                                      bool optional = false,
+                                      const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -3323,7 +3332,8 @@ class CORE_EXPORT QgsProcessingParameterColor : public QgsProcessingParameterDef
      */
     QgsProcessingParameterColor( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
                                  bool opacityEnabled = true,
-                                 bool optional = false );
+                                 bool optional = false,
+                                 const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -3386,7 +3396,7 @@ class CORE_EXPORT QgsProcessingParameterCoordinateOperation : public QgsProcessi
     QgsProcessingParameterCoordinateOperation( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
         const QString &sourceCrsParameterName = QString(), const QString &destinationCrsParameterName = QString(),
         const QVariant &staticSourceCrs = QVariant(), const QVariant &staticDestinationCrs = QVariant(),
-        bool optional = false );
+        bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -3490,7 +3500,7 @@ class CORE_EXPORT QgsProcessingParameterMapTheme : public QgsProcessingParameter
      * Constructor for QgsProcessingParameterMapTheme.
      */
     QgsProcessingParameterMapTheme( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
-                                    bool optional = false );
+                                    bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -3545,7 +3555,8 @@ class CORE_EXPORT QgsProcessingParameterDateTime : public QgsProcessingParameter
         const QVariant &defaultValue = QVariant(),
         bool optional = false,
         const QDateTime &minValue = QDateTime(),
-        const QDateTime &maxValue = QDateTime()
+        const QDateTime &maxValue = QDateTime(),
+        const QString &help = QString()
                                            );
 
     /**
@@ -3652,7 +3663,7 @@ class CORE_EXPORT QgsProcessingParameterProviderConnection : public QgsProcessin
      * in order for the model to work correctly. This is only implemented for a subset of current data providers.
      */
     QgsProcessingParameterProviderConnection( const QString &name, const QString &description, const QString &provider, const QVariant &defaultValue = QVariant(),
-        bool optional = false );
+        bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -3713,7 +3724,7 @@ class CORE_EXPORT QgsProcessingParameterDatabaseSchema : public QgsProcessingPar
      * in order for the model to work correctly. This is only implemented for a subset of current data providers.
      */
     QgsProcessingParameterDatabaseSchema( const QString &name, const QString &description, const QString &connectionParameterName = QString(), const QVariant &defaultValue = QVariant(),
-                                          bool optional = false );
+                                          bool optional = false, const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.
@@ -3780,7 +3791,8 @@ class CORE_EXPORT QgsProcessingParameterDatabaseTable : public QgsProcessingPara
                                          const QString &schemaParameterName = QString(),
                                          const QVariant &defaultValue = QVariant(),
                                          bool optional = false,
-                                         bool allowNewTableNames = false );
+                                         bool allowNewTableNames = false,
+                                         const QString &help = QString() );
 
     /**
      * Returns the type name for the parameter class.

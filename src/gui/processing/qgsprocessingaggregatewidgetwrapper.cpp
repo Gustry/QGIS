@@ -246,9 +246,10 @@ QgsProcessingAggregateParameterDefinitionWidget::QgsProcessingAggregateParameter
   setLayout( vlayout );
 }
 
-QgsProcessingParameterDefinition *QgsProcessingAggregateParameterDefinitionWidget::createParameter( const QString &name, const QString &description, QgsProcessingParameterDefinition::Flags flags ) const
+QgsProcessingParameterDefinition *QgsProcessingAggregateParameterDefinitionWidget::createParameter( const QString &name, const QString &description, QgsProcessingParameterDefinition::Flags flags, const QString &help ) const
 {
   auto param = qgis::make_unique< QgsProcessingParameterAggregate >( name, description, mParentLayerComboBox->currentData().toString() );
+  param->setHelp( help );
   param->setFlags( flags );
   return param.release();
 }

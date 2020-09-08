@@ -23,7 +23,7 @@ Designed for use with the "Aggregate" algorithm.
 #include "qgsprocessingparameteraggregate.h"
 %End
   public:
-    QgsProcessingParameterAggregate( const QString &name, const QString &description = QString(), const QString &parentLayerParameterName = QString(), bool optional = false );
+    QgsProcessingParameterAggregate( const QString &name, const QString &description = QString(), const QString &parentLayerParameterName = QString(), bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterAggregate.
 %End

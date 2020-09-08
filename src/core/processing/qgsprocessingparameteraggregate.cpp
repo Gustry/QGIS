@@ -18,8 +18,8 @@
 #include "qgsvectorlayer.h"
 
 
-QgsProcessingParameterAggregate::QgsProcessingParameterAggregate( const QString &name, const QString &description, const QString &parentLayerParameterName, bool optional )
-  : QgsProcessingParameterDefinition( name, description, QVariant(), optional )
+QgsProcessingParameterAggregate::QgsProcessingParameterAggregate( const QString &name, const QString &description, const QString &parentLayerParameterName, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, QVariant(), optional, help )
   , mParentLayerParameterName( parentLayerParameterName )
 {
 }

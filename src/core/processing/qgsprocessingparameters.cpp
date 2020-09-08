@@ -2181,6 +2181,7 @@ QVariantMap QgsProcessingParameterDefinition::toVariantMap() const
   map.insert( QStringLiteral( "parameter_type" ), type() );
   map.insert( QStringLiteral( "name" ), mName );
   map.insert( QStringLiteral( "description" ), mDescription );
+  map.insert( QStringLiteral( "help" ), mHelp );
   map.insert( QStringLiteral( "default" ), mDefault );
   map.insert( QStringLiteral( "flags" ), static_cast< int >( mFlags ) );
   map.insert( QStringLiteral( "metadata" ), mMetadata );
@@ -2191,6 +2192,7 @@ bool QgsProcessingParameterDefinition::fromVariantMap( const QVariantMap &map )
 {
   mName = map.value( QStringLiteral( "name" ) ).toString();
   mDescription = map.value( QStringLiteral( "description" ) ).toString();
+  mHelp = map.value( QStringLiteral( "help" ) ).toString();
   mDefault = map.value( QStringLiteral( "default" ) );
   mFlags = static_cast< Flags >( map.value( QStringLiteral( "flags" ) ).toInt() );
   mMetadata = map.value( QStringLiteral( "metadata" ) ).toMap();
@@ -2218,8 +2220,8 @@ QString QgsProcessingParameterDefinition::toolTip() const
   return text;
 }
 
-QgsProcessingParameterBoolean::QgsProcessingParameterBoolean( const QString &name, const QString &description, const QVariant &defaultValue, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterBoolean::QgsProcessingParameterBoolean( const QString &name, const QString &description, const QVariant &defaultValue, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
 {}
 
 QgsProcessingParameterDefinition *QgsProcessingParameterBoolean::clone() const
@@ -2252,8 +2254,8 @@ QgsProcessingParameterBoolean *QgsProcessingParameterBoolean::fromScriptCode( co
   return new QgsProcessingParameterBoolean( name, description, definition.toLower().trimmed() != QStringLiteral( "false" ), isOptional );
 }
 
-QgsProcessingParameterCrs::QgsProcessingParameterCrs( const QString &name, const QString &description, const QVariant &defaultValue, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterCrs::QgsProcessingParameterCrs( const QString &name, const QString &description, const QVariant &defaultValue, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
 {
 
 }
@@ -2326,8 +2328,8 @@ QgsProcessingParameterCrs *QgsProcessingParameterCrs::fromScriptCode( const QStr
   return new QgsProcessingParameterCrs( name, description, definition.compare( QLatin1String( "none" ), Qt::CaseInsensitive ) == 0 ? QVariant() : definition, isOptional );
 }
 
-QgsProcessingParameterMapLayer::QgsProcessingParameterMapLayer( const QString &name, const QString &description, const QVariant &defaultValue, bool optional, const QList<int> &types )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterMapLayer::QgsProcessingParameterMapLayer( const QString &name, const QString &description, const QVariant &defaultValue, bool optional, const QList<int> &types, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , QgsProcessingParameterLimitedDataTypes( types )
 {
 
@@ -2555,8 +2557,8 @@ bool QgsProcessingParameterMapLayer::fromVariantMap( const QVariantMap &map )
   return true;
 }
 
-QgsProcessingParameterExtent::QgsProcessingParameterExtent( const QString &name, const QString &description, const QVariant &defaultValue, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterExtent::QgsProcessingParameterExtent( const QString &name, const QString &description, const QVariant &defaultValue, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
 {
 
 }
@@ -2681,8 +2683,8 @@ QgsProcessingParameterExtent *QgsProcessingParameterExtent::fromScriptCode( cons
   return new QgsProcessingParameterExtent( name, description, definition, isOptional );
 }
 
-QgsProcessingParameterPoint::QgsProcessingParameterPoint( const QString &name, const QString &description, const QVariant &defaultValue, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterPoint::QgsProcessingParameterPoint( const QString &name, const QString &description, const QVariant &defaultValue, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
 {
 
 }
@@ -2775,8 +2777,8 @@ QgsProcessingParameterPoint *QgsProcessingParameterPoint::fromScriptCode( const 
   return new QgsProcessingParameterPoint( name, description, definition, isOptional );
 }
 
-QgsProcessingParameterFile::QgsProcessingParameterFile( const QString &name, const QString &description, Behavior behavior, const QString &extension, const QVariant &defaultValue, bool optional, const QString &fileFilter )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterFile::QgsProcessingParameterFile( const QString &name, const QString &description, Behavior behavior, const QString &extension, const QVariant &defaultValue, bool optional, const QString &fileFilter, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , mBehavior( behavior )
   , mExtension( fileFilter.isEmpty() ? extension : QString() )
   , mFileFilter( fileFilter.isEmpty() && extension.isEmpty() ? QObject::tr( "All files (*.*)" ) : fileFilter )
@@ -2902,8 +2904,8 @@ QgsProcessingParameterFile *QgsProcessingParameterFile::fromScriptCode( const QS
   return new QgsProcessingParameterFile( name, description, behavior, QString(), definition, isOptional );
 }
 
-QgsProcessingParameterMatrix::QgsProcessingParameterMatrix( const QString &name, const QString &description, int numberRows, bool fixedNumberRows, const QStringList &headers, const QVariant &defaultValue, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterMatrix::QgsProcessingParameterMatrix( const QString &name, const QString &description, int numberRows, bool fixedNumberRows, const QStringList &headers, const QVariant &defaultValue, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , mHeaders( headers )
   , mNumberRows( numberRows )
   , mFixedNumberRows( fixedNumberRows )
@@ -3065,8 +3067,8 @@ QgsProcessingParameterMatrix *QgsProcessingParameterMatrix::fromScriptCode( cons
   return new QgsProcessingParameterMatrix( name, description, 0, false, QStringList(), definition.isEmpty() ? QVariant() : definition, isOptional );
 }
 
-QgsProcessingParameterMultipleLayers::QgsProcessingParameterMultipleLayers( const QString &name, const QString &description, QgsProcessing::SourceType layerType, const QVariant &defaultValue, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterMultipleLayers::QgsProcessingParameterMultipleLayers( const QString &name, const QString &description, QgsProcessing::SourceType layerType, const QVariant &defaultValue, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , mLayerType( layerType )
 {
 
@@ -3351,8 +3353,8 @@ QgsProcessingParameterMultipleLayers *QgsProcessingParameterMultipleLayers::from
   return new QgsProcessingParameterMultipleLayers( name, description, layerType, defaultVal.isEmpty() ? QVariant() : defaultVal, isOptional );
 }
 
-QgsProcessingParameterNumber::QgsProcessingParameterNumber( const QString &name, const QString &description, Type type, const QVariant &defaultValue, bool optional, double minValue, double maxValue )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterNumber::QgsProcessingParameterNumber( const QString &name, const QString &description, Type type, const QVariant &defaultValue, bool optional, double minValue, double maxValue, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , mMin( minValue )
   , mMax( maxValue )
   , mDataType( type )
@@ -3497,8 +3499,8 @@ QgsProcessingParameterNumber *QgsProcessingParameterNumber::fromScriptCode( cons
          : ( definition.toLower().trimmed() == QStringLiteral( "none" ) ? QVariant() : definition ), isOptional );
 }
 
-QgsProcessingParameterRange::QgsProcessingParameterRange( const QString &name, const QString &description, QgsProcessingParameterNumber::Type type, const QVariant &defaultValue, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterRange::QgsProcessingParameterRange( const QString &name, const QString &description, QgsProcessingParameterNumber::Type type, const QVariant &defaultValue, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , mDataType( type )
 {
 
@@ -3620,8 +3622,8 @@ QgsProcessingParameterRange *QgsProcessingParameterRange::fromScriptCode( const 
                                           : ( definition.toLower().trimmed() == QStringLiteral( "none" ) ? QVariant() : definition ), isOptional );
 }
 
-QgsProcessingParameterRasterLayer::QgsProcessingParameterRasterLayer( const QString &name, const QString &description, const QVariant &defaultValue, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterRasterLayer::QgsProcessingParameterRasterLayer( const QString &name, const QString &description, const QVariant &defaultValue, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
 {
 
 }
@@ -3685,8 +3687,8 @@ QgsProcessingParameterRasterLayer *QgsProcessingParameterRasterLayer::fromScript
   return new QgsProcessingParameterRasterLayer( name, description, definition.isEmpty() ? QVariant() : definition, isOptional );
 }
 
-QgsProcessingParameterEnum::QgsProcessingParameterEnum( const QString &name, const QString &description, const QStringList &options, bool allowMultiple, const QVariant &defaultValue, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterEnum::QgsProcessingParameterEnum( const QString &name, const QString &description, const QStringList &options, bool allowMultiple, const QVariant &defaultValue, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , mOptions( options )
   , mAllowMultiple( allowMultiple )
 {
@@ -3896,8 +3898,8 @@ QgsProcessingParameterEnum *QgsProcessingParameterEnum::fromScriptCode( const QS
   return new QgsProcessingParameterEnum( name, description, values.split( ';' ), multiple, defaultVal.isEmpty() ? QVariant() : defaultVal, isOptional );
 }
 
-QgsProcessingParameterString::QgsProcessingParameterString( const QString &name, const QString &description, const QVariant &defaultValue, bool multiLine, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterString::QgsProcessingParameterString( const QString &name, const QString &description, const QVariant &defaultValue, bool multiLine, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , mMultiLine( multiLine )
 {
 
@@ -4003,8 +4005,8 @@ QgsProcessingParameterString *QgsProcessingParameterString::fromScriptCode( cons
 // QgsProcessingParameterAuthConfig
 //
 
-QgsProcessingParameterAuthConfig::QgsProcessingParameterAuthConfig( const QString &name, const QString &description, const QVariant &defaultValue, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterAuthConfig::QgsProcessingParameterAuthConfig( const QString &name, const QString &description, const QVariant &defaultValue, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
 {
 
 }
@@ -4055,8 +4057,8 @@ QgsProcessingParameterAuthConfig *QgsProcessingParameterAuthConfig::fromScriptCo
 // QgsProcessingParameterExpression
 //
 
-QgsProcessingParameterExpression::QgsProcessingParameterExpression( const QString &name, const QString &description, const QVariant &defaultValue, const QString &parentLayerParameterName, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterExpression::QgsProcessingParameterExpression( const QString &name, const QString &description, const QVariant &defaultValue, const QString &parentLayerParameterName, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , mParentLayerParameterName( parentLayerParameterName )
 {
 
@@ -4136,8 +4138,8 @@ QgsProcessingParameterExpression *QgsProcessingParameterExpression::fromScriptCo
   return new QgsProcessingParameterExpression( name, description, definition, QString(), isOptional );
 }
 
-QgsProcessingParameterVectorLayer::QgsProcessingParameterVectorLayer( const QString &name, const QString &description, const QList<int> &types, const QVariant &defaultValue, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterVectorLayer::QgsProcessingParameterVectorLayer( const QString &name, const QString &description, const QList<int> &types, const QVariant &defaultValue, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , QgsProcessingParameterLimitedDataTypes( types )
 {
 
@@ -4275,8 +4277,8 @@ QgsProcessingParameterVectorLayer *QgsProcessingParameterVectorLayer::fromScript
 QgsProcessingParameterMeshLayer::QgsProcessingParameterMeshLayer( const QString &name,
     const QString &description,
     const QVariant &defaultValue,
-    bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+    bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
 {
 
 }
@@ -4637,8 +4639,8 @@ QgsProcessingParameterField *QgsProcessingParameterField::fromScriptCode( const 
   return new QgsProcessingParameterField( name, description, def.isEmpty() ? QVariant() : def, parent, type, allowMultiple, isOptional, defaultToAllFields );
 }
 
-QgsProcessingParameterFeatureSource::QgsProcessingParameterFeatureSource( const QString &name, const QString &description, const QList<int> &types, const QVariant &defaultValue, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterFeatureSource::QgsProcessingParameterFeatureSource( const QString &name, const QString &description, const QList<int> &types, const QVariant &defaultValue, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , QgsProcessingParameterLimitedDataTypes( types )
 {
 
@@ -4909,8 +4911,8 @@ QgsProcessingParameterFeatureSource *QgsProcessingParameterFeatureSource::fromSc
   return new QgsProcessingParameterFeatureSource( name, description, types, def, isOptional );
 }
 
-QgsProcessingParameterFeatureSink::QgsProcessingParameterFeatureSink( const QString &name, const QString &description, QgsProcessing::SourceType type, const QVariant &defaultValue, bool optional, bool createByDefault, bool supportsAppend )
-  : QgsProcessingDestinationParameter( name, description, defaultValue, optional, createByDefault )
+QgsProcessingParameterFeatureSink::QgsProcessingParameterFeatureSink( const QString &name, const QString &description, QgsProcessing::SourceType type, const QVariant &defaultValue, bool optional, bool createByDefault, bool supportsAppend, const QString &help )
+  : QgsProcessingDestinationParameter( name, description, defaultValue, optional, createByDefault, help )
   , mDataType( type )
   , mSupportsAppend( supportsAppend )
 {
@@ -5190,8 +5192,8 @@ void QgsProcessingParameterFeatureSink::setSupportsAppend( bool supportsAppend )
   mSupportsAppend = supportsAppend;
 }
 
-QgsProcessingParameterRasterDestination::QgsProcessingParameterRasterDestination( const QString &name, const QString &description, const QVariant &defaultValue, bool optional, bool createByDefault )
-  : QgsProcessingDestinationParameter( name, description, defaultValue, optional, createByDefault )
+QgsProcessingParameterRasterDestination::QgsProcessingParameterRasterDestination( const QString &name, const QString &description, const QVariant &defaultValue, bool optional, bool createByDefault, const QString &help )
+  : QgsProcessingDestinationParameter( name, description, defaultValue, optional, createByDefault, help )
 {
 }
 
@@ -5312,8 +5314,8 @@ QgsProcessingParameterRasterDestination *QgsProcessingParameterRasterDestination
 }
 
 
-QgsProcessingParameterFileDestination::QgsProcessingParameterFileDestination( const QString &name, const QString &description, const QString &fileFilter, const QVariant &defaultValue, bool optional, bool createByDefault )
-  : QgsProcessingDestinationParameter( name, description, defaultValue, optional, createByDefault )
+QgsProcessingParameterFileDestination::QgsProcessingParameterFileDestination( const QString &name, const QString &description, const QString &fileFilter, const QVariant &defaultValue, bool optional, bool createByDefault, const QString &help )
+  : QgsProcessingDestinationParameter( name, description, defaultValue, optional, createByDefault, help )
   , mFileFilter( fileFilter.isEmpty() ? QObject::tr( "All files (*.*)" ) : fileFilter )
 {
 
@@ -5467,8 +5469,8 @@ QgsProcessingParameterFileDestination *QgsProcessingParameterFileDestination::fr
   return new QgsProcessingParameterFileDestination( name, description, QString(), definition.isEmpty() ? QVariant() : definition, isOptional );
 }
 
-QgsProcessingParameterFolderDestination::QgsProcessingParameterFolderDestination( const QString &name, const QString &description, const QVariant &defaultValue, bool optional, bool createByDefault )
-  : QgsProcessingDestinationParameter( name, description, defaultValue, optional, createByDefault )
+QgsProcessingParameterFolderDestination::QgsProcessingParameterFolderDestination( const QString &name, const QString &description, const QVariant &defaultValue, bool optional, bool createByDefault, const QString &help )
+  : QgsProcessingDestinationParameter( name, description, defaultValue, optional, createByDefault, help )
 {}
 
 QgsProcessingParameterDefinition *QgsProcessingParameterFolderDestination::clone() const
@@ -5519,8 +5521,8 @@ QgsProcessingParameterFolderDestination *QgsProcessingParameterFolderDestination
   return new QgsProcessingParameterFolderDestination( name, description, definition.isEmpty() ? QVariant() : definition, isOptional );
 }
 
-QgsProcessingDestinationParameter::QgsProcessingDestinationParameter( const QString &name, const QString &description, const QVariant &defaultValue, bool optional, bool createByDefault )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingDestinationParameter::QgsProcessingDestinationParameter( const QString &name, const QString &description, const QVariant &defaultValue, bool optional, bool createByDefault, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , mCreateByDefault( createByDefault )
 {
 
@@ -5611,8 +5613,8 @@ void QgsProcessingDestinationParameter::setCreateByDefault( bool createByDefault
   mCreateByDefault = createByDefault;
 }
 
-QgsProcessingParameterVectorDestination::QgsProcessingParameterVectorDestination( const QString &name, const QString &description, QgsProcessing::SourceType type, const QVariant &defaultValue, bool optional, bool createByDefault )
-  : QgsProcessingDestinationParameter( name, description, defaultValue, optional, createByDefault )
+QgsProcessingParameterVectorDestination::QgsProcessingParameterVectorDestination( const QString &name, const QString &description, QgsProcessing::SourceType type, const QVariant &defaultValue, bool optional, bool createByDefault, const QString &help )
+  : QgsProcessingDestinationParameter( name, description, defaultValue, optional, createByDefault, help )
   , mDataType( type )
 {
 
@@ -5860,8 +5862,8 @@ QgsProcessingParameterVectorDestination *QgsProcessingParameterVectorDestination
   return new QgsProcessingParameterVectorDestination( name, description, type, definition, isOptional );
 }
 
-QgsProcessingParameterBand::QgsProcessingParameterBand( const QString &name, const QString &description, const QVariant &defaultValue, const QString &parentLayerParameterName, bool optional, bool allowMultiple )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterBand::QgsProcessingParameterBand( const QString &name, const QString &description, const QVariant &defaultValue, const QString &parentLayerParameterName, bool optional, bool allowMultiple, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , mParentLayerParameterName( parentLayerParameterName )
   , mAllowMultiple( allowMultiple )
 {
@@ -6047,8 +6049,8 @@ QgsProcessingParameterBand *QgsProcessingParameterBand::fromScriptCode( const QS
 // QgsProcessingParameterDistance
 //
 
-QgsProcessingParameterDistance::QgsProcessingParameterDistance( const QString &name, const QString &description, const QVariant &defaultValue, const QString &parentParameterName, bool optional, double minValue, double maxValue )
-  : QgsProcessingParameterNumber( name, description, Double, defaultValue, optional, minValue, maxValue )
+QgsProcessingParameterDistance::QgsProcessingParameterDistance( const QString &name, const QString &description, const QVariant &defaultValue, const QString &parentParameterName, bool optional, double minValue, double maxValue, const QString &help )
+  : QgsProcessingParameterNumber( name, description, Double, defaultValue, optional, minValue, maxValue, help )
   , mParentParameterName( parentParameterName )
 {
 
@@ -6127,7 +6129,7 @@ bool QgsProcessingParameterDistance::fromVariantMap( const QVariantMap &map )
 // QgsProcessingParameterScale
 //
 
-QgsProcessingParameterScale::QgsProcessingParameterScale( const QString &name, const QString &description, const QVariant &defaultValue, bool optional )
+QgsProcessingParameterScale::QgsProcessingParameterScale( const QString &name, const QString &description, const QVariant &defaultValue, bool optional, const QString &help )
   : QgsProcessingParameterNumber( name, description, Double, defaultValue, optional )
 {
 
@@ -6171,8 +6173,8 @@ QgsProcessingParameterScale *QgsProcessingParameterScale::fromScriptCode( const 
 // QgsProcessingParameterLayout
 //
 
-QgsProcessingParameterLayout::QgsProcessingParameterLayout( const QString &name, const QString &description, const QVariant &defaultValue, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterLayout::QgsProcessingParameterLayout( const QString &name, const QString &description, const QVariant &defaultValue, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
 {}
 
 QgsProcessingParameterDefinition *QgsProcessingParameterLayout::clone() const
@@ -6241,8 +6243,8 @@ QgsProcessingParameterLayout *QgsProcessingParameterLayout::fromScriptCode( cons
 // QString mParentLayerParameterName;
 //
 
-QgsProcessingParameterLayoutItem::QgsProcessingParameterLayoutItem( const QString &name, const QString &description, const QVariant &defaultValue, const QString &parentLayoutParameterName, int itemType, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterLayoutItem::QgsProcessingParameterLayoutItem( const QString &name, const QString &description, const QVariant &defaultValue, const QString &parentLayoutParameterName, int itemType, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , mParentLayoutParameterName( parentLayoutParameterName )
   , mItemType( itemType )
 {
@@ -6374,8 +6376,8 @@ void QgsProcessingParameterLayoutItem::setItemType( int type )
 // QgsProcessingParameterColor
 //
 
-QgsProcessingParameterColor::QgsProcessingParameterColor( const QString &name, const QString &description, const QVariant &defaultValue, bool opacityEnabled, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterColor::QgsProcessingParameterColor( const QString &name, const QString &description, const QVariant &defaultValue, bool opacityEnabled, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , mAllowOpacity( opacityEnabled )
 {
 
@@ -6518,8 +6520,8 @@ QgsProcessingParameterColor *QgsProcessingParameterColor::fromScriptCode( const 
 //
 // QgsProcessingParameterCoordinateOperation
 //
-QgsProcessingParameterCoordinateOperation::QgsProcessingParameterCoordinateOperation( const QString &name, const QString &description, const QVariant &defaultValue, const QString &sourceCrsParameterName, const QString &destinationCrsParameterName, const QVariant &staticSourceCrs, const QVariant &staticDestinationCrs, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterCoordinateOperation::QgsProcessingParameterCoordinateOperation( const QString &name, const QString &description, const QVariant &defaultValue, const QString &sourceCrsParameterName, const QString &destinationCrsParameterName, const QVariant &staticSourceCrs, const QVariant &staticDestinationCrs, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , mSourceParameterName( sourceCrsParameterName )
   , mDestParameterName( destinationCrsParameterName )
   , mSourceCrs( staticSourceCrs )
@@ -6648,8 +6650,8 @@ QgsProcessingParameterCoordinateOperation *QgsProcessingParameterCoordinateOpera
 // QgsProcessingParameterMapTheme
 //
 
-QgsProcessingParameterMapTheme::QgsProcessingParameterMapTheme( const QString &name, const QString &description, const QVariant &defaultValue, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterMapTheme::QgsProcessingParameterMapTheme( const QString &name, const QString &description, const QVariant &defaultValue, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
 {
 
 }
@@ -6748,8 +6750,8 @@ QgsProcessingParameterMapTheme *QgsProcessingParameterMapTheme::fromScriptCode( 
 // QgsProcessingParameterDateTime
 //
 
-QgsProcessingParameterDateTime::QgsProcessingParameterDateTime( const QString &name, const QString &description, Type type, const QVariant &defaultValue, bool optional, const QDateTime &minValue, const QDateTime &maxValue )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterDateTime::QgsProcessingParameterDateTime( const QString &name, const QString &description, Type type, const QVariant &defaultValue, bool optional, const QDateTime &minValue, const QDateTime &maxValue, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , mMin( minValue )
   , mMax( maxValue )
   , mDataType( type )
@@ -6963,8 +6965,8 @@ QgsProcessingParameterDateTime *QgsProcessingParameterDateTime::fromScriptCode( 
 // QgsProcessingParameterProviderConnection
 //
 
-QgsProcessingParameterProviderConnection::QgsProcessingParameterProviderConnection( const QString &name, const QString &description, const QString &provider, const QVariant &defaultValue, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterProviderConnection::QgsProcessingParameterProviderConnection( const QString &name, const QString &description, const QString &provider, const QVariant &defaultValue, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , mProviderId( provider )
 {
 
@@ -7079,8 +7081,8 @@ QgsProcessingParameterProviderConnection *QgsProcessingParameterProviderConnecti
 // QgsProcessingParameterDatabaseSchema
 //
 
-QgsProcessingParameterDatabaseSchema::QgsProcessingParameterDatabaseSchema( const QString &name, const QString &description, const QString &parentLayerParameterName, const QVariant &defaultValue, bool optional )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+QgsProcessingParameterDatabaseSchema::QgsProcessingParameterDatabaseSchema( const QString &name, const QString &description, const QString &parentLayerParameterName, const QVariant &defaultValue, bool optional, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , mParentConnectionParameterName( parentLayerParameterName )
 {
 
@@ -7210,8 +7212,8 @@ QgsProcessingParameterDatabaseSchema *QgsProcessingParameterDatabaseSchema::from
 QgsProcessingParameterDatabaseTable::QgsProcessingParameterDatabaseTable( const QString &name, const QString &description,
     const QString &connectionParameterName,
     const QString &schemaParameterName,
-    const QVariant &defaultValue, bool optional, bool allowNewTableNames )
-  : QgsProcessingParameterDefinition( name, description, defaultValue, optional )
+    const QVariant &defaultValue, bool optional, bool allowNewTableNames, const QString &help )
+  : QgsProcessingParameterDefinition( name, description, defaultValue, optional, help )
   , mParentConnectionParameterName( connectionParameterName )
   , mParentSchemaParameterName( schemaParameterName )
   , mAllowNewTableNames( allowNewTableNames )

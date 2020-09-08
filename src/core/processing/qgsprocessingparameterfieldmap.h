@@ -32,7 +32,7 @@ class CORE_EXPORT QgsProcessingParameterFieldMapping : public QgsProcessingParam
 {
   public:
     //! Constructor for QgsProcessingParameterFieldMapping.
-    QgsProcessingParameterFieldMapping( const QString &name, const QString &description = QString(), const QString &parentLayerParameterName = QString(), bool optional = false );
+    QgsProcessingParameterFieldMapping( const QString &name, const QString &description = QString(), const QString &parentLayerParameterName = QString(), bool optional = false, const QString &help = QString() );
 
     QgsProcessingParameterDefinition *clone() const override;
     QString type() const override;

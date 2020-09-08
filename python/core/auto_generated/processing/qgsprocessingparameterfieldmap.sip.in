@@ -23,7 +23,7 @@ Designed for use with the "Refactor fields" algorithm.
 #include "qgsprocessingparameterfieldmap.h"
 %End
   public:
-    QgsProcessingParameterFieldMapping( const QString &name, const QString &description = QString(), const QString &parentLayerParameterName = QString(), bool optional = false );
+    QgsProcessingParameterFieldMapping( const QString &name, const QString &description = QString(), const QString &parentLayerParameterName = QString(), bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterFieldMapping.
 %End

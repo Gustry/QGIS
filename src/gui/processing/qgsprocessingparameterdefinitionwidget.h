@@ -72,7 +72,7 @@ class GUI_EXPORT QgsProcessingAbstractParameterDefinitionWidget : public QWidget
      * method. Subclass implementations must use these properties when crafting a parameter definition which
      * also respects the additional properties specific to the parameter type handled by the widget subclass.
      */
-    virtual QgsProcessingParameterDefinition *createParameter( const QString &name, const QString &description, QgsProcessingParameterDefinition::Flags flags ) const = 0 SIP_FACTORY;
+    virtual QgsProcessingParameterDefinition *createParameter( const QString &name, const QString &description, QgsProcessingParameterDefinition::Flags flags, const QString &help = QString() ) const = 0 SIP_FACTORY;
 };
 
 

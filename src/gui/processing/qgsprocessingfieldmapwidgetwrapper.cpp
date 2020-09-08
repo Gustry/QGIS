@@ -240,9 +240,10 @@ QgsProcessingFieldMapParameterDefinitionWidget::QgsProcessingFieldMapParameterDe
   setLayout( vlayout );
 }
 
-QgsProcessingParameterDefinition *QgsProcessingFieldMapParameterDefinitionWidget::createParameter( const QString &name, const QString &description, QgsProcessingParameterDefinition::Flags flags ) const
+QgsProcessingParameterDefinition *QgsProcessingFieldMapParameterDefinitionWidget::createParameter( const QString &name, const QString &description, QgsProcessingParameterDefinition::Flags flags, const QString &help ) const
 {
   auto param = qgis::make_unique< QgsProcessingParameterFieldMapping >( name, description, mParentLayerComboBox->currentData().toString() );
+  param->setHelp( help );
   param->setFlags( flags );
   return param.release();
 }

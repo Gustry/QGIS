@@ -1406,7 +1406,7 @@ A boolean parameter for processing algorithms.
   public:
 
     QgsProcessingParameterBoolean( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
-                                   bool optional = false );
+                                   bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterBoolean.
 %End
@@ -1443,7 +1443,7 @@ A coordinate reference system parameter for processing algorithms.
   public:
 
     QgsProcessingParameterCrs( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
-                               bool optional = false );
+                               bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterCrs.
 %End
@@ -1481,7 +1481,7 @@ A rectangular map extent parameter for processing algorithms.
   public:
 
     QgsProcessingParameterExtent( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
-                                  bool optional = false );
+                                  bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterExtent.
 %End
@@ -1520,7 +1520,7 @@ A point parameter for processing algorithms.
   public:
 
     QgsProcessingParameterPoint( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
-                                 bool optional = false );
+                                 bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterPoint.
 %End
@@ -1564,7 +1564,7 @@ An input file or folder parameter for processing algorithms.
     };
 
     QgsProcessingParameterFile( const QString &name, const QString &description = QString(), Behavior behavior = File, const QString &extension = QString(), const QVariant &defaultValue = QVariant(),
-                                bool optional = false, const QString &fileFilter = QString() );
+                                bool optional = false, const QString &fileFilter = QString(), const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterFile.
 
@@ -1677,7 +1677,7 @@ A table (matrix) parameter for processing algorithms.
     QgsProcessingParameterMatrix( const QString &name, const QString &description = QString(), int numberRows = 3,
                                   bool hasFixedNumberRows = false, const QStringList &headers = QStringList(),
                                   const QVariant &defaultValue = QVariant(),
-                                  bool optional = false );
+                                  bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterMatrix.
 %End
@@ -1775,7 +1775,7 @@ A parameter for processing algorithms which accepts multiple map layers.
 
     QgsProcessingParameterMultipleLayers( const QString &name, const QString &description = QString(), QgsProcessing::SourceType layerType = QgsProcessing::TypeVectorAnyGeometry,
                                           const QVariant &defaultValue = QVariant(),
-                                          bool optional = false );
+                                          bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterMultipleLayers.
 %End
@@ -1875,7 +1875,8 @@ shown in the parameter's widget can be specified by setting the parameter's meta
                                            const QVariant &defaultValue = QVariant(),
                                            bool optional = false,
                                            double minValue = -DBL_MAX + 1,
-                                           double maxValue = DBL_MAX
+                                           double maxValue = DBL_MAX,
+                                           const QString &help = QString()
                                          );
 %Docstring
 Constructor for QgsProcessingParameterNumber.
@@ -1981,7 +1982,8 @@ setting the parameter's metadata. For example:
         const QString &parentParameterName = QString(),
         bool optional = false,
         double minValue = -DBL_MAX + 1,
-        double maxValue = DBL_MAX );
+        double maxValue = DBL_MAX,
+        const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterDistance.
 %End
@@ -2058,7 +2060,7 @@ which will return a numeric value representing the scale denominator.
 
     explicit QgsProcessingParameterScale( const QString &name, const QString &description = QString(),
                                           const QVariant &defaultValue = QVariant(),
-                                          bool optional = false );
+                                          bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterScale.
 %End
@@ -2099,7 +2101,7 @@ A numeric range parameter for processing algorithms.
     QgsProcessingParameterRange( const QString &name, const QString &description = QString(),
                                  QgsProcessingParameterNumber::Type type = QgsProcessingParameterNumber::Integer,
                                  const QVariant &defaultValue = QVariant(),
-                                 bool optional = false );
+                                 bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterRange.
 %End
@@ -2158,7 +2160,7 @@ A raster layer parameter for processing algorithms.
   public:
 
     QgsProcessingParameterRasterLayer( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
-                                       bool optional = false );
+                                       bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterRasterLayer.
 %End
@@ -2200,7 +2202,7 @@ An enum based parameter for processing algorithms, allowing for selection from p
     QgsProcessingParameterEnum( const QString &name, const QString &description = QString(), const QStringList &options = QStringList(),
                                 bool allowMultiple = false,
                                 const QVariant &defaultValue = QVariant(),
-                                bool optional = false );
+                                bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterEnum.
 %End
@@ -2276,7 +2278,7 @@ A string parameter for processing algorithms.
 
     QgsProcessingParameterString( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
                                   bool multiLine = false,
-                                  bool optional = false );
+                                  bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterString.
 %End
@@ -2341,7 +2343,7 @@ QgsProcessingParameterAuthConfig should be evaluated by calling :py:func:`QgsPro
   public:
 
     QgsProcessingParameterAuthConfig( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
-                                      bool optional = false );
+                                      bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterAuthConfig.
 %End
@@ -2380,7 +2382,7 @@ An expression parameter for processing algorithms.
 
     QgsProcessingParameterExpression( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
                                       const QString &parentLayerParameterName = QString(),
-                                      bool optional = false );
+                                      bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterExpression.
 %End
@@ -2480,7 +2482,7 @@ the more versatile QgsProcessingParameterFeatureSource wherever possible.
                                        const QString &description = QString(),
                                        const QList< int > &types = QList< int >(),
                                        const QVariant &defaultValue = QVariant(),
-                                       bool optional = false );
+                                       bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterVectorLayer.
 %End
@@ -2529,7 +2531,7 @@ A mesh layer parameter for processing algorithms.
     QgsProcessingParameterMeshLayer( const QString &name,
                                      const QString &description = QString(),
                                      const QVariant &defaultValue = QVariant(),
-                                     bool optional = false );
+                                     bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterMeshLayer.
 %End
@@ -2569,7 +2571,8 @@ A map layer parameter for processing algorithms.
 
     QgsProcessingParameterMapLayer( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
                                     bool optional = false,
-                                    const QList< int > &types = QList< int >() );
+                                    const QList< int > &types = QList< int >(),
+                                    const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterMapLayer.
 %End
@@ -2747,7 +2750,8 @@ An input feature source (such as vector layers) parameter for processing algorit
 
     QgsProcessingParameterFeatureSource( const QString &name, const QString &description = QString(),
                                          const QList< int > &types = QList< int >(),
-                                         const QVariant &defaultValue = QVariant(), bool optional = false );
+                                         const QVariant &defaultValue = QVariant(), bool optional = false,
+                                         const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterFeatureSource.
 %End
@@ -2797,7 +2801,7 @@ which are used for the destination for layers output by an algorithm.
   public:
 
     QgsProcessingDestinationParameter( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
-                                       bool optional = false, bool createByDefault = true );
+                                       bool optional = false, bool createByDefault = true, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingDestinationParameter.
 
@@ -2915,7 +2919,7 @@ A parameter which represents the destination feature sink for features created b
   public:
 
     QgsProcessingParameterFeatureSink( const QString &name, const QString &description = QString(), QgsProcessing::SourceType type = QgsProcessing::TypeVectorAnyGeometry, const QVariant &defaultValue = QVariant(),
-                                       bool optional = false, bool createByDefault = true, bool supportsAppend = false );
+                                       bool optional = false, bool createByDefault = true, bool supportsAppend = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterFeatureSink.
 
@@ -3033,7 +3037,7 @@ created by the algorithm.
   public:
 
     QgsProcessingParameterVectorDestination( const QString &name, const QString &description = QString(), QgsProcessing::SourceType type = QgsProcessing::TypeVectorAnyGeometry, const QVariant &defaultValue = QVariant(),
-        bool optional = false, bool createByDefault = true );
+        bool optional = false, bool createByDefault = true, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterVectorDestination.
 
@@ -3122,7 +3126,8 @@ created by the algorithm.
     QgsProcessingParameterRasterDestination( const QString &name, const QString &description = QString(),
         const QVariant &defaultValue = QVariant(),
         bool optional = false,
-        bool createByDefault = true );
+        bool createByDefault = true,
+        const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterRasterDestination.
 
@@ -3194,7 +3199,8 @@ the widget wrapper metadata "dontconfirmoverwrite" option:
                                            const QString &fileFilter = QString(),
                                            const QVariant &defaultValue = QVariant(),
                                            bool optional = false,
-                                           bool createByDefault = true );
+                                           bool createByDefault = true,
+                                           const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterFileDestination.
 
@@ -3267,7 +3273,8 @@ A folder output parameter.
     QgsProcessingParameterFolderDestination( const QString &name, const QString &description = QString(),
         const QVariant &defaultValue = QVariant(),
         bool optional = false,
-        bool createByDefault = true );
+        bool createByDefault = true,
+        const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterFolderDestination.
 %End
@@ -3309,7 +3316,8 @@ A raster band parameter for Processing algorithms.
     QgsProcessingParameterBand( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
                                 const QString &parentLayerParameterName = QString(),
                                 bool optional = false,
-                                bool allowMultiple = false );
+                                bool allowMultiple = false,
+                                const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterBand.
 %End
@@ -3394,7 +3402,7 @@ This will return the matching layout from the context's current project. Alterna
   public:
 
     QgsProcessingParameterLayout( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
-                                  bool optional = false );
+                                  bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterLayout.
 %End
@@ -3440,7 +3448,8 @@ their UUID (:py:func:`QgsLayoutItem.uuid()`) or ID (:py:func:`QgsLayoutItem.id()
     QgsProcessingParameterLayoutItem( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
                                       const QString &parentLayoutParameterName = QString(),
                                       int itemType = -1,
-                                      bool optional = false );
+                                      bool optional = false,
+                                      const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterLayoutItem.
 %End
@@ -3521,7 +3530,8 @@ QgsProcessingParameterColor should be evaluated by calling :py:func:`QgsProcessi
 
     QgsProcessingParameterColor( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
                                  bool opacityEnabled = true,
-                                 bool optional = false );
+                                 bool optional = false,
+                                 const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterColor.
 
@@ -3593,7 +3603,7 @@ QgsProcessingParameterCoordinateOperation should be evaluated by calling :py:fun
     QgsProcessingParameterCoordinateOperation( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
         const QString &sourceCrsParameterName = QString(), const QString &destinationCrsParameterName = QString(),
         const QVariant &staticSourceCrs = QVariant(), const QVariant &staticDestinationCrs = QVariant(),
-        bool optional = false );
+        bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterCoordinateOperation.
 %End
@@ -3715,7 +3725,7 @@ QgsProcessingParameterMapTheme should be evaluated by calling :py:func:`QgsProce
   public:
 
     QgsProcessingParameterMapTheme( const QString &name, const QString &description = QString(), const QVariant &defaultValue = QVariant(),
-                                    bool optional = false );
+                                    bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterMapTheme.
 %End
@@ -3776,7 +3786,8 @@ which will return a date time value.
         const QVariant &defaultValue = QVariant(),
         bool optional = false,
         const QDateTime &minValue = QDateTime(),
-        const QDateTime &maxValue = QDateTime()
+        const QDateTime &maxValue = QDateTime(),
+        const QString &help = QString()
                                            );
 %Docstring
 Constructor for QgsProcessingParameterDateTime.
@@ -3886,7 +3897,7 @@ QgsProcessingParameterProviderConnection should be evaluated by calling :py:func
   public:
 
     QgsProcessingParameterProviderConnection( const QString &name, const QString &description, const QString &provider, const QVariant &defaultValue = QVariant(),
-        bool optional = false );
+        bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterProviderConnection, for the specified ``provider`` type.
 
@@ -3955,7 +3966,7 @@ QgsProcessingParameterDatabaseSchema should be evaluated by calling :py:func:`Qg
   public:
 
     QgsProcessingParameterDatabaseSchema( const QString &name, const QString &description, const QString &connectionParameterName = QString(), const QVariant &defaultValue = QVariant(),
-                                          bool optional = false );
+                                          bool optional = false, const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterDatabaseSchema.
 
@@ -4032,7 +4043,8 @@ QgsProcessingParameterDatabaseTable should be evaluated by calling :py:func:`Qgs
                                          const QString &schemaParameterName = QString(),
                                          const QVariant &defaultValue = QVariant(),
                                          bool optional = false,
-                                         bool allowNewTableNames = false );
+                                         bool allowNewTableNames = false,
+                                         const QString &help = QString() );
 %Docstring
 Constructor for QgsProcessingParameterDatabaseTable.
 

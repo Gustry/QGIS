@@ -904,11 +904,12 @@ void TestProcessingGui::testBooleanWrapper()
   QVERIFY( !( def->flags() & QgsProcessingParameterDefinition::FlagAdvanced ) );
 
   // using a parameter definition as initial values
-  QgsProcessingParameterBoolean boolParam( QStringLiteral( "n" ), QStringLiteral( "test desc" ), true, false );
+  QgsProcessingParameterBoolean boolParam( QStringLiteral( "n" ), QStringLiteral( "test desc" ), true, false, QStringLiteral( "test help" ) );
   widget = qgis::make_unique< QgsProcessingParameterDefinitionWidget >( QStringLiteral( "boolean" ), context, widgetContext, &boolParam );
   def.reset( widget->createParameter( QStringLiteral( "param_name" ) ) );
   QCOMPARE( def->name(), QStringLiteral( "param_name" ) );
   QCOMPARE( def->description(), QStringLiteral( "test desc" ) );
+  QCOMPARE( def->help(), QStringLiteral( "test help" ) );
   QVERIFY( !( def->flags() & QgsProcessingParameterDefinition::FlagOptional ) );
   QVERIFY( !( def->flags() & QgsProcessingParameterDefinition::FlagAdvanced ) );
   QVERIFY( static_cast< QgsProcessingParameterBoolean * >( def.get() )->defaultValue().toBool() );
@@ -918,6 +919,7 @@ void TestProcessingGui::testBooleanWrapper()
   def.reset( widget->createParameter( QStringLiteral( "param_name" ) ) );
   QCOMPARE( def->name(), QStringLiteral( "param_name" ) );
   QCOMPARE( def->description(), QStringLiteral( "test desc" ) );
+  QCOMPARE( def->help(), QStringLiteral( "test help" ) );
   QVERIFY( def->flags() & QgsProcessingParameterDefinition::FlagOptional );
   QVERIFY( def->flags() & QgsProcessingParameterDefinition::FlagAdvanced );
   QVERIFY( !static_cast< QgsProcessingParameterBoolean * >( def.get() )->defaultValue().toBool() );
@@ -1106,11 +1108,12 @@ void TestProcessingGui::testStringWrapper()
   QVERIFY( !static_cast< QgsProcessingParameterString * >( def.get() )->multiLine() );
 
   // using a parameter definition as initial values
-  QgsProcessingParameterString stringParam( QStringLiteral( "n" ), QStringLiteral( "test desc" ), QStringLiteral( "aaa" ), true );
+  QgsProcessingParameterString stringParam( QStringLiteral( "n" ), QStringLiteral( "test desc" ), QStringLiteral( "aaa" ), true, false, QStringLiteral( "test help" ) );
   widget = qgis::make_unique< QgsProcessingParameterDefinitionWidget >( QStringLiteral( "string" ), context, widgetContext, &stringParam );
   def.reset( widget->createParameter( QStringLiteral( "param_name" ) ) );
   QCOMPARE( def->name(), QStringLiteral( "param_name" ) );
   QCOMPARE( def->description(), QStringLiteral( "test desc" ) );
+  QCOMPARE( def->help(), QStringLiteral( "test help" ) );
   QVERIFY( !( def->flags() & QgsProcessingParameterDefinition::FlagOptional ) );
   QVERIFY( !( def->flags() & QgsProcessingParameterDefinition::FlagAdvanced ) );
   QVERIFY( static_cast< QgsProcessingParameterString * >( def.get() )->multiLine() );
@@ -1122,6 +1125,7 @@ void TestProcessingGui::testStringWrapper()
   def.reset( widget->createParameter( QStringLiteral( "param_name" ) ) );
   QCOMPARE( def->name(), QStringLiteral( "param_name" ) );
   QCOMPARE( def->description(), QStringLiteral( "test desc" ) );
+  QCOMPARE( def->help(), QStringLiteral( "test help" ) );
   QVERIFY( def->flags() & QgsProcessingParameterDefinition::FlagOptional );
   QVERIFY( def->flags() & QgsProcessingParameterDefinition::FlagAdvanced );
   QVERIFY( static_cast< QgsProcessingParameterString * >( def.get() )->defaultValue().toString().isEmpty() );
@@ -1225,6 +1229,7 @@ void TestProcessingGui::testFileWrapper()
   QVERIFY( !static_cast< QgsProcessingParameterFile * >( def.get() )->defaultValue().isValid() );
   QCOMPARE( static_cast< QgsProcessingParameterFile * >( def.get() )->fileFilter(), QStringLiteral( "All files (*.*)" ) );
   fileParam.setFileFilter( QStringLiteral( "TAB files (*.tab)" ) );
+  fileParam.setHelp( QStringLiteral( "test help" ) );
   widget = qgis::make_unique< QgsProcessingParameterDefinitionWidget >( QStringLiteral( "file" ), context, widgetContext, &fileParam );
   def.reset( widget->createParameter( QStringLiteral( "param_name" ) ) );
   QCOMPARE( static_cast< QgsProcessingParameterFile * >( def.get() )->fileFilter(), QStringLiteral( "TAB files (*.tab)" ) );
@@ -1236,6 +1241,7 @@ void TestProcessingGui::testFileWrapper()
   def.reset( widget->createParameter( QStringLiteral( "param_name" ) ) );
   QCOMPARE( def->name(), QStringLiteral( "param_name" ) );
   QCOMPARE( def->description(), QStringLiteral( "test desc" ) );
+  QCOMPARE( def->help(), QStringLiteral( "test help" ) );
   QVERIFY( def->flags() & QgsProcessingParameterDefinition::FlagOptional );
   QVERIFY( def->flags() & QgsProcessingParameterDefinition::FlagAdvanced );
   QCOMPARE( static_cast< QgsProcessingParameterFile * >( def.get() )->behavior(), QgsProcessingParameterFile::Folder );
@@ -1479,12 +1485,14 @@ void TestProcessingGui::testCrsWrapper()
   QVERIFY( !( def->flags() & QgsProcessingParameterDefinition::FlagOptional ) );
   QVERIFY( !( def->flags() & QgsProcessingParameterDefinition::FlagAdvanced ) );
   QCOMPARE( static_cast< QgsProcessingParameterCrs * >( def.get() )->defaultValue().toString(), QStringLiteral( "EPSG:4326" ) );
+  crsParam.setHelp( QStringLiteral( "test help" ) );
   crsParam.setFlags( QgsProcessingParameterDefinition::FlagAdvanced | QgsProcessingParameterDefinition::FlagOptional );
   crsParam.setDefaultValue( QStringLiteral( "EPSG:3111" ) );
   widget = qgis::make_unique< QgsProcessingParameterDefinitionWidget >( QStringLiteral( "crs" ), context, widgetContext, &crsParam );
   def.reset( widget->createParameter( QStringLiteral( "param_name" ) ) );
   QCOMPARE( def->name(), QStringLiteral( "param_name" ) );
   QCOMPARE( def->description(), QStringLiteral( "test desc" ) );
+  QCOMPARE( def->help(), QStringLiteral( "test help" ) );
   QVERIFY( def->flags() & QgsProcessingParameterDefinition::FlagOptional );
   QVERIFY( def->flags() & QgsProcessingParameterDefinition::FlagAdvanced );
   QCOMPARE( static_cast< QgsProcessingParameterCrs * >( def.get() )->defaultValue().toString(), QStringLiteral( "EPSG:3111" ) );
@@ -1681,6 +1689,7 @@ void TestProcessingGui::testNumericWrapperDouble()
   QCOMPARE( static_cast< QgsProcessingParameterNumber * >( def.get() )->dataType(), QgsProcessingParameterNumber::Double );
   QCOMPARE( static_cast< QgsProcessingParameterNumber * >( def.get() )->minimum(), 0.0 );
   QCOMPARE( static_cast< QgsProcessingParameterNumber * >( def.get() )->maximum(), 10.0 );
+  numParam.setHelp( QStringLiteral( "test help" ) );
   numParam.setFlags( QgsProcessingParameterDefinition::FlagAdvanced | QgsProcessingParameterDefinition::FlagOptional );
   numParam.setDataType( QgsProcessingParameterNumber::Integer );
   numParam.setMinimum( -1 );
@@ -1690,6 +1699,7 @@ void TestProcessingGui::testNumericWrapperDouble()
   def.reset( widget->createParameter( QStringLiteral( "param_name" ) ) );
   QCOMPARE( def->name(), QStringLiteral( "param_name" ) );
   QCOMPARE( def->description(), QStringLiteral( "test desc" ) );
+  QCOMPARE( def->help(), QStringLiteral( "test help" ) );
   QVERIFY( def->flags() & QgsProcessingParameterDefinition::FlagOptional );
   QVERIFY( def->flags() & QgsProcessingParameterDefinition::FlagAdvanced );
   QCOMPARE( static_cast< QgsProcessingParameterNumber * >( def.get() )->defaultValue().toInt(), 0 );
@@ -6500,11 +6510,12 @@ void TestProcessingGui::testMapThemeWrapper()
   QVERIFY( !static_cast< QgsProcessingParameterMapTheme * >( def.get() )->defaultValue().isValid() );
 
   // using a parameter definition as initial values
-  QgsProcessingParameterMapTheme themeParam( QStringLiteral( "n" ), QStringLiteral( "test desc" ), QStringLiteral( "aaa" ), false );
+  QgsProcessingParameterMapTheme themeParam( QStringLiteral( "n" ), QStringLiteral( "test desc" ), QStringLiteral( "aaa" ), false, QStringLiteral( "test help" ) );
   widget = qgis::make_unique< QgsProcessingParameterDefinitionWidget >( QStringLiteral( "maptheme" ), context, widgetContext, &themeParam );
   def.reset( widget->createParameter( QStringLiteral( "param_name" ) ) );
   QCOMPARE( def->name(), QStringLiteral( "param_name" ) );
   QCOMPARE( def->description(), QStringLiteral( "test desc" ) );
+  QCOMPARE( def->help(), QStringLiteral( "test help" ) );
   QVERIFY( !( def->flags() & QgsProcessingParameterDefinition::FlagOptional ) );
   QVERIFY( !( def->flags() & QgsProcessingParameterDefinition::FlagAdvanced ) );
   QCOMPARE( static_cast< QgsProcessingParameterMapTheme * >( def.get() )->defaultValue().toString(), QStringLiteral( "aaa" ) );
@@ -6514,6 +6525,7 @@ void TestProcessingGui::testMapThemeWrapper()
   def.reset( widget->createParameter( QStringLiteral( "param_name" ) ) );
   QCOMPARE( def->name(), QStringLiteral( "param_name" ) );
   QCOMPARE( def->description(), QStringLiteral( "test desc" ) );
+  QCOMPARE( def->help(), QStringLiteral( "test help" ) );
   QVERIFY( def->flags() & QgsProcessingParameterDefinition::FlagOptional );
   QVERIFY( def->flags() & QgsProcessingParameterDefinition::FlagAdvanced );
   QCOMPARE( static_cast< QgsProcessingParameterMapTheme * >( def.get() )->defaultValue().toString(), QStringLiteral( "xxx" ) );
