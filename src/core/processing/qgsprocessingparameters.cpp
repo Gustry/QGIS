@@ -6132,7 +6132,7 @@ bool QgsProcessingParameterDistance::fromVariantMap( const QVariantMap &map )
 QgsProcessingParameterScale::QgsProcessingParameterScale( const QString &name, const QString &description, const QVariant &defaultValue, bool optional, const QString &help )
   : QgsProcessingParameterNumber( name, description, Double, defaultValue, optional )
 {
-
+    Q_UNUSED(help);
 }
 
 QgsProcessingParameterScale *QgsProcessingParameterScale::clone() const

@@ -122,6 +122,7 @@ class GUI_EXPORT QgsProcessingParameterDefinitionWidget: public QWidget
     QString mType;
     QgsProcessingAbstractParameterDefinitionWidget *mDefinitionWidget = nullptr;
     QLineEdit *mDescriptionLineEdit = nullptr;
+    QLineEdit *mHelpLineEdit = nullptr;
     QCheckBox *mRequiredCheckBox = nullptr;
     QCheckBox *mAdvancedCheckBox = nullptr;
 

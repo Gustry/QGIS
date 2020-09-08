@@ -68,6 +68,14 @@ QgsProcessingParameterDefinitionWidget::QgsProcessingParameterDefinitionWidget( 
     mDescriptionLineEdit->setText( definition->description() );
   }
 
+  mHelpLineEdit = new QLineEdit();
+  vlayout->addWidget( mHelpLineEdit );
+
+  if ( ! definition->help().isEmpty() )
+  {
+    mHelpLineEdit->setText( definition->help() );
+  }
+
   if ( mDefinitionWidget )
     vlayout->addWidget( mDefinitionWidget );
 
@@ -104,7 +112,7 @@ QgsProcessingParameterDefinition *QgsProcessingParameterDefinitionWidget::create
   {
     // if a specific definition widget exists, get it to create the parameter (since it will know
     // how to set all the additional properties of that parameter, which we don't)
-    param.reset( mDefinitionWidget->createParameter( name, mDescriptionLineEdit->text(), flags, mDescriptionLineEdit->toolTip() ) );
+    param.reset( mDefinitionWidget->createParameter( name, mDescriptionLineEdit->text(), flags, mHelpLineEdit->text() ) );
   }
   else if ( QgsApplication::processingRegistry()->parameterType( mType ) )
   {
@@ -113,6 +121,7 @@ QgsProcessingParameterDefinition *QgsProcessingParameterDefinitionWidget::create
     if ( param )
     {
       param->setDescription( mDescriptionLineEdit->text() );
+      param->setHelp( mHelpLineEdit->text() );
       param->setFlags( flags );
     }
   }
