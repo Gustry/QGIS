@@ -381,6 +381,7 @@ bool QgsMapLayer::readLayerXml( const QDomElement &layerElement, QgsReadWriteCon
   }
 
   //metadataUrl
+  // TODO read legacy and new
   QDomElement metaUrlElem = layerElement.firstChildElement( QStringLiteral( "metadataUrl" ) );
   if ( !metaUrlElem.isNull() )
   {
@@ -496,7 +497,7 @@ bool QgsMapLayer::writeLayerXml( QDomElement &layerElement, QDomDocument &docume
     layerElement.appendChild( layerKeywordList );
   }
 
-  // layer metadataUrl
+  // layer dataUrl
   QString aDataUrl = dataUrl();
   if ( !aDataUrl.isEmpty() )
   {
@@ -530,6 +531,7 @@ bool QgsMapLayer::writeLayerXml( QDomElement &layerElement, QDomDocument &docume
   }
 
   // layer metadataUrl
+  // TODO write new format
   QString aMetadataUrl = metadataUrl();
   if ( !aMetadataUrl.isEmpty() )
   {
