@@ -1635,6 +1635,7 @@ bool QgsVectorLayer::readXml( const QDomNode &layer_node, QgsReadWriteContext &c
 
   // QGIS Server WMS Dimensions
   mServerProperties->readXml( layer_node );
+  mMapLayerServerProperties->readXml( layer_node );
 
   return isValid();               // should be true if read successfully
 
@@ -1959,6 +1960,7 @@ bool QgsVectorLayer::writeXml( QDomNode &layer_node,
 
   // save QGIS Server WMS Dimension definitions
   mServerProperties->writeXml( layer_node, document );
+  mMapLayerServerProperties->writeXml( layer_node, document );
 
   // renderer specific settings
   QString errorMsg;

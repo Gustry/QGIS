@@ -2947,6 +2947,7 @@ class CORE_EXPORT QgsVectorLayer : public QgsMapLayer, public QgsExpressionConte
 
     //!stores information about server properties
     std::unique_ptr< QgsVectorLayerServerProperties > mServerProperties;
+    std::unique_ptr< QgsMapLayerServerProperties > mMapLayerServerProperties;
 
     //! stores information about expression fields on this layer
     QgsExpressionFieldBuffer *mExpressionFieldBuffer = nullptr;

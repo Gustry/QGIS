@@ -35,6 +35,7 @@
 #include "qgscoordinatereferencesystem.h"
 #include "qgsrendercontext.h"
 #include "qgsmaplayerdependency.h"
+#include "qgsmaplayerserverproperties.h"
 #include "qgslayermetadata.h"
 #include "qgsmaplayerstyle.h"
 #include "qgsreadwritecontext.h"
@@ -397,58 +398,70 @@ class CORE_EXPORT QgsMapLayer : public QObject
     /* Layer metadataUrl information */
 
     /**
+     * Returns QGIS Server Properties of the map layer
+     * \since QGIS 3.22
+     */
+    QgsMapLayerServerProperties *mapLayerServerProperties() { return mMapLayerServerProperties.get(); }
+
+    /**
      * Sets the metadata URL of the layer
      *  used by QGIS Server in GetCapabilities request.
      *  MetadataUrl is a a link to the detailed, standardized metadata about the data.
-     * \returns the layer metadata URL
-     * \see metadataUrl()
+     *  Since QGIS 3.22, it will edit the first metadata URL link. You should use mapLayerServerProperties.
+     * \see mapLayerServerProperties()
+     * \deprecated since QGIS 3.22
      */
-    void setMetadataUrl( const QString &metaUrl ) { mMetadataUrl = metaUrl; }
+    void setMetadataUrl( const QString &metaUrl );
 
     /**
      * Returns the metadata URL of the layer
      *  used by QGIS Server in GetCapabilities request.
      *  MetadataUrl is a a link to the detailed, standardized metadata about the data.
      * \returns the layer metadata URL
-     * \see setMetadataUrl()
+     * \see mapLayerServerProperties()
+     * \deprecated since QGIS 3.22
      */
-    QString metadataUrl() const { return mMetadataUrl; }
+    QString metadataUrl() const;
 
     /**
      * Set the metadata type of the layer
      *  used by QGIS Server in GetCapabilities request
      *  MetadataUrlType indicates the standard to which the metadata complies.
      * \returns the layer metadata type
-     * \see metadataUrlType()
+     * \see mapLayerServerProperties()
+     * \deprecated since QGIS 3.22
      */
-    void setMetadataUrlType( const QString &metaUrlType ) { mMetadataUrlType = metaUrlType; }
+    void setMetadataUrlType( const QString &metaUrlType );
 
     /**
      * Returns the metadata type of the layer
      *  used by QGIS Server in GetCapabilities request.
      *  MetadataUrlType indicates the standard to which the metadata complies.
      * \returns the layer metadata type
-     * \see setMetadataUrlType()
+     * \see mapLayerServerProperties()
+     * \deprecated since QGIS 3.22
      */
-    QString metadataUrlType() const { return mMetadataUrlType; }
+    QString metadataUrlType() const;
 
     /**
      * Sets the metadata format of the layer
      *  used by QGIS Server in GetCapabilities request.
      *  MetadataUrlType indicates how the metadata is structured.
      * \returns the layer metadata format
-     * \see metadataUrlFormat()
+     * \see mapLayerServerProperties()
+     * \deprecated since QGIS 3.22
      */
-    void setMetadataUrlFormat( const QString &metaUrlFormat ) { mMetadataUrlFormat = metaUrlFormat; }
+    void setMetadataUrlFormat( const QString &metaUrlFormat );
 
     /**
      * Returns the metadata format of the layer
      *  used by QGIS Server in GetCapabilities request.
      *  MetadataUrlType indicates how the metadata is structured.
      * \returns the layer metadata format
-     * \see setMetadataUrlFormat()
+     * \see mapLayerServerProperties()
+     * \deprecated since QGIS 3.22
      */
-    QString metadataUrlFormat() const { return mMetadataUrlFormat; }
+    QString metadataUrlFormat() const;
 
     /**
      * Set the blending mode used for rendering a layer.
@@ -1733,6 +1746,9 @@ class CORE_EXPORT QgsMapLayer : public QObject
     QString mMetadataUrl;
     QString mMetadataUrlType;
     QString mMetadataUrlFormat;
+
+    //!stores information about server properties
+    std::unique_ptr< QgsMapLayerServerProperties > mMapLayerServerProperties;
 
     //! WMS legend
     QString mLegendUrl;

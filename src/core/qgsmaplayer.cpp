@@ -2275,3 +2275,90 @@ QString QgsMapLayer::crsHtmlMetadata() const
   metadata += QLatin1String( "</table>\n<br><br>\n" );
   return metadata;
 }
+
+void QgsMapLayer::setMetadataUrl( const QString &metaUrl )
+{
+//  if ( mMetadataUrls.isEmpty() )
+//  {
+//    QgsMapLayer::MetadataUrl metadataUrlItem;
+//    metadataUrlItem.url = metaUrl;
+//    mMetadataUrls << metadataUrlItem;
+//  }
+//  else
+//  {
+//    QgsMapLayer::MetadataUrl metadataUrlItem = mMetadataUrls.takeFirst();
+//    metadataUrlItem.url = metaUrl;
+//    mMetadataUrls.insert( 0, metadataUrlItem );
+//  }
+}
+
+QString QgsMapLayer::metadataUrl() const
+{
+//  if ( mMetadataUrls.isEmpty() )
+//  {
+//    return QString();
+//  }
+//  else
+//  {
+//    return mMetadataUrls.first().url;
+//  }
+  return QString();
+}
+
+void QgsMapLayer::setMetadataUrlType( const QString &metaUrlType )
+{
+//  if ( mMetadataUrls.isEmpty() )
+//  {
+//    QgsMapLayer::MetadataUrl metadataUrlItem;
+//    metadataUrlItem.type = metaUrlType;
+//    mMetadataUrls << metadataUrlItem;
+//  }
+//  else
+//  {
+//    QgsMapLayer::MetadataUrl metadataUrlItem = mMetadataUrls.takeFirst();
+//    metadataUrlItem.type = metaUrlType;
+//    mMetadataUrls.insert( 0, metadataUrlItem );
+//  }
+}
+
+QString QgsMapLayer::metadataUrlType() const
+{
+//  if ( mMetadataUrls.isEmpty() )
+//  {
+//    return QString();
+//  }
+//  else
+//  {
+//    return mMetadataUrls.first().type;
+//  }
+  return QString();
+}
+
+void QgsMapLayer::setMetadataUrlFormat( const QString &metaUrlFormat )
+{
+//  if ( mMetadataUrls.isEmpty() )
+//  {
+//    QgsMapLayer::MetadataUrl metadataUrlItem;
+//    metadataUrlItem.format = metaUrlFormat;
+//    mMetadataUrls << metadataUrlItem;
+//  }
+//  else
+//  {
+//    QgsMapLayer::MetadataUrl metadataUrlItem = mMetadataUrls.takeFirst();
+//    metadataUrlItem.format = metaUrlFormat;
+//    mMetadataUrls.insert( 0, metadataUrlItem );
+//  }
+}
+
+QString QgsMapLayer::metadataUrlFormat() const
+{
+//  if ( mMetadataUrls.isEmpty() )
+//  {
+//    return QString();
+//  }
+//  else
+//  {
+//    return mMetadataUrls.first().format;
+//  }
+  return QString();
+}
