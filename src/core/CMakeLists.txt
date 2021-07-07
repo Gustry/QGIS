@@ -387,6 +387,7 @@ set(QGIS_CORE_SRCS
   qgsmaplayerlegend.cpp
   qgsmaplayermodel.cpp
   qgsmaplayerproxymodel.cpp
+  qgsmaplayerserverproperties.cpp
   qgsmaplayerstore.cpp
   qgsmaplayerstyle.cpp
   qgsmaplayerstylemanager.cpp
@@ -1013,6 +1014,7 @@ set(QGIS_CORE_HDRS
   qgsmaplayerproxymodel.h
   qgsmaplayerref.h
   qgsmaplayerrenderer.h
+  qgsmaplayerserverproperties.h
   qgsmaplayerstore.h
   qgsmaplayerstyle.h
   qgsmaplayerstylemanager.h
