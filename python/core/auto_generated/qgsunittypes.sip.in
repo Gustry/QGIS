@@ -269,6 +269,18 @@ Returns the conversion factor between the specified distance units.
 :return: multiplication factor to convert between units
 %End
 
+    static int usualDistancePrecision( DistanceUnit unit );
+%Docstring
+Returns the usual precision for the specified distance units.
+
+:param unit: unit to get the precision
+
+:return: the precision
+
+.. versionadded:: 3.28
+%End
+
+
 
     static QgsUnitTypes::DistanceUnitType unitType( QgsUnitTypes::AreaUnit unit );
 %Docstring
@@ -735,7 +747,6 @@ Returns a translated string representing a layout ``unit``.
 
 .. versionadded:: 3.0
 %End
-
 };
 
 /************************************************************************

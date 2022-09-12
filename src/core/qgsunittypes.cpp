@@ -622,6 +622,29 @@ double QgsUnitTypes::fromUnitToUnitFactor( DistanceUnit fromUnit, DistanceUnit t
   return 1.0;
 }
 
+int QgsUnitTypes::usualDistancePrecision( DistanceUnit unit )
+{
+  int decimals = 4;
+  switch ( unit )
+  {
+    case QgsUnitTypes::DistanceDegrees:
+    case QgsUnitTypes::DistanceUnknownUnit:
+      decimals = 9;
+      break;
+    case QgsUnitTypes::DistanceMeters:
+    case QgsUnitTypes::DistanceKilometers:
+    case QgsUnitTypes::DistanceFeet:
+    case QgsUnitTypes::DistanceNauticalMiles:
+    case QgsUnitTypes::DistanceYards:
+    case QgsUnitTypes::DistanceMiles:
+    case QgsUnitTypes::DistanceCentimeters:
+    case QgsUnitTypes::DistanceMillimeters:
+      decimals = 4;
+      break;
+  }
+  return decimals;
+}
+
 QString QgsUnitTypes::encodeUnit( QgsUnitTypes::AreaUnit unit )
 {
   switch ( unit )

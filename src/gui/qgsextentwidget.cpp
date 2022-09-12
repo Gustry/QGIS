@@ -224,24 +224,7 @@ void QgsExtentWidget::setOutputExtent( const QgsRectangle &r, const QgsCoordinat
     }
   }
 
-  int decimals = 4;
-  switch ( mOutputCrs.mapUnits() )
-  {
-    case QgsUnitTypes::DistanceDegrees:
-    case QgsUnitTypes::DistanceUnknownUnit:
-      decimals = 9;
-      break;
-    case QgsUnitTypes::DistanceMeters:
-    case QgsUnitTypes::DistanceKilometers:
-    case QgsUnitTypes::DistanceFeet:
-    case QgsUnitTypes::DistanceNauticalMiles:
-    case QgsUnitTypes::DistanceYards:
-    case QgsUnitTypes::DistanceMiles:
-    case QgsUnitTypes::DistanceCentimeters:
-    case QgsUnitTypes::DistanceMillimeters:
-      decimals = 4;
-      break;
-  }
+  int decimals = QgsUnitTypes::usualDistancePrecision( mOutputCrs.mapUnits() );
   mXMinLineEdit->setText( QLocale().toString( extent.xMinimum(), 'f', decimals ) );
   mXMaxLineEdit->setText( QLocale().toString( extent.xMaximum(), 'f', decimals ) );
   mYMinLineEdit->setText( QLocale().toString( extent.yMinimum(), 'f', decimals ) );

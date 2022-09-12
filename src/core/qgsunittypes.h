@@ -315,6 +315,16 @@ class CORE_EXPORT QgsUnitTypes
      */
     Q_INVOKABLE static double fromUnitToUnitFactor( QgsUnitTypes::DistanceUnit fromUnit, QgsUnitTypes::DistanceUnit toUnit );
 
+    /**
+     * Returns the usual precision for the specified distance units.
+     * \param unit unit to get the precision
+     * \returns the precision
+     *
+     * \since QGIS 3.28
+     */
+    Q_INVOKABLE static int usualDistancePrecision( DistanceUnit unit );
+
+
     // AREAL UNITS
 
     /**
@@ -687,7 +697,6 @@ class CORE_EXPORT QgsUnitTypes
      * \since QGIS 3.0
      */
     static QString toString( QgsUnitTypes::LayoutUnit unit );
-
 };
 
 #endif // QGSUNITTYPES_H
