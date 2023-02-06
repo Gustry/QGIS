@@ -19,7 +19,7 @@
 
 from .metaenum import metaEnumFromValue
 from qgis.core import QgsSettings, QgsSettingsTree, QgsSettingsEntryBase, QgsLogger, Qgis
-import qgis  # required to get base class of enums
+import qgis  # NOQA required to get base class of enums
 
 
 class PyQgsSettingsEntryEnumFlag(QgsSettingsEntryBase):

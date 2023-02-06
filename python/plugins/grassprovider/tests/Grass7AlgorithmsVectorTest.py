@@ -21,14 +21,14 @@ __author__ = 'Nyall Dawson'
 __date__ = 'March 2018'
 __copyright__ = '(C) 2018, Nyall Dawson'
 
-import AlgorithmsTestBase
+import os
+import re
+import shutil
+import tempfile
 
 import nose2
-import shutil
-import os
-import tempfile
-import re
-
+from grassprovider.Grass7AlgorithmProvider import Grass7AlgorithmProvider
+from grassprovider.Grass7Utils import Grass7Utils
 from qgis.core import (QgsVectorLayer,
                        QgsApplication,
                        QgsFeature,
@@ -42,9 +42,8 @@ from qgis.testing import (
     start_app,
     unittest
 )
-from grassprovider.Grass7AlgorithmProvider import Grass7AlgorithmProvider
-from grassprovider.Grass7Utils import Grass7Utils
 
+import AlgorithmsTestBase
 
 testDataPath = os.path.join(os.path.dirname(__file__), 'testdata')
 

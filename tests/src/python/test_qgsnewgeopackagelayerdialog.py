@@ -54,7 +54,7 @@ class TestPyQgsNewGeoPackageLayerDialog(unittest.TestCase):
 
         # Skip if GDAL python bindings are not available
         try:
-            from osgeo import gdal, ogr
+            from osgeo import gdal, ogr  # NOQA
         except:
             return
 

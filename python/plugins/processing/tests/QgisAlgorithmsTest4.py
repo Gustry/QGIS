@@ -21,18 +21,16 @@ __author__ = 'Matthias Kuhn'
 __date__ = 'January 2016'
 __copyright__ = '(C) 2016, Matthias Kuhn'
 
-import AlgorithmsTestBase
+import os
+import shutil
 
 import nose2
-import shutil
-import os
-
-from qgis.core import (QgsApplication,
-                       QgsProcessingException)
-from qgis.analysis import (QgsNativeAlgorithms)
-from qgis.testing import start_app, unittest
 from processing.core.ProcessingConfig import ProcessingConfig
 from processing.modeler.ModelerUtils import ModelerUtils
+from qgis.core import (QgsApplication)
+from qgis.testing import start_app, unittest
+
+import AlgorithmsTestBase
 
 
 class TestQgisAlgorithms4(unittest.TestCase, AlgorithmsTestBase.AlgorithmsTest):

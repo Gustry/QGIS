@@ -10,6 +10,8 @@ __author__ = 'Alessandro Pasotti'
 __date__ = '2018-09'
 __copyright__ = 'Copyright 2018, The QGIS Project'
 
+from processing.core.Processing import Processing
+from processing.gui.AlgorithmExecutor import execute
 from qgis.PyQt.QtCore import QCoreApplication, QVariant
 from qgis.core import (
     QgsFeature,
@@ -23,15 +25,10 @@ from qgis.core import (
     QgsProcessingFeedback,
     QgsCoordinateReferenceSystem,
     QgsProject,
-    QgsProcessingException,
     QgsProcessingUtils,
     QgsSettings
 )
-from processing.core.Processing import Processing
-from processing.gui.AlgorithmExecutor import execute
 from qgis.testing import start_app, unittest
-from qgis.PyQt.QtTest import QSignalSpy
-from qgis.analysis import QgsNativeAlgorithms
 
 start_app()
 

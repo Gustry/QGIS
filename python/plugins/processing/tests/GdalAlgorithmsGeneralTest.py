@@ -21,11 +21,14 @@ __author__ = 'Matthias Kuhn'
 __date__ = 'January 2016'
 __copyright__ = '(C) 2016, Matthias Kuhn'
 
-import nose2
 import os
 import shutil
 import tempfile
 
+import nose2
+from processing.algs.gdal.GdalUtils import GdalUtils
+from processing.algs.gdal.OgrToPostGis import OgrToPostGis
+from processing.algs.gdal.ogr2ogr import ogr2ogr
 from qgis.core import (QgsProcessingContext,
                        QgsProcessingFeedback,
                        QgsCoordinateReferenceSystem,
@@ -35,17 +38,10 @@ from qgis.core import (QgsProcessingContext,
                        QgsPointXY,
                        QgsProject,
                        QgsVectorLayer,
-                       QgsRectangle,
-                       QgsProjUtils,
                        QgsProcessingException,
                        QgsProcessingFeatureSourceDefinition)
-
 from qgis.testing import (start_app,
                           unittest)
-
-from processing.algs.gdal.GdalUtils import GdalUtils
-from processing.algs.gdal.ogr2ogr import ogr2ogr
-from processing.algs.gdal.OgrToPostGis import OgrToPostGis
 
 testDataPath = os.path.join(os.path.dirname(__file__), 'testdata')
 

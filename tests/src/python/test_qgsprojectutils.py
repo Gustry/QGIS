@@ -14,8 +14,6 @@ import qgis  # NOQA
 from qgis.core import (
     QgsCoordinateTransformContext,
     QgsGroupLayer,
-    QgsLayerTreeGroup,
-    QgsLayerTreeLayer,
     QgsProject,
     QgsProjectUtils,
     QgsRasterLayer,

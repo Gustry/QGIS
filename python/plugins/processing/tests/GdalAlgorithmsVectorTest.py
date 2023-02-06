@@ -21,28 +21,27 @@ __author__ = 'Matthias Kuhn'
 __date__ = 'January 2016'
 __copyright__ = '(C) 2016, Matthias Kuhn'
 
-import nose2
 import os
 import shutil
 import tempfile
 
-from qgis.core import (QgsProcessingContext,
-                       QgsProcessingFeedback,
-                       QgsCoordinateReferenceSystem,
-                       QgsRectangle)
-
-from qgis.testing import (start_app,
-                          unittest)
-
-import AlgorithmsTestBase
-from processing.algs.gdal.ogr2ogr import ogr2ogr
-from processing.algs.gdal.ogrinfo import ogrinfo
+import nose2
 from processing.algs.gdal.Buffer import Buffer
 from processing.algs.gdal.Dissolve import Dissolve
 from processing.algs.gdal.OffsetCurve import OffsetCurve
 from processing.algs.gdal.OgrToPostGis import OgrToPostGis
 from processing.algs.gdal.OneSideBuffer import OneSideBuffer
 from processing.algs.gdal.PointsAlongLines import PointsAlongLines
+from processing.algs.gdal.ogr2ogr import ogr2ogr
+from processing.algs.gdal.ogrinfo import ogrinfo
+from qgis.core import (QgsProcessingContext,
+                       QgsProcessingFeedback,
+                       QgsCoordinateReferenceSystem,
+                       QgsRectangle)
+from qgis.testing import (start_app,
+                          unittest)
+
+import AlgorithmsTestBase
 
 testDataPath = os.path.join(os.path.dirname(__file__), 'testdata')
 

@@ -25,7 +25,6 @@ import os
 import sys
 import difflib
 import functools
-import filecmp
 import tempfile
 from pathlib import Path
 

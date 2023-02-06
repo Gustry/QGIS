@@ -21,12 +21,9 @@ __author__ = 'Matthias Kuhn'
 __date__ = 'January 2016'
 __copyright__ = '(C) 2016, Matthias Kuhn'
 
-import os
-import sys
 import mock
 
 from qgis.gui import QgisInterface, QgsMapCanvas
-from qgis.core import QgsApplication
 
 from qgis.PyQt.QtWidgets import QMainWindow
 from qgis.PyQt.QtCore import QSize

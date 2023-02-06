@@ -21,18 +21,18 @@ __author__ = 'Médéric Ribreux'
 __date__ = 'May 2016'
 __copyright__ = '(C) 2016, Médéric Ribreux'
 
-import AlgorithmsTestBase
-
-import nose2
 import shutil
 
+import nose2
+from grassprovider.Grass7AlgorithmProvider import Grass7AlgorithmProvider
+from grassprovider.Grass7Utils import Grass7Utils
 from qgis.core import QgsApplication
 from qgis.testing import (
     start_app,
     unittest
 )
-from grassprovider.Grass7AlgorithmProvider import Grass7AlgorithmProvider
-from grassprovider.Grass7Utils import Grass7Utils
+
+import AlgorithmsTestBase
 
 
 class TestGrass7AlgorithmsRasterTest(unittest.TestCase, AlgorithmsTestBase.AlgorithmsTest):

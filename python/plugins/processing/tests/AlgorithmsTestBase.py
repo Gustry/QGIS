@@ -21,22 +21,20 @@ __author__ = 'Matthias Kuhn'
 __date__ = 'January 2016'
 __copyright__ = '(C) 2016, Matthias Kuhn'
 
-import qgis  # NOQA switch sip api
-
-import os
-import yaml
-import nose2
-import shutil
 import glob
 import hashlib
-import tempfile
+import os
 import re
-
-from osgeo import gdal
-from osgeo.gdalconst import GA_ReadOnly
-from numpy import nan_to_num
+import shutil
+import tempfile
 from copy import deepcopy
 
+import nose2
+import qgis  # NOQA switch sip api
+import yaml
+from numpy import nan_to_num
+from osgeo import gdal
+from osgeo.gdalconst import GA_ReadOnly
 from qgis.PyQt.QtCore import QT_VERSION
 from qgis.core import (Qgis,
                        QgsVectorLayer,
@@ -49,13 +47,10 @@ from qgis.core import (Qgis,
                        QgsProcessingContext,
                        QgsProcessingUtils,
                        QgsProcessingFeedback)
-from qgis.analysis import (QgsNativeAlgorithms)
 from qgis.testing import (_UnexpectedSuccess,
                           start_app,
                           unittest)
 from utilities import unitTestDataPath
-
-import processing
 
 
 def GDAL_COMPUTE_VERSION(maj, min, rev):

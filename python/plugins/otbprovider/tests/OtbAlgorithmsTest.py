@@ -23,32 +23,30 @@ __copyright__ = '(C) 2019, CNES'
 
 import os
 import shutil
-import nose2
 import tempfile
-from qgis.core import (QgsProcessingParameterNumber,
-                       QgsApplication,
-                       QgsCoordinateReferenceSystem,
-                       QgsRasterLayer,
-                       QgsMapLayer,
-                       QgsProject,
-                       QgsProcessingContext,
-                       QgsProcessingUtils,
-                       QgsProcessingFeedback,
-                       QgsProcessingParameterDefinition,
-                       QgsProcessingModelAlgorithm)
-from qgis.testing import start_app, unittest
-from processing.core.ProcessingConfig import ProcessingConfig, Setting
+
+import nose2
+import processing
+from otbprovider.OtbAlgorithm import OtbAlgorithm
+from otbprovider.OtbAlgorithmProvider import OtbAlgorithmProvider
+from otbprovider.OtbChoiceWidget import OtbParameterChoice, OtbChoiceWidgetWrapper
+from otbprovider.OtbUtils import OtbUtils
+from processing.core.ProcessingConfig import ProcessingConfig
 from processing.gui.AlgorithmDialog import AlgorithmDialog
 from processing.gui.BatchAlgorithmDialog import BatchAlgorithmDialog
 from processing.gui.wrappers import WidgetWrapperFactory
 from processing.modeler.ModelerParametersDialog import ModelerParametersDialog
-from otbprovider.OtbAlgorithm import OtbAlgorithm
-from otbprovider.OtbAlgorithmProvider import OtbAlgorithmProvider
-from otbprovider.OtbUtils import OtbUtils
-from otbprovider.OtbChoiceWidget import OtbParameterChoice, OtbChoiceWidgetWrapper
-import AlgorithmsTestBase
+from qgis.core import (QgsApplication,
+                       QgsCoordinateReferenceSystem,
+                       QgsRasterLayer,
+                       QgsProject,
+                       QgsProcessingContext,
+                       QgsProcessingUtils,
+                       QgsProcessingFeedback,
+                       QgsProcessingModelAlgorithm)
+from qgis.testing import start_app, unittest
 
-import processing
+import AlgorithmsTestBase
 
 OTB_INSTALL_DIR = os.environ.get('OTB_INSTALL_DIR')
 

@@ -21,16 +21,14 @@ __author__ = 'Nyall Dawson'
 __date__ = 'November 2016'
 __copyright__ = '(C) 2016, Nyall Dawson'
 
-from qgis.testing import start_app, unittest
-
+from processing.modeler.ModelerParametersDialog import (ModelerParametersDialog)
 from qgis.core import (QgsProcessingModelAlgorithm,
                        QgsProcessingModelParameter,
                        QgsProcessingParameterString,
                        QgsProcessingParameterNumber,
-                       QgsProcessingParameterDistance,
                        QgsProcessingParameterField,
                        QgsProcessingParameterFile)
-from processing.modeler.ModelerParametersDialog import (ModelerParametersDialog)
+from qgis.testing import start_app, unittest
 
 start_app()
 

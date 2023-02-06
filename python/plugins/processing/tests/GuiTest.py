@@ -22,26 +22,9 @@ __date__ = 'August 2017'
 __copyright__ = '(C) 2017, Nyall Dawson'
 
 import os
-from qgis.testing import start_app, unittest
-from qgis.core import (QgsApplication,
-                       QgsCoordinateReferenceSystem,
-                       QgsProcessingParameterMatrix,
-                       QgsProcessingOutputLayerDefinition,
-                       QgsProcessingParameterFeatureSink,
-                       QgsProcessingParameterFileDestination,
-                       QgsProcessingParameterFolderDestination,
-                       QgsProcessingParameterVectorDestination,
-                       QgsProcessingParameterRasterDestination,
-                       QgsProcessingParameterRange,
-                       QgsFeature,
-                       QgsProcessingModelAlgorithm,
-                       QgsUnitTypes,
-                       QgsProject)
-from qgis.analysis import QgsNativeAlgorithms
 
 from processing.gui.AlgorithmDialog import AlgorithmDialog
 from processing.gui.BatchAlgorithmDialog import BatchAlgorithmDialog
-from processing.modeler.ModelerParametersDialog import ModelerParametersDialog
 from processing.gui.wrappers import (
     BandWidgetWrapper,
     BooleanWidgetWrapper,
@@ -64,7 +47,6 @@ from processing.gui.wrappers import (
     QgsProcessingParameterBoolean,
     QgsProcessingParameterCrs,
     QgsProcessingParameterDistance,
-    QgsProcessingParameterDuration,
     QgsProcessingParameterEnum,
     QgsProcessingParameterExpression,
     QgsProcessingParameterExtent,
@@ -87,6 +69,17 @@ from processing.gui.wrappers import (
     VectorLayerWidgetWrapper,
     WidgetWrapperFactory,
 )
+from processing.modeler.ModelerParametersDialog import ModelerParametersDialog
+from qgis.analysis import QgsNativeAlgorithms
+from qgis.core import (QgsApplication,
+                       QgsCoordinateReferenceSystem,
+                       QgsProcessingParameterMatrix,
+                       QgsProcessingParameterRange,
+                       QgsFeature,
+                       QgsProcessingModelAlgorithm,
+                       QgsUnitTypes,
+                       QgsProject)
+from qgis.testing import start_app, unittest
 
 start_app()
 QgsApplication.processingRegistry().addProvider(QgsNativeAlgorithms())

@@ -21,20 +21,19 @@ __author__ = 'Nyall Dawson'
 __date__ = 'January 2019'
 __copyright__ = '(C) 2019, Nyall Dawson'
 
-import nose2
-import shutil
 import gc
+import shutil
 
+import nose2
+import processing
+from processing.tests.TestData import points
+from qgis.PyQt import sip
 from qgis.core import (QgsApplication,
                        QgsProcessing,
                        QgsProcessingContext,
                        QgsVectorLayer,
                        QgsProject)
-from qgis.PyQt import sip
-from qgis.analysis import (QgsNativeAlgorithms)
 from qgis.testing import start_app, unittest
-import processing
-from processing.tests.TestData import points
 
 
 class TestProcessingGeneral(unittest.TestCase):

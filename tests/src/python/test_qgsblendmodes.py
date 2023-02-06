@@ -30,7 +30,6 @@ from qgis.core import (
     QgsMultiBandColorRenderer,
     QgsMultiRenderChecker,
     QgsPainting,
-    QgsProject,
     QgsRasterLayer,
     QgsRectangle,
     QgsVectorLayer,

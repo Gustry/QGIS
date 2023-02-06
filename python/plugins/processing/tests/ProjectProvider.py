@@ -21,13 +21,13 @@ __author__ = 'Nyall Dawson'
 __date__ = 'July 2018'
 __copyright__ = '(C) 2018, Nyall Dawson'
 
-from qgis.testing import start_app, unittest
+from processing.modeler.ModelerDialog import ModelerDialog
+from processing.modeler.ProjectProvider import ProjectProvider
 from qgis.PyQt.QtCore import QTemporaryFile
 from qgis.core import (QgsApplication,
                        QgsProcessingModelAlgorithm,
                        QgsProject)
-from processing.modeler.ProjectProvider import ProjectProvider
-from processing.modeler.ModelerDialog import ModelerDialog
+from qgis.testing import start_app, unittest
 
 start_app()
 

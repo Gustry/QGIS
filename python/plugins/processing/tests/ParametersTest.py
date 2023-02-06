@@ -24,13 +24,12 @@ __copyright__ = '(C) 2021, René-Luc DHONT'
 import os
 import shutil
 
+from processing.core.parameters import getParameterFromString
 from qgis.core import (QgsProcessingParameterDefinition,
                        QgsProcessingParameterNumber,
                        QgsProcessingParameterFile,
                        QgsProcessing)
 from qgis.testing import start_app, unittest
-
-from processing.core.parameters import getParameterFromString
 
 testDataPath = os.path.join(os.path.dirname(__file__), 'testdata')
 

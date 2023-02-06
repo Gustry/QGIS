@@ -25,10 +25,9 @@ import os
 import shutil
 import tempfile
 
-from qgis.core import NULL, QgsApplication
-from qgis.testing import start_app, unittest
-
 from processing.script import ScriptUtils
+from qgis.core import QgsApplication
+from qgis.testing import start_app, unittest
 
 testDataPath = os.path.join(os.path.dirname(__file__), 'testdata')
 
