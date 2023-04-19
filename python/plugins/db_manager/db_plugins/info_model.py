@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 /***************************************************************************
 Name                 : DB Manager
@@ -19,14 +17,13 @@ email                : brush.tyler@gmail.com
  *                                                                         *
  ***************************************************************************/
 """
-from builtins import object
 
 from qgis.PyQt.QtWidgets import QApplication
 
 from .html_elems import HtmlContent, HtmlSection, HtmlParagraph, HtmlList, HtmlTable, HtmlTableHeader, HtmlTableCol
 
 
-class DatabaseInfo(object):
+class DatabaseInfo:
 
     def __init__(self, db):
         self.db = db
@@ -124,7 +121,7 @@ class DatabaseInfo(object):
         return HtmlContent(ret).toHtml()
 
 
-class SchemaInfo(object):
+class SchemaInfo:
 
     def __init__(self, schema):
         self.schema = schema
@@ -175,7 +172,7 @@ class SchemaInfo(object):
         return HtmlContent(ret).toHtml()
 
 
-class TableInfo(object):
+class TableInfo:
 
     def __init__(self, table):
         self.table = table
@@ -279,8 +276,8 @@ class TableInfo(object):
 
         # add table contents
         for trig in self.table.triggers():
-            name = '%(name)s (<a href="action:trigger/%(name)s/%(action)s">%(action)s</a>)' % {"name": trig.name,
-                                                                                               "action": "delete"}
+            name = '{name} (<a href="action:trigger/{name}/{action}">{action}</a>)'.format(name=trig.name,
+                                                                                           action="delete")
             tbl.append((name, trig.function.replace('<', '&lt;')))
 
         return HtmlTable(tbl, {"class": "header"})

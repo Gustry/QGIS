@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 ***************************************************************************
     plugin_test.py
@@ -54,11 +52,11 @@ class TestDBManagerPostgisPlugin(unittest.TestCase):
 
         # Create temporary service file
         self.old_pgservicefile_env = os.environ.get('PGSERVICEFILE')
-        self.tmpservicefile = '/tmp/qgis-test-{}-pg_service.conf'.format(os.getpid())
+        self.tmpservicefile = f'/tmp/qgis-test-{os.getpid()}-pg_service.conf'
         os.environ['PGSERVICEFILE'] = self.tmpservicefile
 
         f = open(self.tmpservicefile, "w")
-        f.write("[dbmanager]\ndbname={}\n".format(self.testdb))
+        f.write(f"[dbmanager]\ndbname={self.testdb}\n")
         # TODO: add more things if PGSERVICEFILE was already set ?
         f.close()
 

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 /***************************************************************************
 Name                 : DB Manager
@@ -22,8 +20,6 @@ The content of this file is based on
  *                                                                         *
  ***************************************************************************/
 """
-from builtins import str
-from builtins import range
 
 # this will disable the dbplugin if the connector raise an ImportError
 from .connector import OracleDBConnector
@@ -79,20 +75,20 @@ class OracleDBPlugin(DBPlugin):
     def connect(self, parent=None):
         conn_name = self.connectionName()
         settings = QgsSettings()
-        settings.beginGroup("/{0}/{1}".format(
+        settings.beginGroup("/{}/{}".format(
             self.connectionSettingsKey(), conn_name))
 
         if not settings.contains("database"):  # non-existent entry?
             raise InvalidDataException(
-                self.tr('There is no defined database connection "{0}".'.format(
+                self.tr('There is no defined database connection "{}".'.format(
                     conn_name)))
 
         from qgis.core import QgsDataSourceUri
         uri = QgsDataSourceUri()
 
         settingsList = ["host", "port", "database", "username", "password"]
-        host, port, database, username, password = [
-            settings.value(x, "", type=str) for x in settingsList]
+        host, port, database, username, password = (
+            settings.value(x, "", type=str) for x in settingsList)
 
         # get all of the connection options
 
@@ -173,7 +169,7 @@ class ORDatabase(Database):
     def columnUniqueValuesModel(self, col, table, limit=10):
         l = ""
         if limit:
-            l = "WHERE ROWNUM < {:d}".format(limit)
+            l = f"WHERE ROWNUM < {limit:d}"
         con = self.database().connector
         # Prevent geometry column show
         tableName = table.replace('"', "").split(".")
@@ -184,7 +180,7 @@ class ORDatabase(Database):
         if con.isGeometryColumn(tableName, colName):
             return None
 
-        query = "SELECT DISTINCT {} FROM {} {}".format(col, table, l)
+        query = f"SELECT DISTINCT {col} FROM {table} {l}"
         return self.sqlResultModel(query, self)
 
     def sqlResultModel(self, sql, parent):
@@ -218,7 +214,7 @@ class ORDatabase(Database):
         if not vlayer.isValid():
 
             wkbType, srid = con.getTableMainGeomType(
-                "({}\n)".format(sql), geomCol)
+                f"({sql}\n)", geomCol)
             uri.setWkbType(wkbType)
             if srid:
                 uri.setSrid(str(srid))
@@ -523,11 +519,11 @@ class ORTableField(TableField):
 
     def type2String(self):
         if ("TIMESTAMP" in self.dataType or self.dataType in ["DATE", "SDO_GEOMETRY", "BINARY_FLOAT", "BINARY_DOUBLE"]):
-            return "{}".format(self.dataType)
+            return f"{self.dataType}"
         if self.charMaxLen in [None, -1]:
-            return "{}".format(self.dataType)
+            return f"{self.dataType}"
         elif self.modifier in [None, -1, 0]:
-            return "{}({})".format(self.dataType, self.charMaxLen)
+            return f"{self.dataType}({self.charMaxLen})"
 
         return "{}({},{})".format(self.dataType, self.charMaxLen,
                                   self.modifier)

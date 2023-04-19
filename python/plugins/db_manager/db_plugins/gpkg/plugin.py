@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 /***************************************************************************
 Name                 : DB Manager
@@ -19,7 +17,6 @@ email                : brush.tyler@gmail.com
  *                                                                         *
  ***************************************************************************/
 """
-from builtins import str
 
 # this will disable the dbplugin if the connector raise an ImportError
 from .connector import GPKGDBConnector
@@ -202,12 +199,12 @@ class GPKGTable(Table):
         self.name, self.isView, self.isSysTable = row
 
     def ogrUri(self):
-        ogrUri = "%s|layername=%s" % (self.uri().database(), self.name)
+        ogrUri = f"{self.uri().database()}|layername={self.name}"
         return ogrUri
 
     def mimeUri(self):
         # QGIS has no provider to load Geopackage vectors, let's use OGR
-        return "vector:ogr:%s:%s" % (self.name, self.ogrUri())
+        return f"vector:ogr:{self.name}:{self.ogrUri()}"
 
     def toMapLayer(self, geometryType=None, crs=None):
         from qgis.core import QgsVectorLayer
@@ -222,7 +219,7 @@ class GPKGTable(Table):
                 'POLYGON': 'Polygon',
             }
             geometryType = geom_mapping[geometryType]
-            uri = "{}|geometrytype={}".format(uri, geometryType)
+            uri = f"{uri}|geometrytype={geometryType}"
 
         return QgsVectorLayer(uri, self.name, provider)
 
@@ -300,12 +297,12 @@ class GPKGRasterTable(GPKGTable, RasterTable):
         self.extent = self.database().connector.getTableExtent((self.schemaName(), self.name), self.geomColumn)
 
     def gpkgGdalUri(self):
-        gdalUri = 'GPKG:%s:%s' % (self.uri().database(), self.prefixName)
+        gdalUri = f'GPKG:{self.uri().database()}:{self.prefixName}'
         return gdalUri
 
     def mimeUri(self):
         # QGIS has no provider to load rasters, let's use GDAL
-        uri = "raster:gdal:%s:%s" % (self.name, self.uri().database())
+        uri = f"raster:gdal:{self.name}:{self.uri().database()}"
         return uri
 
     def toMapLayer(self, geometryType=None, crs=None):

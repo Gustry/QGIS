@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 /***************************************************************************
 Name                 : Versioning plugin for DB Manager
@@ -99,9 +97,9 @@ class DlgVersioning(QDialog, Ui_DlgVersioning):
                 self.cboTable.addItem(table.name)
 
     def get_escaped_name(self, schema, table, suffix):
-        name = self.db.connector.quoteId("%s%s" % (table, suffix))
+        name = self.db.connector.quoteId(f"{table}{suffix}")
         schema_name = self.db.connector.quoteId(schema) if schema else None
-        return "%s.%s" % (schema_name, name) if schema_name else name
+        return f"{schema_name}.{name}" if schema_name else name
 
     def updateSql(self):
         if self.cboTable.currentIndex() < 0 or len(self.tables) < self.cboTable.currentIndex():
@@ -175,11 +173,11 @@ class DlgVersioning(QDialog, Ui_DlgVersioning):
         QMessageBox.information(self, "Help", helpText)
 
     def sql_alterTable(self):
-        return "ALTER TABLE %s ADD %s serial, ADD %s timestamp default '-infinity', ADD %s timestamp, ADD %s varchar;" % (
+        return "ALTER TABLE {} ADD {} serial, ADD {} timestamp default '-infinity', ADD {} timestamp, ADD {} varchar;".format(
             self.schematable, self.colPkey, self.colStart, self.colEnd, self.colUser)
 
     def sql_setPkey(self):
-        return "ALTER TABLE %s DROP CONSTRAINT %s, ADD PRIMARY KEY (%s);" % (
+        return "ALTER TABLE {} DROP CONSTRAINT {}, ADD PRIMARY KEY ({});".format(
             self.schematable, self.origPkeyName, self.colPkey)
 
     def sql_currentView(self):
@@ -194,46 +192,46 @@ class DlgVersioning(QDialog, Ui_DlgVersioning):
         old_cols = ",".join("OLD." + x for x in self.columns)
 
         sql = """
-CREATE OR REPLACE FUNCTION %(func_at_time)s(timestamp)
-RETURNS SETOF %(view)s AS
+CREATE OR REPLACE FUNCTION {func_at_time}(timestamp)
+RETURNS SETOF {view} AS
 $$
-SELECT %(all_cols)s FROM %(schematable)s WHERE
-  ( SELECT CASE WHEN %(end)s IS NULL THEN (%(start)s <= $1) ELSE (%(start)s <= $1 AND %(end)s > $1) END );
+SELECT {all_cols} FROM {schematable} WHERE
+  ( SELECT CASE WHEN {end} IS NULL THEN ({start} <= $1) ELSE ({start} <= $1 AND {end} > $1) END );
 $$
 LANGUAGE 'sql';
 
-CREATE OR REPLACE FUNCTION %(func_update)s()
+CREATE OR REPLACE FUNCTION {func_update}()
 RETURNS TRIGGER AS
 $$
 BEGIN
-  IF OLD.%(end)s IS NOT NULL THEN
+  IF OLD.{end} IS NOT NULL THEN
     RETURN NULL;
   END IF;
-  IF NEW.%(end)s IS NULL THEN
-    INSERT INTO %(schematable)s (%(cols)s, %(start)s, %(end)s) VALUES (%(oldcols)s, OLD.%(start)s, current_timestamp);
-    NEW.%(start)s = current_timestamp;
-    NEW.%(user)s = current_user;
+  IF NEW.{end} IS NULL THEN
+    INSERT INTO {schematable} ({cols}, {start}, {end}) VALUES ({oldcols}, OLD.{start}, current_timestamp);
+    NEW.{start} = current_timestamp;
+    NEW.{user} = current_user;
   END IF;
   RETURN NEW;
 END;
 $$
 LANGUAGE 'plpgsql';
 
-CREATE OR REPLACE FUNCTION %(func_insert)s()
+CREATE OR REPLACE FUNCTION {func_insert}()
 RETURNS trigger AS
 $$
 BEGIN
-  if NEW.%(start)s IS NULL then
-    NEW.%(start)s = now();
-    NEW.%(end)s = null;
-    NEW.%(user)s = current_user;
+  if NEW.{start} IS NULL then
+    NEW.{start} = now();
+    NEW.{end} = null;
+    NEW.{user} = current_user;
   end if;
   RETURN NEW;
 END;
 $$
-LANGUAGE 'plpgsql';""" % {'view': self.view, 'schematable': self.schematable, 'cols': cols, 'oldcols': old_cols,
-                          'start': self.colStart, 'end': self.colEnd, 'user': self.colUser, 'func_at_time': self.func_at_time,
-                          'all_cols': all_cols, 'func_update': self.func_update, 'func_insert': self.func_insert}
+LANGUAGE 'plpgsql';""".format(view=self.view, schematable=self.schematable, cols=cols, oldcols=old_cols,
+                              start=self.colStart, end=self.colEnd, user=self.colUser, func_at_time=self.func_at_time,
+                              all_cols=all_cols, func_update=self.func_update, func_insert=self.func_insert)
         return sql
 
     def sql_triggers(self):
@@ -254,20 +252,20 @@ FOR EACH ROW EXECUTE PROCEDURE %(func_insert)s();""" % \
         cols = ",".join(self.columns)
         return_cols = self.colPkey + "," + ",".join(self.columns)
         new_cols = ",".join("NEW." + x for x in self.columns)
-        assign_cols = ",".join("%s = NEW.%s" % (x, x) for x in self.columns)
+        assign_cols = ",".join(f"{x} = NEW.{x}" for x in self.columns)
 
         return """
-CREATE OR REPLACE RULE "_DELETE" AS ON DELETE TO %(view)s DO INSTEAD
-  DELETE FROM %(schematable)s WHERE %(origpkey)s = old.%(origpkey)s;
-CREATE OR REPLACE RULE "_INSERT" AS ON INSERT TO %(view)s DO INSTEAD
-  INSERT INTO %(schematable)s (%(cols)s) VALUES (%(newcols)s) RETURNING %(return_cols)s;
-CREATE OR REPLACE RULE "_UPDATE" AS ON UPDATE TO %(view)s DO INSTEAD
-  UPDATE %(schematable)s SET %(assign)s WHERE %(origpkey)s = NEW.%(origpkey)s;""" % {'view': self.view,
-                                                                                     'schematable': self.schematable,
-                                                                                     'cols': cols, 'newcols': new_cols,
-                                                                                     'return_cols': return_cols,
-                                                                                     'assign': assign_cols,
-                                                                                     'origpkey': self.colOrigPkey}
+CREATE OR REPLACE RULE "_DELETE" AS ON DELETE TO {view} DO INSTEAD
+  DELETE FROM {schematable} WHERE {origpkey} = old.{origpkey};
+CREATE OR REPLACE RULE "_INSERT" AS ON INSERT TO {view} DO INSTEAD
+  INSERT INTO {schematable} ({cols}) VALUES ({newcols}) RETURNING {return_cols};
+CREATE OR REPLACE RULE "_UPDATE" AS ON UPDATE TO {view} DO INSTEAD
+  UPDATE {schematable} SET {assign} WHERE {origpkey} = NEW.{origpkey};""".format(view=self.view,
+                                                                                 schematable=self.schematable,
+                                                                                 cols=cols, newcols=new_cols,
+                                                                                 return_cols=return_cols,
+                                                                                 assign=assign_cols,
+                                                                                 origpkey=self.colOrigPkey)
 
     def onOK(self):
         # execute and commit the code

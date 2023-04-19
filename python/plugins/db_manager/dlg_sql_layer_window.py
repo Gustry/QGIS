@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 /***************************************************************************
 Name                 : DB Manager
@@ -21,9 +19,6 @@ The content of this file is based on
  *                                                                         *
  ***************************************************************************/
 """
-from builtins import zip
-from builtins import next
-from builtins import str
 from hashlib import md5
 
 from qgis.PyQt.QtCore import Qt, pyqtSignal
@@ -104,7 +99,7 @@ class DlgSqlLayerWindow(QWidget, Ui_Dialog):
         self.aliasSubQuery = isinstance(db, PGDatabase)  # only PostgreSQL requires subqueries to be aliases
         self.setupUi(self)
         self.setWindowTitle(
-            "%s - %s [%s]" % (self.windowTitle(), db.connection().connectionName(), db.connection().typeNameString()))
+            f"{self.windowTitle()} - {db.connection().connectionName()} [{db.connection().typeNameString()}]")
 
         self.defaultLayerName = self.tr('QueryLayer')
 
@@ -180,9 +175,9 @@ class DlgSqlLayerWindow(QWidget, Ui_Dialog):
         if not uri.table().startswith('(') and not uri.table().endswith(')'):
             schema = uri.schema()
             if schema and schema.upper() != 'PUBLIC':
-                sql = 'SELECT * FROM {0}.{1}'.format(self.db.connector.quoteId(schema), self.db.connector.quoteId(sql))
+                sql = f'SELECT * FROM {self.db.connector.quoteId(schema)}.{self.db.connector.quoteId(sql)}'
             else:
-                sql = 'SELECT * FROM {0}'.format(self.db.connector.quoteId(sql))
+                sql = f'SELECT * FROM {self.db.connector.quoteId(sql)}'
         self.editSql.setText(sql)
         self.executeSql()
 
@@ -405,7 +400,7 @@ class DlgSqlLayerWindow(QWidget, Ui_Dialog):
                         break
                     aliasIndex += 1
 
-                sql = "SELECT * FROM (%s\n) AS %s LIMIT 0" % (str(query), connector.quoteId(alias))
+                sql = f"SELECT * FROM ({str(query)}\n) AS {connector.quoteId(alias)} LIMIT 0"
             else:
                 sql = "SELECT * FROM (%s\n) WHERE 1=0" % str(query)
 

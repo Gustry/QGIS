@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 /***************************************************************************
 Name                 : DB Manager
@@ -19,9 +17,6 @@ email                : brush.tyler@gmail.com
  *                                                                         *
  ***************************************************************************/
 """
-from builtins import str
-from builtins import map
-from builtins import range
 
 # this will disable the dbplugin if the connector raise an ImportError
 from .connector import PostGisDBConnector
@@ -70,7 +65,7 @@ class PostGisDBPlugin(DBPlugin):
     def connect(self, parent=None):
         conn_name = self.connectionName()
         settings = QgsSettings()
-        settings.beginGroup("/%s/%s" % (self.connectionSettingsKey(), conn_name))
+        settings.beginGroup(f"/{self.connectionSettingsKey()}/{conn_name}")
 
         if not settings.contains("database"):  # non-existent entry?
             raise InvalidDataException(self.tr('There is no defined database connection "{0}".').format(conn_name))
@@ -80,7 +75,7 @@ class PostGisDBPlugin(DBPlugin):
         uri = QgsDataSourceUri()
 
         settingsList = ["service", "host", "port", "database", "username", "password", "authcfg"]
-        service, host, port, database, username, password, authcfg = [settings.value(x, "", type=str) for x in settingsList]
+        service, host, port, database, username, password, authcfg = (settings.value(x, "", type=str) for x in settingsList)
 
         useEstimatedMetadata = settings.value("estimatedMetadata", False, type=bool)
         try:
@@ -200,7 +195,7 @@ class PGTable(Table):
     def __init__(self, row, db, schema=None):
         Table.__init__(self, db, schema)
         self.name, schema_name, self._relationType, self.owner, self.estimatedRowCount, self.pages, self.comment = row
-        self.isView = self._relationType in set(['v', 'm'])
+        self.isView = self._relationType in {'v', 'm'}
         self.estimatedRowCount = int(self.estimatedRowCount)
 
     def runVacuumAnalyze(self):
@@ -353,7 +348,7 @@ class PGRasterTable(PGTable, RasterTable):
         port = ('port=%s' % uri.port()) if uri.port() else ''
 
         schema = self.schemaName() if self.schemaName() else 'public'
-        table = '"%s"."%s"' % (schema, self.name)
+        table = f'"{schema}"."{self.name}"'
 
         if not dbname:
             # postgresraster provider *requires* a dbname
@@ -429,9 +424,9 @@ class PGTableField(TableField):
         """Returns the comment for a field"""
         tab = self.table()
         # SQL Query checking if a comment exists for the field
-        sql_cpt = "Select count(*) from pg_description pd, pg_class pc, pg_attribute pa where relname = '%s' and attname = '%s' and pa.attrelid = pc.oid and pd.objoid = pc.oid and pd.objsubid = pa.attnum" % (tab.name, self.name)
+        sql_cpt = f"Select count(*) from pg_description pd, pg_class pc, pg_attribute pa where relname = '{tab.name}' and attname = '{self.name}' and pa.attrelid = pc.oid and pd.objoid = pc.oid and pd.objsubid = pa.attnum"
         # SQL Query that return the comment of the field
-        sql = "Select pd.description from pg_description pd, pg_class pc, pg_attribute pa where relname = '%s' and attname = '%s' and pa.attrelid = pc.oid and pd.objoid = pc.oid and pd.objsubid = pa.attnum" % (tab.name, self.name)
+        sql = f"Select pd.description from pg_description pd, pg_class pc, pg_attribute pa where relname = '{tab.name}' and attname = '{self.name}' and pa.attrelid = pc.oid and pd.objoid = pc.oid and pd.objsubid = pa.attnum"
         c = tab.database().connector._execute(None, sql_cpt)  # Execute Check query
         res = tab.database().connector._fetchone(c)[0]  # Store result
         if res == 1:

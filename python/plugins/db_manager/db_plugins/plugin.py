@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 /***************************************************************************
 Name                 : DB Manager
@@ -19,8 +17,6 @@ email                : brush.tyler@gmail.com
  *                                                                         *
  ***************************************************************************/
 """
-from builtins import str
-from builtins import range
 
 from qgis.PyQt.QtCore import Qt, QObject, pyqtSignal, QByteArray
 
@@ -160,7 +156,7 @@ class DBPlugin(QObject):
             md.deleteConnection(self.connectionName())
         except (AttributeError, QgsProviderConnectionException):
             settings = QgsSettings()
-            settings.beginGroup("/%s/%s" % (self.connectionSettingsKey(), self.connectionName()))
+            settings.beginGroup(f"/{self.connectionSettingsKey()}/{self.connectionName()}")
             settings.remove("")
 
         self.deleted.emit()
@@ -314,7 +310,7 @@ class Database(DbItemObject):
         l = ""
         if limit is not None:
             l = "LIMIT %d" % limit
-        return self.sqlResultModel("SELECT DISTINCT %s FROM %s %s" % (col, table, l), self)
+        return self.sqlResultModel(f"SELECT DISTINCT {col} FROM {table} {l}", self)
 
     def uniqueIdFunction(self):
         """Return a SQL function used to generate a unique id for rows of a query"""
@@ -760,7 +756,7 @@ class Table(DbItemObject):
 
     def mimeUri(self):
         layerType = "raster" if self.type == Table.RasterType else "vector"
-        return "%s:%s:%s:%s" % (layerType, self.database().dbplugin().providerName(), self.name, self.uri().uri(False))
+        return f"{layerType}:{self.database().dbplugin().providerName()}:{self.name}:{self.uri().uri(False)}"
 
     def toMapLayer(self, geometryType=None, crs=None):
         provider = self.database().dbplugin().providerName()
@@ -1235,7 +1231,7 @@ class TableField(TableSubItemObject):
     def type2String(self):
         if self.modifier is None or self.modifier == -1:
             return "%s" % self.dataType
-        return "%s (%s)" % (self.dataType, self.modifier)
+        return f"{self.dataType} ({self.modifier})"
 
     def default2String(self):
         if not self.hasDefault:
@@ -1250,7 +1246,7 @@ class TableField(TableSubItemObject):
         name = quoteIdFunc(self.name)
         not_null = "NOT NULL" if self.notNull else ""
 
-        txt = "%s %s %s" % (name, self.type2String(), not_null)
+        txt = f"{name} {self.type2String()} {not_null}"
         if self.hasDefault:
             txt += " DEFAULT %s" % self.default2String()
         return txt

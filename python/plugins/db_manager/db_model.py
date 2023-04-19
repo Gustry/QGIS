@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 /***************************************************************************
 Name                 : DB Manager
@@ -19,8 +17,6 @@ email                : brush.tyler@gmail.com
  *                                                                         *
  ***************************************************************************/
 """
-from builtins import str
-from builtins import range
 
 from functools import partial
 from qgis.PyQt.QtCore import Qt, QObject, qDebug, QByteArray, QMimeData, QDataStream, QIODevice, QFileInfo, QAbstractItemModel, QModelIndex, pyqtSignal
@@ -294,7 +290,7 @@ class TableItem(TreeItem):
             pathList.extend(self.parent().path())
 
         if self.getItemData().type == Table.VectorType:
-            pathList.append("%s::%s" % (self.data(0), self.getItemData().geomColumn))
+            pathList.append(f"{self.data(0)}::{self.getItemData().geomColumn}")
         else:
             pathList.append(self.data(0))
 

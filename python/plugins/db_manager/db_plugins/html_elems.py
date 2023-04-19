@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 /***************************************************************************
 Name                 : DB Manager
@@ -19,11 +17,9 @@ email                : brush.tyler@gmail.com
  *                                                                         *
  ***************************************************************************/
 """
-from builtins import str
-from builtins import object
 
 
-class HtmlContent(object):
+class HtmlContent:
 
     def __init__(self, data):
         self.data = data if not isinstance(data, HtmlContent) else data.data
@@ -56,7 +52,7 @@ class HtmlContent(object):
         return len(self.data) > 0
 
 
-class HtmlElem(object):
+class HtmlElem:
 
     def __init__(self, tag, data, attrs=None):
         self.tag = tag
@@ -78,17 +74,17 @@ class HtmlElem(object):
     def getAttrsHtml(self):
         html = ''
         for k, v in self.attrs.items():
-            html += ' %s="%s"' % (k, v)
+            html += f' {k}="{v}"'
         return html
 
     def openTagHtml(self):
-        return "<%s%s>" % (self.tag, self.getAttrsHtml())
+        return f"<{self.tag}{self.getAttrsHtml()}>"
 
     def closeTagHtml(self):
         return "</%s>" % self.tag
 
     def toHtml(self):
-        return "%s%s%s" % (self.openTagHtml(), self.data.toHtml(), self.closeTagHtml())
+        return f"{self.openTagHtml()}{self.data.toHtml()}{self.closeTagHtml()}"
 
     def hasContents(self):
         return self.data.toHtml() != ""

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 /***************************************************************************
 Name                 : DB Manager
@@ -268,7 +266,7 @@ class ORTableInfo(TableInfo):
         for fld in self.table.fields():
             char_max_len = fld.charMaxLen if fld.charMaxLen else ""
             if fld.modifier:
-                char_max_len = "{},{}".format(char_max_len, fld.modifier)
+                char_max_len = f"{char_max_len},{fld.modifier}"
             is_null_txt = "N" if fld.notNull else "Y"
 
             # make primary key field underlined
@@ -509,7 +507,7 @@ class ORTableInfo(TableInfo):
         tbl.append((QApplication.translate("DBManagerPlugin",
                                            "Use no index:"),
                     values[9]))
-        tbl.append(('<a href="action:mview/refresh">{0}</a>'.format(
+        tbl.append(('<a href="action:mview/refresh">{}</a>'.format(
             QApplication.translate("DBManagerPlugin", "Refresh the materialized view")),
             ""))
         ret.append(HtmlTable(tbl))
@@ -595,7 +593,7 @@ class ORVectorTableInfo(ORTableInfo, VectorTableInfo):
             tbl.append(
                 (QApplication.translate(
                     "DBManagerPlugin", "Spatial ref:"),
-                 "{0} ({1})".format(sr_info, srid)))
+                 f"{sr_info} ({srid})"))
 
         # estimated extent
         if not self.table.estimatedExtent:

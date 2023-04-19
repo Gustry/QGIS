@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 /***************************************************************************
 Name                 : DB Manager
@@ -38,7 +36,7 @@ class SLTableDataModel(TableDataModel):
         table_txt = self.db.quoteId((self.table.schemaName(), self.table.name))
 
         # run query and get results
-        sql = "SELECT %s FROM %s" % (fields_txt, table_txt)
+        sql = f"SELECT {fields_txt} FROM {table_txt}"
         c = self.db._get_cursor()
         self.db._execute(c, sql)
 

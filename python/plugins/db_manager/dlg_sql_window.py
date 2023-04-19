@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 /***************************************************************************
 Name                 : DB Manager
@@ -21,9 +19,6 @@ The content of this file is based on
  *                                                                         *
  ***************************************************************************/
 """
-from builtins import zip
-from builtins import next
-from builtins import str
 from hashlib import md5
 
 import os
@@ -318,7 +313,7 @@ class DlgSqlWindow(QWidget, Ui_Dialog):
             self.tr("SQL File (*.sql *.SQL);;All Files (*)"))
 
         if filename:
-            with open(filename, 'r') as f:
+            with open(filename) as f:
                 self.editSql.clear()
                 for line in f:
                     self.editSql.insertText(line)
@@ -532,7 +527,7 @@ class DlgSqlWindow(QWidget, Ui_Dialog):
                         break
                     aliasIndex += 1
 
-                sql = "SELECT * FROM (%s\n) AS %s LIMIT 0" % (str(query), connector.quoteId(alias))
+                sql = f"SELECT * FROM ({str(query)}\n) AS {connector.quoteId(alias)} LIMIT 0"
             else:
                 sql = "SELECT * FROM (%s\n) WHERE 1=0" % str(query)
 

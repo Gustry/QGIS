@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 /***************************************************************************
 Name                 : DB Manager
@@ -20,7 +18,6 @@ email                : even.rouault at spatialys.com
  *                                                                         *
  ***************************************************************************/
 """
-from builtins import str
 
 from functools import cmp_to_key
 
@@ -444,7 +441,7 @@ class GPKGDBConnector(DBConnector):
             if md is None or len(md) == 0:
                 ds = self.gdal_ds
             else:
-                subdataset_name = 'GPKG:%s:%s' % (self.gdal_ds.GetDescription(), tablename)
+                subdataset_name = f'GPKG:{self.gdal_ds.GetDescription()}:{tablename}'
                 ds = gdal.Open(subdataset_name)
             if ds is None:
                 return None
@@ -494,7 +491,7 @@ class GPKGDBConnector(DBConnector):
                 ret = self._fetchOne(sql)
                 return ret != [] and ret[0][0] == 1
             else:
-                subdataset_name = 'GPKG:%s:%s' % (self.gdal_ds.GetDescription(), tablename)
+                subdataset_name = f'GPKG:{self.gdal_ds.GetDescription()}:{tablename}'
                 for key in md:
                     if md[key] == subdataset_name:
                         return True
@@ -769,13 +766,13 @@ class GPKGDBConnector(DBConnector):
 
     def addTablePrimaryKey(self, table, column):
         """Adds a primery key (with one column) to a table """
-        sql = "ALTER TABLE %s ADD PRIMARY KEY (%s)" % (self.quoteId(table), self.quoteId(column))
+        sql = f"ALTER TABLE {self.quoteId(table)} ADD PRIMARY KEY ({self.quoteId(column)})"
         self._execute_and_commit(sql)
 
     def createTableIndex(self, table, name, column, unique=False):
         """Creates index on one column using default options """
         unique_str = "UNIQUE" if unique else ""
-        sql = "CREATE %s INDEX %s ON %s (%s)" % (
+        sql = "CREATE {} INDEX {} ON {} ({})".format(
             unique_str, self.quoteId(name), self.quoteId(table), self.quoteId(column))
         self._execute_and_commit(sql)
 
@@ -788,7 +785,7 @@ class GPKGDBConnector(DBConnector):
         if self.isRasterTable(table):
             return False
         _, tablename = self.getSchemaTableName(table)
-        sql = "SELECT CreateSpatialIndex(%s, %s)" % (
+        sql = "SELECT CreateSpatialIndex({}, {})".format(
             self.quoteId(tablename), self.quoteId(geom_column))
         try:
             res = self._fetchOne(sql)
@@ -800,7 +797,7 @@ class GPKGDBConnector(DBConnector):
         if self.isRasterTable(table):
             return False
         _, tablename = self.getSchemaTableName(table)
-        sql = "SELECT DisableSpatialIndex(%s, %s)" % (
+        sql = "SELECT DisableSpatialIndex({}, {})".format(
             self.quoteId(tablename), self.quoteId(geom_column))
         res = self._fetchOne(sql)
         return len(res) > 0 and len(res[0]) > 0 and res[0][0] == 1
@@ -811,7 +808,7 @@ class GPKGDBConnector(DBConnector):
         _, tablename = self.getSchemaTableName(table)
 
         # (only available in >= 2.1.2)
-        sql = "SELECT HasSpatialIndex(%s, %s)" % (self.quoteString(tablename), self.quoteString(geom_column))
+        sql = f"SELECT HasSpatialIndex({self.quoteString(tablename)}, {self.quoteString(geom_column)})"
         gdal.PushErrorHandler()
         ret = self._fetchOne(sql)
         gdal.PopErrorHandler()

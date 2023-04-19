@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 /***************************************************************************
 Name                 : DB Manager plugin for virtual layers
@@ -130,7 +128,7 @@ class FakeDatabase(Database):
         return True
 
     def spatialIndexClause(self, src_table, src_column, dest_table, dest_column):
-        return '"%s"._search_frame_ = "%s"."%s"' % (src_table, dest_table, dest_column)
+        return f'"{src_table}"._search_frame_ = "{dest_table}"."{dest_column}"'
 
     def supportsComment(self):
         return False

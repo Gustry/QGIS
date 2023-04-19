@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 /***************************************************************************
 Name                 : DB Manager
@@ -40,7 +38,7 @@ class PGDatabaseInfo(DatabaseInfo):
 class PGTableInfo(TableInfo):
 
     def __init__(self, table):
-        super(PGTableInfo, self).__init__(table)
+        super().__init__(table)
         self.table = table
 
     def generalInfo(self):
@@ -193,13 +191,13 @@ class PGTableInfo(TableInfo):
 
         # add table contents
         for trig in self.table.triggers():
-            name = '%(name)s (<a href="action:trigger/%(name)s/%(action)s">%(action)s</a>)' % {"name": trig.name,
-                                                                                               "action": "delete"}
+            name = '{name} (<a href="action:trigger/{name}/{action}">{action}</a>)'.format(name=trig.name,
+                                                                                           action="delete")
 
             (enabled, action) = (QApplication.translate("DBManagerPlugin", "Yes"), "disable") if trig.enabled else (
                 QApplication.translate("DBManagerPlugin", "No"), "enable")
-            txt_enabled = '%(enabled)s (<a href="action:trigger/%(name)s/%(action)s">%(action)s</a>)' % {
-                "name": trig.name, "action": action, "enabled": enabled}
+            txt_enabled = '{enabled} (<a href="action:trigger/{name}/{action}">{action}</a>)'.format(
+                name=trig.name, action=action, enabled=enabled)
 
             tbl.append((name, trig.function, trig.type2String(), txt_enabled))
 
@@ -221,8 +219,8 @@ class PGTableInfo(TableInfo):
 
         # add table contents
         for rule in self.table.rules():
-            name = '%(name)s (<a href="action:rule/%(name)s/%(action)s">%(action)s</a>)' % {"name": rule.name,
-                                                                                            "action": "delete"}
+            name = '{name} (<a href="action:rule/{name}/{action}">{action}</a>)'.format(name=rule.name,
+                                                                                        action="delete")
             tbl.append((name, rule.definition))
 
         return HtmlTable(tbl, {"class": "header"})

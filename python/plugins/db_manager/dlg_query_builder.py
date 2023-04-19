@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 /***************************************************************************
 Name                 : DB Manager
@@ -20,7 +18,6 @@ email                : hugo dot mercier at oslandia dot com
 
 Query builder dialog, based on the QSpatialite plugin (GPLv2+) by Romain Riviere
 """
-from builtins import str
 
 from qgis.PyQt.QtCore import Qt, QObject, QEvent
 from qgis.PyQt.QtWidgets import QDialog, QMessageBox, QTextEdit
@@ -117,10 +114,10 @@ class QueryBuilderDlg(QDialog):
 
         if self.db.explicitSpatialIndex():
             self.tablesGeo = [table for table in self.tables if isinstance(table, VectorTable)]
-            tablesGeo = ['"%s"."%s"' % (table.name, table.geomColumn) for table in self.tablesGeo]
+            tablesGeo = [f'"{table.name}"."{table.geomColumn}"' for table in self.tablesGeo]
             self.ui.table_target.insertItems(1, tablesGeo)
             self.idxTables = [table for table in self.tablesGeo if table.hasSpatialIndex()]
-            idxTables = ['"%s"."%s"' % (table.name, table.geomColumn) for table in self.idxTables]
+            idxTables = [f'"{table.name}"."{table.geomColumn}"' for table in self.idxTables]
             self.ui.table_idx.insertItems(1, idxTables)
 
             self.ui.usertree.clicked.connect(self.use_rtree)
@@ -208,7 +205,7 @@ class QueryBuilderDlg(QDialog):
         if (txt is None) or (txt in ("", " ")):
             self.ui.tab.setText('%s' % ag)
         else:
-            self.ui.tab.setText('%s, %s' % (txt, ag))
+            self.ui.tab.setText(f'{txt}, {ag}')
         self.ui.tables.setCurrentIndex(0)
 
     def add_columns(self):
@@ -254,7 +251,7 @@ class QueryBuilderDlg(QDialog):
         if (table.name in self.coltables):
             return
 
-        columns = ['"%s"."%s"' % (table.name, col.name) for col in table.fields()]
+        columns = [f'"{table.name}"."{col.name}"' for col in table.fields()]
         # add special '*' column:
         columns = ['"%s".*' % table.name] + columns
         self.coltables.append(table.name)  # table columns have been listed
@@ -338,7 +335,7 @@ class QueryBuilderDlg(QDialog):
         query_order = str(self.ui.order.toPlainText())
         query = ""
         if query_col.strip() != '':
-            query += "SELECT %s \nFROM %s" % (query_col, query_table)
+            query += f"SELECT {query_col} \nFROM {query_table}"
         if query_where.strip() != '':
             query += "\nWHERE %s" % query_where
         if query_group.strip() != '':
@@ -381,7 +378,7 @@ class QueryBuilderDlg(QDialog):
             if len(table) != 1:
                 break
             table = table[0]
-            columns = ['"%s"."%s"' % (table.name, col.name) for col in table.fields()]
+            columns = [f'"{table.name}"."{col.name}"' for col in table.fields()]
             # first and second col combobox
             end = self.ui.columns.count()
             self.ui.columns.insertItems(end, columns)
