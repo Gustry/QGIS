@@ -50,7 +50,7 @@ class TestQgsServerWMSGetMapSizeProject(QgsServerTestBase):
 
 
 def make_request(instance, height, width):
-    qs = "?" + "&".join(["%s=%s" % i for i in list({
+    qs = "?" + urllib.parse.urlencode({
         "MAP": urllib.parse.quote(instance.project),
         "SERVICE": "WMS",
         "VERSION": "1.3.0",
@@ -60,7 +60,7 @@ def make_request(instance, height, width):
         "FORMAT": "image/png",
         "HEIGHT": str(height),
         "WIDTH": str(width)
-    }.items())])
+    })
     r, h = instance._result(instance._execute_request(qs))
     return instance.strip_version_xmlns(r)
 

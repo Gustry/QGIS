@@ -23,12 +23,12 @@ from test_qgsserver_accesscontrol import TestQgsServerAccessControl
 class TestQgsServerAccessControlWCS(TestQgsServerAccessControl):
 
     def test_wcs_getcapabilities(self):
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WCS",
             "VERSION": "1.0.0",
             "REQUEST": "GetCapabilities",
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         self.assertTrue(
@@ -40,13 +40,13 @@ class TestQgsServerAccessControlWCS(TestQgsServerAccessControl):
             str(response).find("<name>dem</name>") != -1,
             f"No dem layer in WCS/GetCapabilities\n{response}")
 
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WCS",
             "VERSION": "1.0.0",
             "REQUEST": "GetCapabilities",
             "TEST": "dem",
-        }.items())])
+        })
 
         response, headers = self._get_restricted(query_string)
         self.assertFalse(
@@ -54,13 +54,13 @@ class TestQgsServerAccessControlWCS(TestQgsServerAccessControl):
             f"Unexpected dem layer in WCS/GetCapabilities\n{response}")
 
     def test_wcs_describecoverage(self):
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WCS",
             "VERSION": "1.0.0",
             "REQUEST": "DescribeCoverage",
             "COVERAGE": "dem",
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         self.assertTrue(
@@ -72,14 +72,14 @@ class TestQgsServerAccessControlWCS(TestQgsServerAccessControl):
             str(response).find("<name>dem</name>") != -1,
             f"No dem layer in DescribeCoverage\n{response}")
 
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WCS",
             "VERSION": "1.0.0",
             "REQUEST": "DescribeCoverage",
             "COVERAGE": "dem",
             "TEST": "dem",
-        }.items())])
+        })
 
         response, headers = self._get_restricted(query_string)
         self.assertFalse(
@@ -87,7 +87,7 @@ class TestQgsServerAccessControlWCS(TestQgsServerAccessControl):
             f"Unexpected dem layer in DescribeCoverage\n{response}")
 
     def test_wcs_getcoverage(self):
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WCS",
             "VERSION": "1.0.0",
@@ -98,7 +98,7 @@ class TestQgsServerAccessControlWCS(TestQgsServerAccessControl):
             "HEIGHT": "100",
             "WIDTH": "100",
             "FORMAT": "GTiff",
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         self.assertEqual(
@@ -116,7 +116,7 @@ class TestQgsServerAccessControlWCS(TestQgsServerAccessControl):
             self._geo_img_diff(response, "WCS_GetCoverage.geotiff") == 0,
             "Image for GetCoverage is wrong")
 
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WCS",
             "VERSION": "1.0.0",
@@ -128,7 +128,7 @@ class TestQgsServerAccessControlWCS(TestQgsServerAccessControl):
             "WIDTH": "100",
             "FORMAT": "GTiff",
             "TEST": "dem",
-        }.items())])
+        })
 
         response, headers = self._get_restricted(query_string)
         self.assertEqual(

@@ -23,16 +23,16 @@ from test_qgsserver_accesscontrol import TestQgsServerAccessControl
 class TestQgsServerAccessControlFixFilters(TestQgsServerAccessControl):
 
     def test_wfs_getfeature_fix_feature_filters(self):
-        wfs_query_string = "&".join(["%s=%s" % i for i in list({
+        wfs_query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "GetFeature",
             "TYPENAME": "Hello_Filter",
             "EXP_FILTER": "pkuid = 1"
-        }.items())])
+        })
 
-        wms_query_string = "&".join(["%s=%s" % i for i in list({
+        wms_query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -43,7 +43,7 @@ class TestQgsServerAccessControlFixFilters(TestQgsServerAccessControl):
             "HEIGHT": "500",
             "WIDTH": "500",
             "SRS": "EPSG:3857"
-        }.items())])
+        })
 
         # Execute an unrestricted wfs request
         response, headers = self._get_fullaccess(wfs_query_string)

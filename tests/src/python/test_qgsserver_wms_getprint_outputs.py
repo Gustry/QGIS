@@ -142,7 +142,7 @@ class PyQgsServerWMSGetPrintOutputs(QgsServerTestBase):
     def test_wms_getprint_basic(self):
 
         # Output JPEG
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -152,13 +152,13 @@ class PyQgsServerWMSGetPrintOutputs(QgsServerTestBase):
             "map0:EXTENT": "-33626185.498,-13032965.185,33978427.737,16020257.031",
             "LAYERS": "Country,Hello",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_Basic", outputFormat='JPG')
 
         # Output PDF
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -168,7 +168,7 @@ class PyQgsServerWMSGetPrintOutputs(QgsServerTestBase):
             "map0:EXTENT": "-33626185.498,-13032965.185,33978427.737,16020257.031",
             "LAYERS": "Country,Hello",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._pdf_diff_error(r, h, "WMS_GetPrint_Basic_Pdf", dpi=300)
@@ -176,7 +176,7 @@ class PyQgsServerWMSGetPrintOutputs(QgsServerTestBase):
     def test_wms_getprint_selection(self):
 
         # Output PDF
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -188,7 +188,7 @@ class PyQgsServerWMSGetPrintOutputs(QgsServerTestBase):
             "map0:LAYERS": "Country,Hello",
             "CRS": "EPSG:3857",
             "SELECTION": "Country: 4"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._pdf_diff_error(r, h, "WMS_GetPrint_Selection_Pdf", dpi=300)

@@ -25,7 +25,7 @@ class TestQgsServerAccessControlWMSGetlegendgraphic(TestQgsServerAccessControl):
     # regenerate_reference = True
 
     def test_wms_getlegendgraphic_hello(self):
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -38,7 +38,7 @@ class TestQgsServerAccessControlWMSGetlegendgraphic(TestQgsServerAccessControl):
             "ITEMFONTSIZE": "20",
             "LAYERFONTFAMILY": self.fontFamily,
             "ITEMFONTFAMILY": self.fontFamily,
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         self._img_diff_error(response, headers, "WMS_GetLegendGraphic_Hello", 250, QSize(10, 10))
@@ -47,7 +47,7 @@ class TestQgsServerAccessControlWMSGetlegendgraphic(TestQgsServerAccessControl):
         self._img_diff_error(response, headers, "WMS_GetLegendGraphic_Hello", 250, QSize(10, 10))
 
     def test_wms_getlegendgraphic_country(self):
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -60,7 +60,7 @@ class TestQgsServerAccessControlWMSGetlegendgraphic(TestQgsServerAccessControl):
             "ITEMFONTSIZE": "20",
             "LAYERFONTFAMILY": self.fontFamily,
             "ITEMFONTFAMILY": self.fontFamily,
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         self._img_diff_error(response, headers, "WMS_GetLegendGraphic_Country", 250, QSize(10, 10))
@@ -75,7 +75,7 @@ class TestQgsServerAccessControlWMSGetlegendgraphic(TestQgsServerAccessControl):
         )
 
     def test_wms_getlegendgraphic_country_grp(self):
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -88,7 +88,7 @@ class TestQgsServerAccessControlWMSGetlegendgraphic(TestQgsServerAccessControl):
             "ITEMFONTSIZE": "20",
             "LAYERFONTFAMILY": self.fontFamily,
             "ITEMFONTFAMILY": self.fontFamily,
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         self._img_diff_error(response, headers, "WMS_GetLegendGraphic_Country", 250, QSize(10, 10))

@@ -196,6 +196,11 @@ class QgsServerTestBase(QgisTestCase):
         """Order of attributes is random, strip version and xmlns"""
         return text.replace(b'version="1.3.0"', b'').replace(b'xmlns="http://www.opengis.net/ogc"', b'')
 
+    @classmethod
+    def _query_string(cls, data: dict) -> str:
+        """ Build a query string. """
+        return "&".join(["%s=%s" % i for i in list(data.items())])
+
     def assert_headers(self, header, body):
         stream = StringIO()
         header_string = header.decode('utf-8')
@@ -481,13 +486,13 @@ class TestQgsServer(QgsServerTestBase):
     def test_wcs_getcapabilities_url(self):
         # empty url in project
         project = os.path.join(self.testdata_path, "test_project_without_urls.qgs")
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(project),
             "SERVICE": "WCS",
             "VERSION": "1.0.0",
             "REQUEST": "GetCapabilities",
             "STYLES": ""
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
 
@@ -500,13 +505,13 @@ class TestQgsServer(QgsServerTestBase):
 
         # url well defined in project
         project = os.path.join(self.testdata_path, "test_project_with_urls.qgs")
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(project),
             "SERVICE": "WCS",
             "VERSION": "1.0.0",
             "REQUEST": "GetCapabilities",
             "STYLES": ""
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
 
@@ -521,13 +526,13 @@ class TestQgsServer(QgsServerTestBase):
         for header_name, header_value in (("X-Qgis-Service-Url", "http://test1"), ("X-Qgis-Wcs-Service-Url", "http://test2")):
             # empty url in project
             project = os.path.join(self.testdata_path, "test_project_without_urls.qgs")
-            qs = "?" + "&".join(["%s=%s" % i for i in list({
+            qs = "?" + self._query_string({
                 "MAP": urllib.parse.quote(project),
                 "SERVICE": "WCS",
                 "VERSION": "1.0.0",
                 "REQUEST": "GetCapabilities",
                 "STYLES": ""
-            }.items())])
+            })
 
             r, h = self._result(self._execute_request(qs, request_headers={header_name: header_value}))
 
@@ -547,13 +552,13 @@ class TestQgsServer(QgsServerTestBase):
         ):
             # empty url in project
             project = os.path.join(self.testdata_path, "test_project_without_urls.qgs")
-            qs = "?" + "&".join(["%s=%s" % i for i in list({
+            qs = "?" + self._query_string({
                 "MAP": urllib.parse.quote(project),
                 "SERVICE": "WCS",
                 "VERSION": "1.0.0",
                 "REQUEST": "GetCapabilities",
                 "STYLES": ""
-            }.items())])
+            })
 
             r, h = self._result(self._execute_request(qs, request_headers=headers))
 

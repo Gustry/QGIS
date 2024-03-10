@@ -135,23 +135,23 @@ class TestQgsServerWFS(QgsServerTestBase):
         project = self.testdata_path + "test_project_wfs.qgs"
 
         # a single invalid typename
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(project),
             "SERVICE": "WFS",
             "REQUEST": "GetFeature",
             "TYPENAME": "invalid"
-        }.items())])
+        })
         header, body = self._execute_request(qs)
 
         self.assertIn(b"TypeName 'invalid' could not be found", body)
 
         # an invalid typename preceded by a valid one
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(project),
             "SERVICE": "WFS",
             "REQUEST": "GetFeature",
             "TYPENAME": "testlayer,invalid"
-        }.items())])
+        })
         header, body = self._execute_request(qs)
 
         self.assertIn(b"TypeName 'invalid' could not be found", body)
@@ -186,12 +186,12 @@ class TestQgsServerWFS(QgsServerTestBase):
         # empty url in project
         project = os.path.join(
             self.testdata_path, "test_project_without_urls.qgs")
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(project),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "GetCapabilities"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
 
@@ -202,12 +202,12 @@ class TestQgsServerWFS(QgsServerTestBase):
         # url well defined in query string
         project = os.path.join(
             self.testdata_path, "test_project_without_urls.qgs")
-        qs = "https://www.qgis-server.org?" + "&".join(["%s=%s" % i for i in list({
+        qs = "https://www.qgis-server.org?" + self._query_string({
             "MAP": urllib.parse.quote(project),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "GetCapabilities"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
 
@@ -219,12 +219,12 @@ class TestQgsServerWFS(QgsServerTestBase):
         # url well defined in project
         project = os.path.join(
             self.testdata_path, "test_project_with_urls.qgs")
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(project),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "GetCapabilities"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
 
@@ -240,12 +240,12 @@ class TestQgsServerWFS(QgsServerTestBase):
         project = self.testdata_path + "test_wfs_no_data.qgs"
         self.assertTrue(os.path.exists(project), "Project file not found: " + project)
 
-        query_string = "?" + "&".join(["%s=%s" % i for i in list({
+        query_string = "?" + self._query_string({
             "MAP": urllib.parse.quote(project),
             "SERVICE": "WFS",
             "VERSION": "1.1.0",
             "REQUEST": "GetCapabilities"
-        }.items())])
+        })
 
         header, body = self._execute_request(query_string)
 
@@ -772,14 +772,14 @@ class TestQgsServerWFS(QgsServerTestBase):
         f.setAttributes([123])
         layer.dataProvider().addFeatures([f])
 
-        query_string = "?" + "&".join(["%s=%s" % i for i in list({
+        query_string = "?" + self._query_string({
             "SERVICE": "WFS",
             "REQUEST": "GetFeature",
             "VERSION": "1.1.0",
             "TYPENAME": "layer",
             "SRSNAME": "EPSG:3857",
             "outputFormat": "GeoJSON"
-        }.items())])
+        })
 
         header, body = self._execute_request_project(query_string, project)
         json.loads(body)
@@ -788,14 +788,14 @@ class TestQgsServerWFS(QgsServerTestBase):
         jdata['features'][0]['geometry']['coordinates']
         self.assertEqual(jdata['features'][0]['geometry']['coordinates'], [807305, 5592878])
 
-        query_string = "?" + "&".join(["%s=%s" % i for i in list({
+        query_string = "?" + self._query_string({
             "SERVICE": "WFS",
             "REQUEST": "GetFeature",
             "VERSION": "1.1.0",
             "TYPENAME": "layer",
             "SRSNAME": "EPSG:4326",
             "outputFormat": "GeoJSON"
-        }.items())])
+        })
 
         header, body = self._execute_request_project(query_string, project)
         json.loads(body)
@@ -804,13 +804,13 @@ class TestQgsServerWFS(QgsServerTestBase):
         jdata['features'][0]['geometry']['coordinates']
         self.assertEqual([int(i) for i in jdata['features'][0]['geometry']['coordinates']], [7, 44])
 
-        query_string = "?" + "&".join(["%s=%s" % i for i in list({
+        query_string = "?" + self._query_string({
             "SERVICE": "WFS",
             "REQUEST": "GetFeature",
             "VERSION": "1.1.0",
             "TYPENAME": "layer",
             "outputFormat": "GeoJSON"
-        }.items())])
+        })
 
         header, body = self._execute_request_project(query_string, project)
         json.loads(body)
@@ -819,14 +819,14 @@ class TestQgsServerWFS(QgsServerTestBase):
         jdata['features'][0]['geometry']['coordinates']
         self.assertEqual([int(i) for i in jdata['features'][0]['geometry']['coordinates']], [7, 44])
 
-        query_string = "?" + "&".join(["%s=%s" % i for i in list({
+        query_string = "?" + self._query_string({
             "SERVICE": "WFS",
             "REQUEST": "GetFeature",
             "VERSION": "1.1.0",
             "TYPENAME": "layer",
             "SRSNAME": "EPSG:32632",
             "outputFormat": "GeoJSON"
-        }.items())])
+        })
 
         header, body = self._execute_request_project(query_string, project)
         json.loads(body)
@@ -835,7 +835,7 @@ class TestQgsServerWFS(QgsServerTestBase):
         jdata['features'][0]['geometry']['coordinates']
         self.assertEqual([int(i) for i in jdata['features'][0]['geometry']['coordinates']], [361806, 4964192])
 
-        query_string = "?" + "&".join(["%s=%s" % i for i in list({
+        query_string = "?" + self._query_string({
             "SERVICE": "WFS",
             "REQUEST": "GetFeature",
             "VERSION": "1.1.0",
@@ -843,7 +843,7 @@ class TestQgsServerWFS(QgsServerTestBase):
             "SRSNAME": "EPSG:3857",
             "outputFormat": "GeoJSON",
             "FEATUREID": "layer.2"
-        }.items())])
+        })
 
         header, body = self._execute_request_project(query_string, project)
         json.loads(body)
@@ -983,13 +983,13 @@ class TestQgsServerWFS(QgsServerTestBase):
         f.setAttributes([123])
         layer.dataProvider().addFeatures([f])
 
-        query_string = "?" + "&".join(["%s=%s" % i for i in list({
+        query_string = "?" + self._query_string({
             "SERVICE": "WFS",
             "REQUEST": "GetFeature",
             "VERSION": "1.1.0",
             "TYPENAME": "layer",
             "SRSNAME": "EPSG:4326"
-        }.items())])
+        })
 
         header, body = self._execute_request_project(query_string, project)
         root = et.fromstring(body)
@@ -999,14 +999,14 @@ class TestQgsServerWFS(QgsServerTestBase):
         self.assertEqual([c[:4] for c in e.findall('.//')[0].text.split(' ')], ['7.25', '44.7'])
         self.assertEqual([c[:4] for c in e.findall('.//')[1].text.split(' ')], ['7.29', '44.8'])
 
-        query_string = "?" + "&".join(["%s=%s" % i for i in list({
+        query_string = "?" + self._query_string({
             "SERVICE": "WFS",
             "REQUEST": "GetFeature",
             "VERSION": "1.1.0",
             "TYPENAME": "layer",
             "SRSNAME": "EPSG:4326",
             "BBOX": "7.2,44.5,8.2,45.1,EPSG:4326"
-        }.items())])
+        })
 
         header, body = self._execute_request_project(query_string, project)
         root = et.fromstring(body)
@@ -1015,14 +1015,14 @@ class TestQgsServerWFS(QgsServerTestBase):
         self.assertEqual([c[:4] for c in e.findall('.//')[0].text.split(' ')], ['7.2', '44.5'])
         self.assertEqual([c[:4] for c in e.findall('.//')[1].text.split(' ')], ['8.2', '45.1'])
 
-        query_string = "?" + "&".join(["%s=%s" % i for i in list({
+        query_string = "?" + self._query_string({
             "SERVICE": "WFS",
             "REQUEST": "GetFeature",
             "VERSION": "1.1.0",
             "TYPENAME": "layer",
             "SRSNAME": "EPSG:4326",
             "BBOX": "807305,5589555,812191,5592878,EPSG:3857"
-        }.items())])
+        })
 
         header, body = self._execute_request_project(query_string, project)
         root = et.fromstring(body)
