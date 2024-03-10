@@ -45,7 +45,7 @@ class TestQgsServerWMSGetMapIgnoreBadLayers(QgsServerTestBase):
     def test_wms_getmap_datasource_error_ignore(self):
         """Must NOT throw a server exception if datasource if not available and QGIS_SERVER_IGNORE_BAD_LAYERS is set"""
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(os.path.join(self.testdata_path,
                                                    'test_project_wms_invalid_layers.qgs')),
             "SERVICE": "WMS",
@@ -61,7 +61,7 @@ class TestQgsServerWMSGetMapIgnoreBadLayers(QgsServerTestBase):
             "DPI": "200",
             "MAP_RESOLUTION": "200",
             "FORMAT_OPTIONS": "dpi:200"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
 

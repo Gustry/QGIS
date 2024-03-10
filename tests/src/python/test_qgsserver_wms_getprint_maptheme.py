@@ -66,7 +66,7 @@ class PyQgsServerWMSGetPrintMapTheme(QgsServerTestBase):
 
         # blank template, specified layer is red
         response = QgsBufferServerResponse()
-        request = QgsBufferServerRequest('?' + '&'.join(["%s=%s" % i for i in params.items()]))
+        request = QgsBufferServerRequest('?' + self._query_string(params))
         self.server.handleRequest(request, response, project)
 
         image = QImage.fromData(response.body(), "PNG")
@@ -75,7 +75,7 @@ class PyQgsServerWMSGetPrintMapTheme(QgsServerTestBase):
         # blank template, specified layer is green
         params["map0:LAYERS"] = "green"
         response = QgsBufferServerResponse()
-        request = QgsBufferServerRequest('?' + '&'.join(["%s=%s" % i for i in params.items()]))
+        request = QgsBufferServerRequest('?' + self._query_string(params))
         self.server.handleRequest(request, response, project)
 
         image = QImage.fromData(response.body(), "PNG")
@@ -85,7 +85,7 @@ class PyQgsServerWMSGetPrintMapTheme(QgsServerTestBase):
         params["map0:LAYERS"] = ""
         params["TEMPLATE"] = "red"
         response = QgsBufferServerResponse()
-        request = QgsBufferServerRequest('?' + '&'.join(["%s=%s" % i for i in params.items()]))
+        request = QgsBufferServerRequest('?' + self._query_string(params))
         self.server.handleRequest(request, response, project)
 
         image = QImage.fromData(response.body(), "PNG")
@@ -95,7 +95,7 @@ class PyQgsServerWMSGetPrintMapTheme(QgsServerTestBase):
         params["map0:LAYERS"] = ""
         params["TEMPLATE"] = "green"
         response = QgsBufferServerResponse()
-        request = QgsBufferServerRequest('?' + '&'.join(["%s=%s" % i for i in params.items()]))
+        request = QgsBufferServerRequest('?' + self._query_string(params))
         self.server.handleRequest(request, response, project)
 
         image = QImage.fromData(response.body(), "PNG")
@@ -107,7 +107,7 @@ class PyQgsServerWMSGetPrintMapTheme(QgsServerTestBase):
         params["map0:LAYERS"] = "red"
         params["TEMPLATE"] = "green"
         response = QgsBufferServerResponse()
-        request = QgsBufferServerRequest('?' + '&'.join(["%s=%s" % i for i in params.items()]))
+        request = QgsBufferServerRequest('?' + self._query_string(params))
         self.server.handleRequest(request, response, project)
 
         image = QImage.fromData(response.body(), "PNG")
@@ -117,7 +117,7 @@ class PyQgsServerWMSGetPrintMapTheme(QgsServerTestBase):
         params["LAYERS"] = "red"
         params["TEMPLATE"] = "green"
         response = QgsBufferServerResponse()
-        request = QgsBufferServerRequest('?' + '&'.join(["%s=%s" % i for i in params.items()]))
+        request = QgsBufferServerRequest('?' + self._query_string(params))
         self.server.handleRequest(request, response, project)
 
         image = QImage.fromData(response.body(), "PNG")
@@ -129,7 +129,7 @@ class PyQgsServerWMSGetPrintMapTheme(QgsServerTestBase):
         params["map0:LAYERS"] = "green"
         params["TEMPLATE"] = "red"
         response = QgsBufferServerResponse()
-        request = QgsBufferServerRequest('?' + '&'.join(["%s=%s" % i for i in params.items()]))
+        request = QgsBufferServerRequest('?' + self._query_string(params))
         self.server.handleRequest(request, response, project)
 
         image = QImage.fromData(response.body(), "PNG")
@@ -157,7 +157,7 @@ class PyQgsServerWMSGetPrintMapTheme(QgsServerTestBase):
         }
 
         response = QgsBufferServerResponse()
-        request = QgsBufferServerRequest('?' + '&'.join(["%s=%s" % i for i in params.items()]))
+        request = QgsBufferServerRequest('?' + self._query_string(params))
         self.server.handleRequest(request, response, project)
 
         image = QImage.fromData(response.body(), "PNG")
@@ -176,7 +176,7 @@ class PyQgsServerWMSGetPrintMapTheme(QgsServerTestBase):
         # Black LAYERS
         params["LAYERS"] = "points_black"
         response = QgsBufferServerResponse()
-        request = QgsBufferServerRequest('?' + '&'.join(["%s=%s" % i for i in params.items()]))
+        request = QgsBufferServerRequest('?' + self._query_string(params))
         self.server.handleRequest(request, response, project)
 
         image = QImage.fromData(response.body(), "PNG")
@@ -196,7 +196,7 @@ class PyQgsServerWMSGetPrintMapTheme(QgsServerTestBase):
         del params["LAYERS"]
         params["map0:LAYERS"] = "points_black"
         response = QgsBufferServerResponse()
-        request = QgsBufferServerRequest('?' + '&'.join(["%s=%s" % i for i in params.items()]))
+        request = QgsBufferServerRequest('?' + self._query_string(params))
         self.server.handleRequest(request, response, project)
 
         image = QImage.fromData(response.body(), "PNG")
@@ -217,7 +217,7 @@ class PyQgsServerWMSGetPrintMapTheme(QgsServerTestBase):
         params["map0:LAYERS"] = "points_blue"
         params["LAYERS"] = "points_black"
         response = QgsBufferServerResponse()
-        request = QgsBufferServerRequest('?' + '&'.join(["%s=%s" % i for i in params.items()]))
+        request = QgsBufferServerRequest('?' + self._query_string(params))
         self.server.handleRequest(request, response, project)
 
         image = QImage.fromData(response.body(), "PNG")
@@ -258,7 +258,7 @@ class PyQgsServerWMSGetPrintMapTheme(QgsServerTestBase):
         }
 
         response = QgsBufferServerResponse()
-        request = QgsBufferServerRequest('?' + '&'.join(["%s=%s" % i for i in params.items()]))
+        request = QgsBufferServerRequest('?' + self._query_string(params))
         self.server.handleRequest(request, response, project)
 
         image = QImage.fromData(response.body(), "PNG")
@@ -269,7 +269,7 @@ class PyQgsServerWMSGetPrintMapTheme(QgsServerTestBase):
         params["map0:LAYERS"] = ""
 
         response = QgsBufferServerResponse()
-        request = QgsBufferServerRequest('?' + '&'.join(["%s=%s" % i for i in params.items()]))
+        request = QgsBufferServerRequest('?' + self._query_string(params))
         self.server.handleRequest(request, response, project)
 
         image = QImage.fromData(response.body(), "PNG")
@@ -279,7 +279,7 @@ class PyQgsServerWMSGetPrintMapTheme(QgsServerTestBase):
         params["TEMPLATE"] = "red"
 
         response = QgsBufferServerResponse()
-        request = QgsBufferServerRequest('?' + '&'.join(["%s=%s" % i for i in params.items()]))
+        request = QgsBufferServerRequest('?' + self._query_string(params))
         self.server.handleRequest(request, response, project)
 
         image = QImage.fromData(response.body(), "PNG")
@@ -289,7 +289,7 @@ class PyQgsServerWMSGetPrintMapTheme(QgsServerTestBase):
         params["TEMPLATE"] = "green"
 
         response = QgsBufferServerResponse()
-        request = QgsBufferServerRequest('?' + '&'.join(["%s=%s" % i for i in params.items()]))
+        request = QgsBufferServerRequest('?' + self._query_string(params))
         self.server.handleRequest(request, response, project)
 
         image = QImage.fromData(response.body(), "PNG")
@@ -300,7 +300,7 @@ class PyQgsServerWMSGetPrintMapTheme(QgsServerTestBase):
         params["LAYERS"] = "red"
 
         response = QgsBufferServerResponse()
-        request = QgsBufferServerRequest('?' + '&'.join(["%s=%s" % i for i in params.items()]))
+        request = QgsBufferServerRequest('?' + self._query_string(params))
         self.server.handleRequest(request, response, project)
 
         image = QImage.fromData(response.body(), "PNG")
@@ -326,7 +326,7 @@ class PyQgsServerWMSGetPrintMapTheme(QgsServerTestBase):
             params['ATLAS_PK'] = '2'
 
             response = QgsBufferServerResponse()
-            request = QgsBufferServerRequest('?' + '&'.join(["%s=%s" % i for i in params.items()]))
+            request = QgsBufferServerRequest('?' + self._query_string(params))
             self.server.handleRequest(request, response, project)
 
             image = QImage.fromData(response.body(), "PNG")
@@ -338,7 +338,7 @@ class PyQgsServerWMSGetPrintMapTheme(QgsServerTestBase):
             params['ATLAS_PK'] = '4'
 
             response = QgsBufferServerResponse()
-            request = QgsBufferServerRequest('?' + '&'.join(["%s=%s" % i for i in params.items()]))
+            request = QgsBufferServerRequest('?' + self._query_string(params))
             self.server.handleRequest(request, response, project)
 
             image = QImage.fromData(response.body(), "PNG")

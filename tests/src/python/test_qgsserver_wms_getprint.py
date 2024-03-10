@@ -29,7 +29,7 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
     """QGIS Server WMS Tests for GetPrint request"""
 
     def test_wms_getprint_basic(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -38,12 +38,12 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "map0:EXTENT": "-33626185.498,-13032965.185,33978427.737,16020257.031",
             "map0:LAYERS": "Country,Hello",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_Basic")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -53,12 +53,12 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "map0:EXTENT": "-33626185.498,-13032965.185,33978427.737,16020257.031",
             "LAYERS": "Country,Hello",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_Basic")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -69,14 +69,14 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "map0:LAYERS": "Country,Hello",
             "LAYERS": "Country,Hello",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_Basic")
 
     def test_wms_getprint_style(self):
         # default style
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -86,14 +86,14 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "map0:EXTENT": "-33626185.498,-13032965.185,33978427.737,16020257.031",
             "map0:LAYERS": "Country_Labels",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         assert h.get("Content-Type").startswith('image'), r
         self._img_diff_error(r, h, "WMS_GetPrint_StyleDefault")
 
         # custom style
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -104,13 +104,13 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "map0:LAYERS": "Country_Labels",
             "map0:STYLES": "custom",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_StyleCustom")
 
         # default style
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -120,13 +120,13 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "map0:EXTENT": "-33626185.498,-13032965.185,33978427.737,16020257.031",
             "LAYERS": "Country_Labels",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_StyleDefault")
 
         # custom style
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -137,13 +137,13 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "LAYERS": "Country_Labels",
             "STYLES": "custom",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_StyleCustom")
 
         # default style
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -154,13 +154,13 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "map0:LAYERS": "Country_Labels",
             "LAYERS": "Country_Labels",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_StyleDefault")
 
         # custom style
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -172,13 +172,13 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "map0:STYLES": "custom",
             "LAYERS": "Country_Labels",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_StyleCustom")
 
     def test_wms_getprint_group(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectGroupsPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -188,14 +188,14 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "map0:EXTENT": "-33626185.498,-13032965.185,33978427.737,16020257.031",
             "map0:LAYERS": "Country_Diagrams,Country_Labels,Country",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r_individual, h = self._result(self._execute_request(qs))
 
         # test reference image
         self._img_diff_error(r_individual, h, "WMS_GetPrint_Group")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectGroupsPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -205,7 +205,7 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "map0:EXTENT": "-33626185.498,-13032965.185,33978427.737,16020257.031",
             "map0:LAYERS": "CountryGroup",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r_group, h = self._result(self._execute_request(qs))
 
@@ -225,7 +225,7 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
         # self.assertEqual(r_individual, r_group, 'Individual layers query and group layers query results should be identical')
 
     def test_wms_getprint_legend(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -235,13 +235,13 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "map0:EXTENT": "-33626185.498,-13032965.185,33978427.737,16020257.031",
             "map0:LAYERS": "Country,Hello",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_Legend")
 
     def test_wms_getprint_srs(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -251,13 +251,13 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "map0:EXTENT": "-309.015,-133.011,312.179,133.949",
             "map0:LAYERS": "Country,Hello",
             "CRS": "EPSG:4326"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_SRS")
 
     def test_wms_getprint_scale(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -268,13 +268,13 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "map0:LAYERS": "Country,Hello",
             "map0:SCALE": "36293562",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_Scale")
 
     def test_wms_getprint_size(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -286,13 +286,13 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "map0:SCALE": "36293562",
             "CRS": "EPSG:3857",
             "HEIGHT": "100"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_Size", max_size_diff=QSize(1, 1))
 
     def test_wms_getprint_grid(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -304,13 +304,13 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "map0:GRID_INTERVAL_X": "1000000",
             "map0:GRID_INTERVAL_Y": "2000000",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_Grid")
 
     def test_wms_getprint_rotation(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -321,14 +321,14 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "map0:LAYERS": "Country,Hello",
             "map0:ROTATION": "45",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_Rotation")
 
     def test_wms_getprint_two_maps(self):
         """Test map0 and map1 apply to the correct maps"""
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -341,19 +341,19 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "map1:LAYERS": "Country,Hello",
             "CRS": "EPSG:3857",
             "IDTEXTBOX": "",
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_TwoMaps")
 
     def test_wms_getprint_excluded_layout(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "REQUEST": "GetPrint",
             "TEMPLATE": "excluded",
             "CRS": "EPSG:4326"
-        }.items())])
+        })
         r, h = self._result(self._execute_request(qs))
 
         self.assertIn(b"The TEMPLATE parameter is invalid", r)
@@ -361,7 +361,7 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
     @unittest.skipIf(os.environ.get('QGIS_CONTINUOUS_INTEGRATION_RUN', 'true'),
                      'Can\'t rely on external resources for continuous integration')
     def test_wms_getprint_external(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -378,7 +378,7 @@ class TestQgsServerWMSGetPrint(QgsServerTestBase):
             "landsat:bbox": "-90,-180,90,180",
             "landsat:version": "1.3.0",
             "CRS": "EPSG:4326"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_External")

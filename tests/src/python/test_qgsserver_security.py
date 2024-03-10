@@ -355,7 +355,7 @@ class TestQgsServerSecurity(QgsServerTestBase):
             return False
 
     def handle_request_wfs_getfeature_filter(self, filter_xml):
-        qs = "?" + "&".join(["%s=%s" % i for i in {
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.project),
             "SERVICE": "WFS",
             "VERSION": "1.1.1",
@@ -363,12 +363,12 @@ class TestQgsServerSecurity(QgsServerTestBase):
             "TYPENAME": "point",
             "STYLES": "",
             "CRS": "EPSG:32613",
-            "FILTER": filter_xml}.items()])
+            "FILTER": filter_xml})
 
         return self._execute_request(qs)
 
     def handle_request_wms_getfeatureinfo(self, filter_sql):
-        qs = "?" + "&".join(["%s=%s" % i for i in {
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.project),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -381,7 +381,7 @@ class TestQgsServerSecurity(QgsServerTestBase):
             "WIDTH": "500",
             "BBOX": "606171,4822867,612834,4827375",
             "CRS": "EPSG:32613",
-            "FILTER": filter_sql}.items()])
+            "FILTER": filter_sql})
 
         return self._result(self._execute_request(qs))
 
@@ -404,7 +404,7 @@ class TestQgsServerSecurity(QgsServerTestBase):
             params["SLD"] = sld
         if filter is not None:
             params["FILTER"] = urllib.parse.quote(filter)
-        qs = "?" + "&".join(["%s=%s" % i for i in params.items()])
+        qs = "?" + self._query_string(params)
 
         return self._result(self._execute_request(qs))
 

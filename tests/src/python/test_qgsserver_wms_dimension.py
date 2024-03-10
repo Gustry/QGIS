@@ -54,7 +54,7 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
 
     def test_wms_getmap_default(self):
         # default rendering
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -66,14 +66,14 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_All_NoValue")
 
     def test_wms_getmap_simple_value(self):
         # dimension with value
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -86,12 +86,12 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "ELEVATION": "1000"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_Elevation_Value")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -104,12 +104,12 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "DIM_RANGE_ELEVATION": "1000"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_RangeElevation_Value")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -122,12 +122,12 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "TIME": "2021-05-31T17:00:00"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_Time_Value")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -140,13 +140,13 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "DIM_DATE": "2021-05-31"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_Date_Value")
 
         # multi dimension with value
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -160,14 +160,14 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
             "CRS": "EPSG:3857",
             "ELEVATION": "1000",
             "DIM_RANGE_ELEVATION": "1000"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_Elevation_RangeElevation_Value")
 
     def test_wms_getmap_range_value(self):
         # dimension with range value
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -180,12 +180,12 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "ELEVATION": "1000/2000"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_Elevation_RangeValue")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -198,12 +198,12 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "DIM_RANGE_ELEVATION": "1000/2000"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_RangeElevation_RangeValue")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -216,12 +216,12 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "TIME": "2021-05-31T09:00:00/2021-06-30T09:00:00"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_Time_RangeValue")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -234,14 +234,14 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "DIM_DATE": "2021-05-31/2021-06-30"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_Date_RangeValue")
 
     def test_wms_getmap_multi_values(self):
         # dimension with multi values
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -254,12 +254,12 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "ELEVATION": "1000,2000"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_Elevation_MultiValues")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -272,12 +272,12 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "DIM_RANGE_ELEVATION": "1000,2000"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_RangeElevation_MultiValues")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -290,12 +290,12 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "TIME": "2021-05-31T10:00:00,2021-05-31T17:00:00"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_Time_MultiValues")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -308,14 +308,14 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "DIM_DATE": "2021-05-31,2021-06-30"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_Date_MultiValues")
 
     def test_wms_getmap_mix_values(self):
         # dimension with mix values
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -328,14 +328,14 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "ELEVATION": "1000/1500,2000"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_Elevation_MixValues")
         # same as ELEVATION=1000/2000
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_Elevation_RangeValue")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -348,7 +348,7 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "DIM_RANGE_ELEVATION": "1000/1500,2000"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_RangeElevation_MixValues")
@@ -357,7 +357,7 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
 
     def test_wms_getmap_with_filter(self):
         # dimension with filter
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -371,7 +371,7 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
             "CRS": "EPSG:3857",
             "ELEVATION": "800/2200",
             "FILTER": "Contours:\"elev\" <= 1200"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_Elevation_RangeValue_Filter")
@@ -379,7 +379,7 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
         self._img_diff_error(r, h, "WMS_GetMap_Dimension_Elevation_Value")
 
     def test_wms_getprint_dimension(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -392,7 +392,7 @@ class TestQgsServerWMSDimension(TestQgsServerWMSTestBase):
             "CRS": "EPSG:3857",
             "HEIGHT": "500",
             "DIM_DATE": "2021-05-31,2021-06-30"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_Dimension", max_size_diff=QSize(1, 1))

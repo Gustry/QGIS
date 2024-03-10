@@ -186,7 +186,7 @@ class TestQgsServerAccessControlWMSGetPrintPG(QgsServerTestBase):
         """Test issue GH #41800 """
 
         # Extent for feature where pk1 = 1, pk2 = 2
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             'SERVICE': "WMS",
             'VERSION': "1.3.0",
             'REQUEST': "GetPrint",
@@ -196,7 +196,7 @@ class TestQgsServerAccessControlWMSGetPrintPG(QgsServerTestBase):
             'DPI': 72,
             'TEMPLATE': "print1",
             'map0:EXTENT': '45.70487804878048621,7.67926829268292099,46.22987804878049189,8.42479674796748235',
-        }.items())])
+        })
 
         def _check_red():
 
@@ -323,7 +323,7 @@ class TestQgsServerAccessControlWMSGetPrintPG(QgsServerTestBase):
     def test_atlas(self):
         """Test atlas"""
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             'SERVICE': "WMS",
             'VERSION': "1.3.0",
             'REQUEST': "GetPrint",
@@ -332,7 +332,7 @@ class TestQgsServerAccessControlWMSGetPrintPG(QgsServerTestBase):
             'LAYERS': 'multiple_pks',
             'DPI': 72,
             'TEMPLATE': "print1",
-        }.items())])
+        })
 
         req = QgsBufferServerRequest('http://my_server/' + qs + '&ATLAS_PK=1,2')
         res = QgsBufferServerResponse()

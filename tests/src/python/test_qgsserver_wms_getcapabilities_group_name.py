@@ -50,17 +50,17 @@ class TestQgsServerWMSGetCapabilities(QgsServerTestBase):
 
 
 def make_capabilities_request(instance, project):
-    qs = "?" + "&".join(["%s=%s" % i for i in list({
+    qs = "?" + urllib.parse.urlencode({
         "MAP": urllib.parse.quote(project),
         "SERVICE": "WMS",
         "REQUEST": "GetCapabilities"
-    }.items())])
+    })
     r, h = instance._result(instance._execute_request(qs))
     return instance.strip_version_xmlns(r)
 
 
 def make_map_request(instance, project):
-    qs = "?" + "&".join(["%s=%s" % i for i in list({
+    qs = "?" + urllib.parse.urlencode({
         "MAP": urllib.parse.quote(project),
         "SERVICE": "WMS",
         "REQUEST": "GetMap",
@@ -70,7 +70,7 @@ def make_map_request(instance, project):
         "HEIGHT": "600",
         "LAYERS": "layer_group",
         "VERSION": "1.3.0"
-    }.items())])
+    })
     r, h = instance._result(instance._execute_request(qs))
     return instance.strip_version_xmlns(r)
 

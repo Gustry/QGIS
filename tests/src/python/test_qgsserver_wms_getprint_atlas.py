@@ -30,7 +30,7 @@ class TestQgsServerWMSGetPrintAtlas(QgsServerTestBase):
     """QGIS Server WMS Tests for GetPrint atlas request"""
 
     def __test_wms_getprint_atlas(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
@@ -40,17 +40,17 @@ class TestQgsServerWMSGetPrintAtlas(QgsServerTestBase):
             "CRS": "EPSG:3857",
             "ATLAS_PK": "3",
             "map0:LAYERS": "Country,Hello",
-        }.items())])
+        })
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetPrint_Atlas")
 
     def __test_wms_getprint_atlas_getProjectSettings(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
             "REQUEST": "GetProjectSettings",
-        }.items())])
+        })
         r, h = self._result(self._execute_request(qs))
         self.assertIn('atlasEnabled="1"', str(r))
         self.assertIn('<PrimaryKeyAttribute>', str(r))
@@ -71,14 +71,14 @@ class TestQgsServerWMSGetPrintAtlas(QgsServerTestBase):
             "CRS": "EPSG:2056",
             "ATLAS_PK": "2",
         }
-        qs = "?" + "&".join(["%s=%s" % i for i in list(params.items())])
+        qs = "?" + self._query_string(params)
         r, h = self._result(self._execute_request_project(qs, project))
         self._img_diff_error(r, h, "WMS_GetPrint_Atlas_No_Pk")
 
         # Test issue GH #49900: when using map scales scale
         params['TEMPLATE'] = 'layout_fixed_scale'
         params['ATLAS_PK'] = '4'
-        qs = "?" + "&".join(["%s=%s" % i for i in list(params.items())])
+        qs = "?" + self._query_string(params)
         r, h = self._result(self._execute_request_project(qs, project))
         self._img_diff_error(r, h, "WMS_GetPrint_Atlas_Fixed_Scale")
 

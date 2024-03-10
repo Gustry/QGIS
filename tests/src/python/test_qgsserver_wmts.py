@@ -120,7 +120,7 @@ class TestQgsServerWMTS(QgsServerTestBase):
 
     def test_wmts_gettile(self):
         # Testing project WMTS layer
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectGroupsPath),
             "SERVICE": "WMTS",
             "VERSION": "1.0.0",
@@ -132,12 +132,12 @@ class TestQgsServerWMTS(QgsServerTestBase):
             "TILEROW": "0",
             "TILECOL": "0",
             "FORMAT": "image/png"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMTS_GetTile_Project_3857_0", 20000)
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectGroupsPath),
             "SERVICE": "WMTS",
             "VERSION": "1.0.0",
@@ -149,13 +149,13 @@ class TestQgsServerWMTS(QgsServerTestBase):
             "TILEROW": "0",
             "TILECOL": "0",
             "FORMAT": "image/png"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMTS_GetTile_Project_4326_0", 20000)
 
         # Testing group WMTS layer
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectGroupsPath),
             "SERVICE": "WMTS",
             "VERSION": "1.0.0",
@@ -167,12 +167,12 @@ class TestQgsServerWMTS(QgsServerTestBase):
             "TILEROW": "0",
             "TILECOL": "0",
             "FORMAT": "image/png"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMTS_GetTile_CountryGroup_3857_0", 20000)
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectGroupsPath),
             "SERVICE": "WMTS",
             "VERSION": "1.0.0",
@@ -184,13 +184,13 @@ class TestQgsServerWMTS(QgsServerTestBase):
             "TILEROW": "0",
             "TILECOL": "0",
             "FORMAT": "image/png"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMTS_GetTile_CountryGroup_4326_0", 20000)
 
         # Testing QgsMapLayer WMTS layer
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectGroupsPath),
             "SERVICE": "WMTS",
             "VERSION": "1.0.0",
@@ -202,12 +202,12 @@ class TestQgsServerWMTS(QgsServerTestBase):
             "TILEROW": "0",
             "TILECOL": "0",
             "FORMAT": "image/png"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMTS_GetTile_Hello_3857_0", 20000)
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectGroupsPath),
             "SERVICE": "WMTS",
             "VERSION": "1.0.0",
@@ -219,13 +219,13 @@ class TestQgsServerWMTS(QgsServerTestBase):
             "TILEROW": "0",
             "TILECOL": "0",
             "FORMAT": "image/png"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMTS_GetTile_Hello_4326_0", 20000)
 
     def test_wmts_gettile_invalid_parameters(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectGroupsPath),
             "SERVICE": "WMTS",
             "VERSION": "1.0.0",
@@ -237,13 +237,13 @@ class TestQgsServerWMTS(QgsServerTestBase):
             "TILEROW": "0",
             "TILECOL": "FOO",
             "FORMAT": "image/png"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"TILECOL (\'FOO\') cannot be converted into int" in r
         self.assertTrue(err)
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectGroupsPath),
             "SERVICE": "WMTS",
             "VERSION": "1.0.0",
@@ -255,13 +255,13 @@ class TestQgsServerWMTS(QgsServerTestBase):
             "TILEROW": "0",
             "TILECOL": "1",
             "FORMAT": "image/png"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"TileCol is unknown" in r
         self.assertTrue(err)
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectGroupsPath),
             "SERVICE": "WMTS",
             "VERSION": "1.0.0",
@@ -273,13 +273,13 @@ class TestQgsServerWMTS(QgsServerTestBase):
             "TILEROW": "0",
             "TILECOL": "-1",
             "FORMAT": "image/png"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"TileCol is unknown" in r
         self.assertTrue(err)
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectGroupsPath),
             "SERVICE": "WMTS",
             "VERSION": "1.0.0",
@@ -291,13 +291,13 @@ class TestQgsServerWMTS(QgsServerTestBase):
             "TILEROW": "0",
             "TILECOL": "0",
             "FORMAT": "image/png"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"Layer \'dem\' not found" in r
         self.assertTrue(err)
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectGroupsPath),
             "SERVICE": "WMTS",
             "VERSION": "1.0.0",
@@ -309,7 +309,7 @@ class TestQgsServerWMTS(QgsServerTestBase):
             "TILEROW": "0",
             "TILECOL": "0",
             "FORMAT": "image/png"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"TileMatrixSet is unknown" in r

@@ -23,12 +23,12 @@ from test_qgsserver_accesscontrol import XML_NS, TestQgsServerAccessControl
 class TestQgsServerAccessControlWFS(TestQgsServerAccessControl):
 
     def test_wfs_getcapabilities(self):
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "GetCapabilities"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         self.assertTrue(
@@ -57,13 +57,13 @@ class TestQgsServerAccessControlWFS(TestQgsServerAccessControl):
            The restricted access to 'Hello' is the expression `$id = 1`
            The field 'color' has restricted access
         """
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "DescribeFeatureType",
             "TYPENAME": "Hello"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         self.assertTrue(
@@ -79,13 +79,13 @@ class TestQgsServerAccessControlWFS(TestQgsServerAccessControl):
         """Tests WFS DescribeFeatureType Request on 'Country' with access control
            The layer 'Country'has restricted access
         """
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "DescribeFeatureType",
             "TYPENAME": "Country"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         self.assertTrue(
@@ -526,14 +526,14 @@ class TestQgsServerAccessControlWFS(TestQgsServerAccessControl):
            The restricted access to 'Hello' is the expression `$id = 1`
            The field 'color' has restricted access
         """
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "GetFeature",
             "TYPENAME": "Hello",
             "EXP_FILTER": "pkuid = 1"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         # The feature with `pk = 1` is in the response with the field 'color'
@@ -568,14 +568,14 @@ class TestQgsServerAccessControlWFS(TestQgsServerAccessControl):
         """Tests WFS GetFeature Request on 'Hello' with Expression Filter `pkuid = 2` and access control
            The restricted access to 'Hello' is the expression `$id = 1`
         """
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "GetFeature",
             "TYPENAME": "Hello",
             "EXP_FILTER": "pkuid = 2"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         # The feature with `pk = 2` is in the response
@@ -605,14 +605,14 @@ class TestQgsServerAccessControlWFS(TestQgsServerAccessControl):
         """Tests WFS GetFeature Request on 'Hello_Filter' with Expression Filter `pkuid = 1` and access control
            The restricted access to 'Hello_Filter is the expression `pkuid = 6 or pkuid = 7`
         """
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "GetFeature",
             "TYPENAME": "Hello_Filter",
             "EXP_FILTER": "pkuid = 1"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         # The feature with `pk = 1` is in the response
@@ -650,14 +650,14 @@ class TestQgsServerAccessControlWFS(TestQgsServerAccessControl):
         """Tests WFS GetFeature Request on 'Hello_Filter' with Expression Filter `pkuid = 6` and access control
            The restricted access to 'Hello_Filter is the expression `pkuid = 6 or pkuid = 7`
         """
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "GetFeature",
             "TYPENAME": "Hello_Filter",
             "EXP_FILTER": "pkuid = 6"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         # The feature with `pk = 6` is in the response
@@ -691,14 +691,14 @@ class TestQgsServerAccessControlWFS(TestQgsServerAccessControl):
            The restricted access to 'Hello' is the expression `$id = 1`
            The field 'color' has restricted access
         """
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "GetFeature",
             "TYPENAME": "Hello",
             "FEATUREID": "Hello.1"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         # The feature with `pk = 1` is in the response with the field 'color'
@@ -734,14 +734,14 @@ class TestQgsServerAccessControlWFS(TestQgsServerAccessControl):
            The restricted access to 'Hello' is the expression `$id = 1`
            The field 'color' has restricted access
         """
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "GetFeature",
             "TYPENAME": "Hello",
             "FEATUREID": "Hello.2"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         # The feature with `pk = 2` is in the response
@@ -771,14 +771,14 @@ class TestQgsServerAccessControlWFS(TestQgsServerAccessControl):
         """Tests WFS GetFeature Request on 'Hello_Filter' with FeatureId `Hello_Filter.1` and access control
            The restricted access to 'Hello_Filter is the expression `pkuid = 6 or pkuid = 7`
         """
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "GetFeature",
             "TYPENAME": "Hello_Filter",
             "FEATUREID": "Hello_Filter.1"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         # The feature with `pk = 1` is in the response
@@ -816,14 +816,14 @@ class TestQgsServerAccessControlWFS(TestQgsServerAccessControl):
         """Tests WFS GetFeature Request on 'Hello_Filter' with FeatureId `Hello_Filter.6` and access control
            The restricted access to 'Hello_Filter is the expression `pkuid = 6 or pkuid = 7`
         """
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "GetFeature",
             "TYPENAME": "Hello_Filter",
             "FEATUREID": "Hello_Filter.6"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         # The feature with `pk = 6` is in the response
@@ -861,14 +861,14 @@ class TestQgsServerAccessControlWFS(TestQgsServerAccessControl):
            The restricted access to 'Hello' is the expression `$id = 1`
            The field 'color' has restricted access
         """
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(os.path.join(self.tmp_path, 'project_shp.qgs')),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "GetFeature",
             "TYPENAME": "Hello",
             "FEATUREID": "Hello.1"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         # The feature with `pk = 2` is in the response with the field 'color'
@@ -905,14 +905,14 @@ class TestQgsServerAccessControlWFS(TestQgsServerAccessControl):
            The restricted access to 'Hello' is the expression `$id = 1`
            The field 'color' has restricted access
         """
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(os.path.join(self.tmp_path, 'project_shp.qgs')),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "GetFeature",
             "TYPENAME": "Hello",
             "FEATUREID": "Hello.0"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         # The feature with `pk = 1` is in the response
@@ -943,14 +943,14 @@ class TestQgsServerAccessControlWFS(TestQgsServerAccessControl):
            The datasource is an ESRI Shapefile
            The restricted access to 'Hello_Filter is the expression `pkuid = 6 or pkuid = 7`
         """
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(os.path.join(self.tmp_path, 'project_shp.qgs')),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "GetFeature",
             "TYPENAME": "Hello_Filter",
             "FEATUREID": "Hello_Filter.0"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         # The feature with `pk = 1` is in the response
@@ -989,14 +989,14 @@ class TestQgsServerAccessControlWFS(TestQgsServerAccessControl):
            The datasource is an ESRI Shapefile
            The restricted access to 'Hello_Filter is the expression `pkuid = 6 or pkuid = 7`
         """
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(os.path.join(self.tmp_path, 'project_shp.qgs')),
             "SERVICE": "WFS",
             "VERSION": "1.0.0",
             "REQUEST": "GetFeature",
             "TYPENAME": "Hello_Filter",
             "FEATUREID": "Hello_Filter.5"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         # The feature with `pk = 6` is in the response

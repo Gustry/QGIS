@@ -113,7 +113,7 @@ class TestQgsServerAccessControlWMSGetMapPG(TestQgsServerAccessControl):
         return super()._handle_request(restricted, query_string, **kwargs)
 
     def test_wms_getmap(self):
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -125,12 +125,12 @@ class TestQgsServerAccessControlWMSGetMapPG(TestQgsServerAccessControl):
             "HEIGHT": "500",
             "WIDTH": "500",
             "SRS": "EPSG:3857"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         self._img_diff_error(response, headers, "WMS_PG_GetMap")
 
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -142,11 +142,11 @@ class TestQgsServerAccessControlWMSGetMapPG(TestQgsServerAccessControl):
             "HEIGHT": "500",
             "WIDTH": "500",
             "SRS": "EPSG:3857"
-        }.items())])
+        })
         response, headers = self._get_restricted(query_string)
         self._img_diff_error(response, headers, "Restricted_WMS_PG_GetMap")
 
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -159,12 +159,12 @@ class TestQgsServerAccessControlWMSGetMapPG(TestQgsServerAccessControl):
             "WIDTH": "500",
             "SRS": "EPSG:3857",
             "SELECTION": "someData: 4"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         self._img_diff_error(response, headers, "WMS_PG_GetMap_Selection")
 
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -177,12 +177,12 @@ class TestQgsServerAccessControlWMSGetMapPG(TestQgsServerAccessControl):
             "WIDTH": "500",
             "SRS": "EPSG:3857",
             "SELECTION": "someData: 4"
-        }.items())])
+        })
         response, headers = self._get_restricted(query_string)
         self._img_diff_error(response, headers, "Restricted_WMS_PG_GetMap_Selection")
 
     def test_wms_getmap_long(self):
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -194,12 +194,12 @@ class TestQgsServerAccessControlWMSGetMapPG(TestQgsServerAccessControl):
             "HEIGHT": "500",
             "WIDTH": "500",
             "SRS": "EPSG:3857"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         self._img_diff_error(response, headers, "WMS_PG_GetMap")
 
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -211,11 +211,11 @@ class TestQgsServerAccessControlWMSGetMapPG(TestQgsServerAccessControl):
             "HEIGHT": "500",
             "WIDTH": "500",
             "SRS": "EPSG:3857"
-        }.items())])
+        })
         response, headers = self._get_restricted(query_string)
         self._img_diff_error(response, headers, "Restricted_WMS_PG_GetMap")
 
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -228,12 +228,12 @@ class TestQgsServerAccessControlWMSGetMapPG(TestQgsServerAccessControl):
             "WIDTH": "500",
             "SRS": "EPSG:3857",
             "SELECTION": "someDataLong: 4"
-        }.items())])
+        })
 
         response, headers = self._get_fullaccess(query_string)
         self._img_diff_error(response, headers, "WMS_PG_GetMap_Selection")
 
-        query_string = "&".join(["%s=%s" % i for i in list({
+        query_string = self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -246,7 +246,7 @@ class TestQgsServerAccessControlWMSGetMapPG(TestQgsServerAccessControl):
             "WIDTH": "500",
             "SRS": "EPSG:3857",
             "SELECTION": "someDataLong: 4"
-        }.items())])
+        })
         response, headers = self._get_restricted(query_string)
         self._img_diff_error(response, headers, "Restricted_WMS_PG_GetMap_Selection")
 

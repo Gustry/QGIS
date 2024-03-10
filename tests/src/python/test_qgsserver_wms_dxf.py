@@ -29,7 +29,7 @@ os.environ['QT_HASH_SEED'] = '1'
 class PyQgsServerWMSGetMapDxf(QgsServerTestBase):
 
     def test_dxf_export_works_with_reverse_axis_epsg(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(os.path.join(self.testdata_path,
                                                    'test_dxf_export.qgs')),
             "SERVICE": "WMS",
@@ -42,7 +42,7 @@ class PyQgsServerWMSGetMapDxf(QgsServerTestBase):
             "FORMAT": "application/dxf",
             "SCALE": "500",
             "FILE_NAME": "test_dxf_export.dxf"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
 

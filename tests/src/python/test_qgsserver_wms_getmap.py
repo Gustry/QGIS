@@ -60,7 +60,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
 
     def test_wms_getmap_basic_mode(self):
         # 1 bits
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -72,13 +72,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Mode_1bit", 20000)
 
         # 8 bits
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -90,13 +90,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Mode_8bit", 20000)
 
         # 16 bits
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -108,13 +108,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Mode_16bit", 20000)
 
         # webp
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -126,13 +126,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Mode_16bit", 20000, outputFormat='WEBP')
 
     def test_wms_getmap_basic(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -144,12 +144,12 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Basic")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -161,12 +161,12 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Basic2")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectUseLayerIdsPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -178,12 +178,12 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Basic3")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -195,12 +195,12 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Basic4")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "sERVICE": "WMS",
             "VeRSION": "1.1.1",
@@ -212,13 +212,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HeIGHT": "500",
             "WIDTH": "500",
             "CRs": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Basic4")
 
     def test_wms_getmap_complex_labeling(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -230,14 +230,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Labeling_Complex")
 
     def test_wms_getmap_context_rendering(self):
         project = os.path.join(self.testdata_path, "test_project_render_context.qgs")
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(project),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -249,13 +249,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:4326"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_ContextRendering")
 
     def test_wms_getmap_dpi(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -268,7 +268,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "DPI": "112.5"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Basic5")
@@ -277,7 +277,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
         self.assertEqual(round(img.dotsPerMeterY() / 39.37, 1), 112.5)
 
     def test_wms_getmap_dpi_png_8bit(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -290,7 +290,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "DPI": "112.5"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         img = QImage.fromData(r, "PNG")
@@ -299,7 +299,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
 
     def test_wms_getmap_invalid_parameters(self):
         # invalid format
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -311,14 +311,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"The format \'pdf\' from FORMAT is not supported." in r
         self.assertTrue(err)
 
         # height should be an int
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -330,14 +330,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "FOO",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"HEIGHT (\'FOO\') cannot be converted into int" in r
         self.assertTrue(err)
 
         # height should be > 0
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -349,14 +349,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "-1",
             "WIDTH": "1",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"The requested map size is too large" in r
         self.assertTrue(err)
 
         # width should be an int
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -368,14 +368,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "FOO",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"WIDTH (\'FOO\') cannot be converted into int" in r
         self.assertTrue(err)
 
         # width should be > 0
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -387,14 +387,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "1",
             "WIDTH": "-1",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"The requested map size is too large" in r
         self.assertTrue(err)
 
         # bbox should be formatted like "double,double,double,double"
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -406,13 +406,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"BBOX (\'-16817707,-4710778,5696513\') cannot be converted into a rectangle" in r
         self.assertTrue(err)
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -424,14 +424,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"BBOX (\'-16817707,-4710778,5696513,FOO\') cannot be converted into a rectangle" in r
         self.assertTrue(err)
 
         # test invalid bbox : xmin > xmax
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -443,14 +443,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"cannot be converted into a rectangle" in r
         self.assertTrue(err)
 
         # test invalid bbox : ymin > ymax
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -462,14 +462,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"cannot be converted into a rectangle" in r
         self.assertTrue(err)
 
         # opacities should be a list of int
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -482,14 +482,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "OPACITIES": "253,FOO",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"OPACITIES (\'253,FOO\') cannot be converted into a list of int" in r
         self.assertTrue(err)
 
         # filters should be formatted like "layer0:filter0;layer1:filter1"
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -502,14 +502,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "FILTER": "Country \"name\" = 'eurasia'"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"FILTER (\'Country \"name\" = \'eurasia\'\') is not properly formatted" in r
         self.assertTrue(err)
 
         # selections should be formatted like "layer0:id0,id1;layer1:id0"
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -522,14 +522,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "SRS": "EPSG:3857",
             "SELECTION": "Country=4"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"SELECTION (\'Country=4\') is not properly formatted" in r
         self.assertTrue(err)
 
         # invalid highlight geometries
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -542,14 +542,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"HIGHLIGHT_GEOM (\'POLYGONN((-15000000 10000000, -15000000 6110620, 2500000 6110620, 2500000 10000000, -15000000 10000000))\') cannot be converted into a list of geometries" in r
         self.assertTrue(err)
 
         # invalid highlight label colors
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -562,14 +562,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"HIGHLIGHT_LABELCOLOR (\'#00230000;#0023000\') cannot be converted into a list of colors" in r
         self.assertTrue(err)
 
         # invalid list of label sizes
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -582,14 +582,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"HIGHLIGHT_LABELSIZE (\'16;17;FOO\') cannot be converted into a list of int" in r
         self.assertTrue(err)
 
         # invalid list of label buffer size
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -602,14 +602,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"HIGHLIGHT_LABELBUFFERSIZE (\'1.5;2;FF\') cannot be converted into a list of float" in r
         self.assertTrue(err)
 
         # invalid buffer color
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -622,14 +622,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         err = b"HIGHLIGHT_LABELBUFFERCOLOR (\'#2300FF00;#2300FF0\') cannot be converted into a list of colors" in r
         self.assertTrue(err)
 
     def test_wms_getmap_transparent(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -642,7 +642,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "TRANSPARENT": "TRUE"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Transparent")
@@ -653,7 +653,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
 
         d = unitTestDataPath('qgis_server_accesscontrol') + '/'
         project = os.path.join(d, "project_labeling_settings.qgs")
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(project),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -666,13 +666,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "TRANSPARENT": "TRUE"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_LabelingSettings")
 
     def test_wms_getmap_background(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -685,12 +685,12 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "BGCOLOR": "green"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Background")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -703,13 +703,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "BGCOLOR": "0x008000"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Background_Hex")
 
     def test_wms_getmap_order(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -721,13 +721,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_LayerOrder")
 
     def test_wms_getmap_srs(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -739,12 +739,12 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "SRS": "EPSG:4326"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_SRS")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -756,14 +756,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:4326"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_SRS")
 
     def test_wms_getmap_style(self):
         # default style
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -775,13 +775,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_StyleDefault")
 
         # custom style with STYLES parameter
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -793,13 +793,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_StyleCustom")
 
         # custom style with STYLE parameter
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -811,13 +811,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_StyleCustom")
 
         # mixed custom and default style with STYLES parameter
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -829,12 +829,12 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_StyleMixed")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -846,12 +846,12 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_StyleMixed_LayerOrder")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -863,13 +863,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_StyleMixed_LayerOrder")
 
     def test_wms_getmap_filter(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -882,13 +882,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "FILTER": "Country:\"name\" = 'eurasia'"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Filter")
 
         # try to display a feature yet filtered by the project
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectStatePath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -901,13 +901,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "FILTER": "Country:\"name\" = 'africa'"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Filter2")
 
         # display all features to check that initial filter is restored
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectStatePath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -919,13 +919,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857",
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Filter3")
 
         # display multiple features filtered from multiple layers
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectStatePath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -938,13 +938,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "FILTER": "Country: \"name\" IN ( 'arctic' , 'eurasia' );Hello: \"color\" = 'red';Hello_Filter_SubsetString: \"color\" = 'slate'"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Filter4")
 
         # display multiple features filtered from multiple layers with same filter for some
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -957,14 +957,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "FILTER": "Country,Country_Diagrams: \"name\" IN ( 'africa' , 'eurasia' );Hello: \"color\" IN ( 'magenta' , 'cerese' )"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Filter5")
 
         # test that filters with colons in values work as expected
         projectPath = os.path.join(self.testdata_path, "test_project_wms_filter.qgs")
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -977,13 +977,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "FILTER": "points:\"name\" = 'foo:bar'"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Filter6")
 
         # Error in filter (missing quote after africa) with multiple layer filter
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -996,7 +996,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "FILTER": "Country,Country_Diagrams: \"name\" IN ( 'africa , 'eurasia' );Hello: \"color\" IN ( 'magenta' , 'cerese' )"
-        }.items())])
+        })
 
         expected = self.strip_version_xmlns(
             b'<?xml version="1.0" encoding="UTF-8"?>\n<ServiceExceptionReport  >\n <ServiceException code="Security">The filter string  "name" IN ( \'africa , \'eurasia\' ) has been rejected because of security reasons. Note: Text strings have to be enclosed in single or double quotes. A space between each word / special character is mandatory. Allowed Keywords and special characters are IS,NOT,NULL,AND,OR,IN,=,&lt;,>=,>,>=,!=,\',\',(,),DMETAPHONE,SOUNDEX. Not allowed are semicolons in the filter expression.</ServiceException>\n</ServiceExceptionReport>\n')
@@ -1005,7 +1005,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
         self.assertEqual(self.strip_version_xmlns(r), expected)
 
         # Test IS NOT NULL, so display all features
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectStatePath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1018,7 +1018,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "FILTER": "Country:\"name\" IS NOT NULL"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Filter3")
@@ -1026,7 +1026,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
     def test_wms_getmap_filter_ogc(self):
         filter = "<Filter><PropertyIsEqualTo><PropertyName>name</PropertyName>" + \
                  "<Literal>eurasia</Literal></PropertyIsEqualTo></Filter>"
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1039,7 +1039,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "FILTER": filter
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Filter_OGC")
@@ -1047,7 +1047,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
     def test_wms_getmap_filter_ogc_with_empty(self):
         filter = "(<Filter><PropertyIsEqualTo><PropertyName>name</PropertyName>" + \
                  "<Literal>eurasia</Literal></PropertyIsEqualTo></Filter>)()"
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1060,7 +1060,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "FILTER": filter
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Filter_OGC")
@@ -1068,7 +1068,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
         # empty filter
         filter = ("(<ogc:Filter xmlns=\"http://www.opengis.net/ogc\">"
                   "</ogc:Filter>)")
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1081,7 +1081,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "FILTER": filter
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Filter_OGC2")
@@ -1092,7 +1092,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
                           "</PropertyName><Literal>eurasia</Literal>"
                           "</PropertyIsEqualTo></Filter>)")
         filter = f"{filter_hello}{filter_country}"
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1105,7 +1105,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "FILTER": filter
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Filter_OGC3")
@@ -1119,7 +1119,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
                   '</fes:PropertyIsEqualTo>'
                   '</fes:Filter>')
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1132,7 +1132,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "FILTER": filter
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Filter_OGC_V2")
@@ -1145,7 +1145,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
                   '</fes:PropertyIsEqualTo>'
                   '</fes:Filter>')
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1158,13 +1158,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "FILTER": filter
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Filter_OGC_V2")
 
     def test_wms_getmap_selection(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1177,13 +1177,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "SRS": "EPSG:3857",
             "SELECTION": "Country: 4,1;Hello: 2,5"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Selection")
 
     def test_wms_getmap_diagrams(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1195,13 +1195,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Diagrams")
 
     def test_wms_getmap_opacities(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1214,12 +1214,12 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "OPACITIES": "125, 50"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Opacities")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1232,13 +1232,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "OPACITIES": "125,50,150"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Opacities2")
 
         # Test OPACITIES with specific STYLES
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1251,14 +1251,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "OPACITIES": "125,50,150"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Opacities3")
 
     def test_wms_getmap_highlight(self):
         # highlight layer with color separated from sld
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1278,14 +1278,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Highlight")
 
     def test_wms_getmap_highlight_point(self):
         # checks SLD stroke-width works for Points See issue 19795 comments
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1305,13 +1305,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Highlight_Point")
 
     def test_wms_getmap_highlight_point_label_options(self):
         # checks HIGHLIGHT_LABEL_ROTATION, HIGHLIGHT_LABEL_HORIZONTAL_ALIGNMENT, HIGHLIGHT_LABEL_VERTICAL_ALIGNMENT
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1334,7 +1334,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Highlight_Point_Label_Options")
 
@@ -1342,7 +1342,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
 
     def test_wms_getmap_highlight_line(self):
         # checks SLD stroke-width works for Lines See issue 19795 comments
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1361,12 +1361,12 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Highlight_Line")
 
     def test_wms_getmap_annotations(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectAnnotationPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1378,7 +1378,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Annotations")
@@ -1399,7 +1399,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
         httpd_thread.daemon = True
         httpd_thread.start()
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1411,12 +1411,12 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_SLDRestored")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "REQUEST": "GetMap",
             "VERSION": "1.1.1",
@@ -1430,12 +1430,12 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "STYLES": "",
             "FORMAT": "image/png",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_SLD")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1447,13 +1447,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_SLDRestored")
 
         # Test SVG
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "REQUEST": "GetMap",
             "VERSION": "1.1.1",
@@ -1467,7 +1467,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "STYLES": "",
             "FORMAT": "image/png",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_SLD_SVG")
@@ -1475,7 +1475,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
         httpd.server_close()
 
     def test_wms_getmap_sld_body(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1487,12 +1487,12 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_SLDRestored")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "REQUEST": "GetMap",
             "VERSION": "1.1.1",
@@ -1505,12 +1505,12 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "STYLES": "",
             "FORMAT": "image/png",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_SLD")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1522,7 +1522,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_SLDRestored")
@@ -1531,7 +1531,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
         """QGIS Server has to restore all the style. This test is not done
         to evaluate the SLD application but the style restoration and
         specifically the labeling."""
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1544,10 +1544,10 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
         r, h = self._result(self._execute_request(qs))
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1559,7 +1559,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Labeling_Complex")
@@ -1568,7 +1568,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
         """A WMS shall render the requested layers by drawing the leftmost in the list
         bottommost, the next one over that, and so on."""
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectGroupsPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1580,11 +1580,11 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r_individual, _ = self._result(self._execute_request(qs))
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectGroupsPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1596,7 +1596,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r_group, _ = self._result(self._execute_request(qs))
 
@@ -1612,7 +1612,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
         self.assertEqual(r_individual, r_group,
                          'Individual layers query and group layers query results should be identical')
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectGroupsPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1624,14 +1624,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r_group, _ = self._result(self._execute_request(qs))
 
         self.assertEqual(r_individual, r_group,
                          'Individual layers query and group layers query with short name results should be identical')
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectGroupsPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -1643,7 +1643,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         r_group_sld, _ = self._result(self._execute_request(qs))
         self.assertEqual(r_individual, r_group_sld,
@@ -1653,7 +1653,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
         """A WMS shall render the requested layers by drawing the leftmost in the list
         bottommost, the next one over that, and so on. Even if the layers are inside groups."""
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(os.path.join(self.testdata_path,
                                                    'test_project_wms_grouped_layers.qgs')),
             "SERVICE": "WMS",
@@ -1669,12 +1669,12 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "DPI": "200",
             "MAP_RESOLUTION": "200",
             "FORMAT_OPTIONS": "dpi:200"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_GroupedLayersUp")
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(os.path.join(self.testdata_path,
                                                    'test_project_wms_grouped_layers.qgs')),
             "SERVICE": "WMS",
@@ -1690,14 +1690,14 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "DPI": "200",
             "MAP_RESOLUTION": "200",
             "FORMAT_OPTIONS": "dpi:200"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_GroupedLayersDown")
 
     def test_wms_getmap_datasource_error(self):
         """Must throw a server exception if datasource if not available"""
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(os.path.join(self.testdata_path,
                                                    'test_project_wms_invalid_layers.qgs')),
             "SERVICE": "WMS",
@@ -1713,7 +1713,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "DPI": "200",
             "MAP_RESOLUTION": "200",
             "FORMAT_OPTIONS": "dpi:200"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
 
@@ -1723,7 +1723,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
                      'Can\'t rely on external resources for continuous integration')
     def test_wms_getmap_external(self):
         # 1 bits
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "REQUEST": "GetMap",
@@ -1742,7 +1742,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:4326"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_External", 20000)
@@ -1750,7 +1750,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
     def test_wms_getmap_root_custom_layer_order_regression_21917(self):
         """When drawing root layer, custom layer order order should be respected."""
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(os.path.join(self.testdata_path,
                                                    'bug_21917_root_layer_order.qgs')),
             "SERVICE": "WMS",
@@ -1766,13 +1766,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "DPI": "200",
             "MAP_RESOLUTION": "200",
             "FORMAT_OPTIONS": "dpi:200"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Group_Layer_Order")
 
         # Check with root_layer
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(os.path.join(self.testdata_path,
                                                    'bug_21917_root_layer_order.qgs')),
             "SERVICE": "WMS",
@@ -1788,7 +1788,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "DPI": "200",
             "MAP_RESOLUTION": "200",
             "FORMAT_OPTIONS": "dpi:200"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Group_Layer_Order")
@@ -1797,7 +1797,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
         """Test the implementation of tile_map_edge_buffer from mapserver."""
 
         # Check without tiled parameters (default is false)
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(
                 os.path.join(self.testdata_path, 'wms_tile_buffer.qgs')),
             "SERVICE": "WMS",
@@ -1809,13 +1809,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "512",
             "LAYERS": "wms_tile_buffer_data",
             "FORMAT": "image/png"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Tiled_False")
 
         # Check with tiled=false
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(
                 os.path.join(self.testdata_path, 'wms_tile_buffer.qgs')),
             "SERVICE": "WMS",
@@ -1828,13 +1828,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "LAYERS": "wms_tile_buffer_data",
             "FORMAT": "image/png",
             "TILED": "false"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Tiled_False")
 
         # Check with tiled=true
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(
                 os.path.join(self.testdata_path, 'wms_tile_buffer.qgs')),
             "SERVICE": "WMS",
@@ -1847,13 +1847,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "LAYERS": "wms_tile_buffer_data",
             "FORMAT": "image/png",
             "TILED": "true"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Tiled_True")
 
         # Check with labels and tiled=false
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(
                 os.path.join(self.testdata_path, 'wms_tile_buffer.qgs')),
             "SERVICE": "WMS",
@@ -1866,13 +1866,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "LAYERS": "wms_tile_buffer_labels",
             "FORMAT": "image/png",
             "TILED": "false"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Tiled_Labels_False")
 
         # Check with labels and tiled=true
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(
                 os.path.join(self.testdata_path, 'wms_tile_buffer.qgs')),
             "SERVICE": "WMS",
@@ -1885,13 +1885,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "LAYERS": "wms_tile_buffer_labels",
             "FORMAT": "image/png",
             "TILED": "true"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Tiled_Labels_True")
 
         # Check with rotated labels and tiled=true
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(
                 os.path.join(self.testdata_path, 'wms_tile_buffer.qgs')),
             "SERVICE": "WMS",
@@ -1904,7 +1904,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "LAYERS": "wms_tile_buffer_labels_rotated",
             "FORMAT": "image/png",
             "TILED": "true"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Tiled_Rotated_Labels_True")
@@ -1912,7 +1912,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
     @unittest.skipIf(os.getenv('QGIS_CONTINUOUS_INTEGRATION_RUN'), "This tests fails on GH workflow")
     def test_mode8bit_with_transparency(self):
         # 8 bits
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(
                 self.testdata_path + 'test_project_wms_8bit_with_transparency.qgs'),
             "SERVICE": "WMS",
@@ -1926,13 +1926,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:3857",
             "TRANSPARENT": "TRUE"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_Mode_8bit_with_transparency", max_diff=1500)
 
     def test_multiple_layers_with_equal_name(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(os.path.join(self.testdata_path,
                                                    'test_project_wms_duplicate_names.qgz')),
             "SERVICE": "WMS",
@@ -1948,7 +1948,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "DPI": "200",
             "MAP_RESOLUTION": "200",
             "FORMAT_OPTIONS": "dpi:200"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_DuplicateNames")
@@ -1959,7 +1959,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
         vl = QgsVectorLayer('Point?crs=epsg:4326&field=int:integer', 'test+plus', 'memory')
         p = QgsProject()
         p.addMapLayers([vl])
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
             "REQUEST": "GetMap",
@@ -1970,7 +1970,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:4326"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request_project(qs, p))
         # No exceptions
@@ -1978,7 +1978,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
         self.assertNotIn(b"The layer 'test plus' does not exist", r)
 
         # + literal: we get an exception
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
             "REQUEST": "GetMap",
@@ -1989,13 +1989,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:4326"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request_project(qs, p))
         self.assertIn(b"The layer 'test plus' does not exist", r)
 
     def test_wms_annotation_item(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(os.path.join(self.testdata_path,
                                                    'test_project_annotation_item.qgz')),
             "SERVICE": "WMS",
@@ -2011,7 +2011,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "DPI": "96",
             "MAP_RESOLUTION": "96",
             "FORMAT_OPTIONS": "dpi:96"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
         self._img_diff_error(r, h, "WMS_GetMap_AnnotationItem")
@@ -2070,7 +2070,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
         project = QgsProject()
         project.addMapLayers([layer_date, layer_range])
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
             "REQUEST": "GetMap",
@@ -2082,13 +2082,13 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "500",
             "CRS": "EPSG:4326",
             "TRANSPARENT": "TRUE"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request_project(qs, project))
         self._img_diff_error(r, h, "WMS_GetMap_TemporalProperties_no_filter")
 
         # Time filter but no exposed properties
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
             "REQUEST": "GetMap",
@@ -2101,7 +2101,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "CRS": "EPSG:4326",
             "TRANSPARENT": "TRUE",
             "TIME": "2001-01-01"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request_project(qs, project))
         self._img_diff_error(r, h, "WMS_GetMap_TemporalProperties_no_filter")
@@ -2114,7 +2114,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
         self._img_diff_error(r, h, "WMS_GetMap_TemporalProperties_date_filter")
 
         # Filtr both layers
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
             "REQUEST": "GetMap",
@@ -2127,17 +2127,17 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "CRS": "EPSG:4326",
             "TRANSPARENT": "TRUE",
             "TIME": "2002-02-02/2003-03-04"
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request_project(qs, project))
         self._img_diff_error(r, h, "WMS_GetMap_TemporalProperties_datetime_filter")
 
         # Test get capabilities
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
             "REQUEST": "GetCapabilities",
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request_project(qs, project))
         t = et.fromstring(r)
@@ -2207,7 +2207,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
         layer.setLabeling(QgsVectorLayerSimpleLabeling(settings))
         layer.setLabelsEnabled(True)
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
             "REQUEST": "GetMap",
@@ -2220,7 +2220,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "CRS": "EPSG:4326",
             "DPI": 96,
             "OPACITIES": "128"
-        }.items())])
+        })
 
         request = QgsBufferServerRequest(qs)
         response = QgsBufferServerResponse()
@@ -2229,7 +2229,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
         self._img_diff_error(response.body(), response.headers(), "WMS_GetMap_LabelingOpacities128")
 
         # Test restorer
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
             "REQUEST": "GetMap",
@@ -2241,7 +2241,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "WIDTH": "200",
             "CRS": "EPSG:4326",
             "DPI": 96,
-        }.items())])
+        })
 
         request = QgsBufferServerRequest(qs)
         response = QgsBufferServerResponse()
@@ -2250,7 +2250,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
         self._img_diff_error(response.body(), response.headers(), "WMS_GetMap_LabelingOpacities")
 
     def test_get_map_pdf(self):
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "SERVICE": "WMS",
             "VERSION": "1.1.1",
@@ -2262,7 +2262,7 @@ class TestQgsServerWMSGetMap(QgsServerTestBase):
             "HEIGHT": "500",
             "WIDTH": "500",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
 
         self._assert_status_code(200, qs)
 

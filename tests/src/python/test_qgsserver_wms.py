@@ -175,18 +175,18 @@ class TestQgsServerWMS(TestQgsServerWMSTestBase):
                                  project=self.projectPath)
 
         # Test SLD unchange after GetMap SLD_BODY
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "REQUEST": "GetStyles",
             "VERSION": "1.1.1",
             "SERVICE": "WMS",
             "LAYERS": "db_point"
-        }.items())])
+        })
         r, h = self._result(self._execute_request(qs))
         assert "StyledLayerDescriptor" in str(r), f"StyledLayerDescriptor not in {r}"
         assert "__sld_style" not in str(r), f"__sld_style in {r}"
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "REQUEST": "GetMap",
             "VERSION": "1.1.1",
@@ -199,16 +199,16 @@ class TestQgsServerWMS(TestQgsServerWMSTestBase):
             "STYLES": "",
             "FORMAT": "image/png",
             "CRS": "EPSG:3857"
-        }.items())])
+        })
         self._assert_status_code(200, qs)
 
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(self.projectPath),
             "REQUEST": "GetStyles",
             "VERSION": "1.1.1",
             "SERVICE": "WMS",
             "LAYERS": "db_point"
-        }.items())])
+        })
         r, h = self._result(self._execute_request(qs))
         assert "StyledLayerDescriptor" in str(r), f"StyledLayerDescriptor not in {r}"
         assert "__sld_style" not in str(r), f"__sld_style in {r}"
@@ -288,54 +288,54 @@ class TestQgsServerWMS(TestQgsServerWMSTestBase):
     def test_wms_getcapabilities_versions(self):
         # default version 1.3.0 when empty VERSION parameter
         project = os.path.join(self.testdata_path, "test_project.qgs")
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(project),
             "SERVICE": "WMS",
             "REQUEST": "GetCapabilities",
-        }.items())])
+        })
 
         self.wms_request_compare(qs, reference_file='wms_getcapabilities_1_3_0', version='')
 
         # default version 1.3.0 when VERSION = 1.3.0 parameter
         project = os.path.join(self.testdata_path, "test_project.qgs")
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(project),
             "SERVICE": "WMS",
             "REQUEST": "GetCapabilities",
-        }.items())])
+        })
 
         self.wms_request_compare(qs, reference_file='wms_getcapabilities_1_3_0', version='1.3.0')
 
         # version 1.1.1
         project = os.path.join(self.testdata_path, "test_project.qgs")
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(project),
             "SERVICE": "WMS",
             "REQUEST": "GetCapabilities",
-        }.items())])
+        })
 
         self.wms_request_compare(qs, reference_file='wms_getcapabilities_1_1_1', version='1.1.1')
 
         # default version 1.3.0 when invalid VERSION parameter
         project = os.path.join(self.testdata_path, "test_project.qgs")
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(project),
             "SERVICE": "WMS",
             "REQUEST": "GetCapabilities",
-        }.items())])
+        })
 
         self.wms_request_compare(qs, reference_file='wms_getcapabilities_1_3_0', version='33.33.33')
 
     def test_wms_getcapabilities_url(self):
         # empty url in project
         project = os.path.join(self.testdata_path, "test_project_without_urls.qgs")
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(project),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
             "REQUEST": "GetCapabilities",
             "STYLES": ""
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
 
@@ -349,13 +349,13 @@ class TestQgsServerWMS(TestQgsServerWMSTestBase):
         # url passed in query string
         # verify that GetCapabilities isn't put into the url for non-uppercase parameter names
         project = os.path.join(self.testdata_path, "test_project_without_urls.qgs")
-        qs = "https://www.qgis-server.org?" + "&".join(["%s=%s" % i for i in list({
+        qs = "https://www.qgis-server.org?" + self._query_string({
             "MAP": urllib.parse.quote(project),
             "SeRvIcE": "WMS",
             "VeRsIoN": "1.3.0",
             "ReQuEsT": "GetCapabilities",
             "STYLES": ""
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
 
@@ -369,13 +369,13 @@ class TestQgsServerWMS(TestQgsServerWMSTestBase):
 
         # url well defined in project
         project = os.path.join(self.testdata_path, "test_project_with_urls.qgs")
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": urllib.parse.quote(project),
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
             "REQUEST": "GetCapabilities",
             "STYLES": ""
-        }.items())])
+        })
 
         r, h = self._result(self._execute_request(qs))
 
@@ -388,12 +388,12 @@ class TestQgsServerWMS(TestQgsServerWMSTestBase):
     @unittest.skip('Timeout issues')
     def test_wms_GetProjectSettings_wms_print_layers(self):
         projectPath = self.testdata_path + "test_project_wms_printlayers.qgs"
-        qs = "?" + "&".join(["%s=%s" % i for i in list({
+        qs = "?" + self._query_string({
             "MAP": projectPath,
             "SERVICE": "WMS",
             "VERSION": "1.3.0",
             "REQUEST": "GetProjectSettings"
-        }.items())])
+        })
         header, body = self._execute_request(qs)
         xmlResult = body.decode('utf-8')
         self.assertNotEqual(xmlResult.find("<WMSBackgroundLayer>1</WMSBackgroundLayer>"), -1)
