@@ -12964,25 +12964,12 @@ void QgisApp::helpContents()
 
 void QgisApp::apiDocumentation()
 {
-  if ( QFileInfo::exists( QgsApplication::pkgDataPath() + "/doc/api/index.html" ) )
-  {
-    openURL( QStringLiteral( "api/index.html" ) );
-  }
-  else
-  {
-    QgsSettings settings;
-    QString QgisApiUrl = settings.value( QStringLiteral( "qgis/QgisApiUrl" ),
-                                         QStringLiteral( "https://qgis.org/api/" ) ).toString();
-    openURL( QgisApiUrl, false );
-  }
+  showApiDocumentation( Qgis::DocumentationApi::CppQgis, Qgis::DocumentationBrowser::SystemWebBrowser );
 }
 
 void QgisApp::pyQgisApiDocumentation()
 {
-  QgsSettings settings;
-  QString PyQgisApiUrl = settings.value( QStringLiteral( "qgis/PyQgisApiUrl" ),
-                                         QStringLiteral( "https://qgis.org/pyqgis/" ) ).toString();
-  openURL( PyQgisApiUrl, false );
+  showApiDocumentation( Qgis::DocumentationApi::PyQgis, Qgis::DocumentationBrowser::SystemWebBrowser );
 }
 
 void QgisApp::reportaBug()
@@ -13124,6 +13111,12 @@ void QgisApp::unregisterDevToolFactory( QgsDevToolWidgetFactory *factory )
 {
   mDevToolsWidget->removeToolFactory( factory );
   mDevToolFactories.removeAll( factory );
+}
+
+
+void QgisApp::showApiDocumentation( Qgis::DocumentationApi api, Qgis::DocumentationBrowser browser, const QString &object, const QString &module )
+{
+  mDevToolsWidget->showApiDocumentation( api, browser, object, module );
 }
 
 void QgisApp::registerApplicationExitBlocker( QgsApplicationExitBlockerInterface *blocker )
